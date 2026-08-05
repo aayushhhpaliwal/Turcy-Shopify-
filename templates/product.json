@@ -51,7 +51,7 @@
         "variant_picker": {
           "type": "variant_picker",
           "settings": {
-            "picker_type": "dropdown",
+            "picker_type": "button",
             "swatch_shape": "circle"
           }
         },
@@ -70,24 +70,6 @@
           "settings": {
             "show_dynamic_checkout": true,
             "show_gift_card_recipient": true
-          }
-        },
-        "custom_liquid_r9x6XB": {
-          "type": "custom_liquid",
-          "settings": {
-            "custom_liquid": "<div style=\"text-align:center;\nmargin-top:5px;\nmargin-bottom:12px;\nmax-width: 60rem;\">\n                  <img style=\"width:100%;display:block;margin:0 auto;\" src=\"https://cdn.shopify.com/s/files/1/0688/3075/7033/files/trust_page_3.png?v=1752215350\" alt=\"Trust\">\n                </div>"
-          }
-        },
-        "custom_liquid_xwxV4U": {
-          "type": "custom_liquid",
-          "settings": {
-            "custom_liquid": "<style>\n  .nail-usp-section {\n    width: 100%;\n    background: #fff;\n    padding: 8px 15px;\n    font-family: 'Playpen Sans';\n  }\n\n  .nail-usp-wrapper {\n    max-width: 760px;\n    margin: 0 auto;\n    display: grid;\n    grid-template-columns: repeat(2, 1fr); /* Always 2 columns */\n    column-gap: 80px;\n    row-gap: 5px;\n  }\n\n  .nail-usp-item {\n    display: flex;\n    align-items: center;\n    gap: 12px;\n    color: #000;\n  }\n\n  .nail-usp-icon {\n    width: 35px;\n    height: 35px;\n    object-fit: contain;\n    flex-shrink: 0;\n    filter: grayscale(1);\nborder: 1px solid gray;\n    border-radius: 20px;\n  }\n\n  .nail-usp-title {\n    margin: 0;\n    font-size: 13px;\n    line-height: 1.2;\n    font-weight: 700;\n    text-transform: uppercase;\n    letter-spacing: -0.2px;\n  }\n\n  /* MOBILE */\n  @media screen and (max-width: 749px) {\n    .nail-usp-section {\n      padding: 10px 10px;\n    }\n\n    .nail-usp-wrapper {\n      grid-template-columns: repeat(2, 1fr); /* KEEP 2 columns */\n      column-gap: 20px;\n      row-gap: 6px;\n    }\n\n    .nail-usp-icon {\n      width: 25px;\n      height: 25px;\n    }\n\n    .nail-usp-title {\n      font-size: 7.5px;\n    }\n  }\n</style>\n\n<section class=\"nail-usp-section\">\n  <div class=\"nail-usp-wrapper\">\n\n    <div class=\"nail-usp-item\">\n      <img class=\"nail-usp-icon\" src=\"https://chillhouse.com/cdn/shop/files/0f3ffbac93875b4b61fc727f26d1c378eacfa053.png?v=1756909509&width=100\">\n      <p class=\"nail-usp-title\">Science Backed Care</p>\n    </div>\n\n    <div class=\"nail-usp-item\">\n      <img class=\"nail-usp-icon\" src=\"https://chillhouse.com/cdn/shop/files/28255342d693c392d7d223893d0b7ca938659b09.png?v=1756909608&width=100\">\n      <p class=\"nail-usp-title\">Daily Beauty Routine</p>\n    </div>\n\n    <div class=\"nail-usp-item\">\n      <img class=\"nail-usp-icon\" src=\"https://chillhouse.com/cdn/shop/files/2f66b0ed8ce996358e36e657ad19d8ab315c55f6.png?v=1756909662&width=100\">\n      <p class=\"nail-usp-title\">Paraben Free</p>\n    </div>\n\n    <div class=\"nail-usp-item\">\n      <img class=\"nail-usp-icon\" src=\"https://chillhouse.com/cdn/shop/files/77616dad5c4d94ca055739292feb59c32a26e0e5.png?v=1756909566&width=100\">\n      <p class=\"nail-usp-title\">No Sulphates</p>\n    </div>\n\n   \n\n    \n\n  </div>\n</section>"
-          }
-        },
-        "custom_liquid_aebTqa": {
-          "type": "custom_liquid",
-          "settings": {
-            "custom_liquid": "<section class=\"offer-strip-section\">\n  <div class=\"offer-strip-wrapper\">\n    \n    <div class=\"offer-strip-item\">\n      <h3>Get FLAT 5% OFF</h3>\n      <p>on prepaid beauty orders</p>\n    </div>\n\n    <div class=\"offer-strip-item\">\n      <h3>Build Your Routine</h3>\n      <p>special offer on combos</p>\n    </div>\n\n    <div class=\"offer-strip-item\">\n      <h3>Buy 3 items, get</h3>\n      <p>Flat 20% OFF</p>\n    </div>\n\n  </div>\n</section>\n\n<style>\n  .offer-strip-section {\n    width: 100%;\n    background: #FCF8F2;\n  }\n\n  .offer-strip-wrapper {\n    max-width: 1240px;\n    margin: 0 auto;\n    background:#dee4ff;\n    border-radius: 12px;\n    padding: 16px 20px;\n    display: grid;\n    grid-template-columns: repeat(3, 1fr);\n    gap: 10px;\n    align-items: center;\n    text-align: center;\n  }\n\n  .offer-strip-item {\n    padding: 4px 8px;\n  }\n\n  .offer-strip-item h3 {\n    margin: 0;\n    font-size: 13px;\n    line-height: 1.2;\n    font-weight: 700;\n    color: #1f2430;\n  }\n\n  .offer-strip-item p {\n    margin: 2px 0 0;\n    font-size: 11px;\n    line-height: 1.25;\n    font-weight: 500;\n    color: #c06d11;\n  }\n\n  @media (max-width: 767px) {\n    .offer-strip-section {\n      padding: 6px 8px;\n    }\n\n    .offer-strip-wrapper {\n      grid-template-columns: repeat(3, 1fr);\n      gap: 4px;\n      padding: 10px 6px;\n      border-radius: 10px;\n    }\n\n    .offer-strip-item {\n      padding: 2px 3px;\n    }\n\n    .offer-strip-item h3 {\n      font-size: 10px;\n      line-height: 1.15;\n    }\n\n    .offer-strip-item p {\n      font-size: 9px;\n      line-height: 1.15;\n      margin-top: 2px;\n    }\n  }\n\n  @media (max-width: 380px) {\n    .offer-strip-wrapper {\n      gap: 2px;\n      padding: 8px 4px;\n    }\n\n    .offer-strip-item h3 {\n      font-size: 9px;\n    }\n\n    .offer-strip-item p {\n      font-size: 8px;\n    }\n  }\n</style>"
           }
         },
         "custom_liquid_Kg437N": {
@@ -126,12 +108,6 @@
           "disabled": true,
           "settings": {}
         },
-        "ag_shoppable_video_mp_tiktok_block_GbtUUU": {
-          "type": "shopify://apps/ag-shoppable-video/blocks/mp_tiktok_block/1216543a-6237-4445-a5f2-61991cd76022",
-          "settings": {
-            "mp_tiktok_feed_id": "2505-948749"
-          }
-        },
         "share": {
           "type": "share",
           "settings": {
@@ -148,15 +124,11 @@
         "custom_liquid_n4HdRT",
         "quantity_selector",
         "buy_buttons",
-        "custom_liquid_r9x6XB",
-        "custom_liquid_xwxV4U",
-        "custom_liquid_aebTqa",
         "custom_liquid_Kg437N",
         "custom_liquid_mqqMQr",
         "collapsible_tab_GR983k",
         "collapsible_tab_YrPPxF",
         "description",
-        "ag_shoppable_video_mp_tiktok_block_GbtUUU",
         "share"
       ],
       "custom_css": [
@@ -202,20 +174,6 @@
     },
     "1777984343d8c7ff81": {
       "type": "apps",
-      "blocks": {
-        "ag_product_reviews_app_block_review_list_WaK7Vq": {
-          "type": "shopify://apps/ag-product-reviews/blocks/app-block-review-list/c4e1e9ca-4d46-4e76-bc39-7e42417cb327",
-          "settings": {
-            "air_blockreviews_summaryHeading": "Reviews",
-            "air_blockreviews_layout": "grid",
-            "air_blockreviews_singleStarColor": "#16a086",
-            "air_blockreviews_primaryColor": "#121212"
-          }
-        }
-      },
-      "block_order": [
-        "ag_product_reviews_app_block_review_list_WaK7Vq"
-      ],
       "settings": {
         "include_margins": true
       }
