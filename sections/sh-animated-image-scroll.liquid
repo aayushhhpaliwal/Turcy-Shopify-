@@ -1,0 +1,452 @@
+{% if section.blocks.size > 0 %}
+  {%- capture sp_animated_image_scroll_css -%}
+    <style>
+      #sh-{{ section.id }}.sh-animated-img-scroll-section {background-color: {{section.settings.bg_color}};padding:{{ section.settings.padding_top }}px 0 {{section.settings.padding_bottom}}px 0;}
+      #sh-{{ section.id }} .sp-animated_img_scroll_title {margin-bottom: 30px;}
+      #sh-{{ section.id }} .sp-animated_img_scroll_title h2 {font-size: {{ section.settings.title_font_size }}px;color: {{section.settings.title_color}};font-weight: 500;margin: 0 0 20px;}
+      #sh-{{ section.id }} .sp-profile-section-desc.sp-section-desc p {font-size: {{ section.settings.content_font_size }}px;color: {{section.settings.content_color}};margin: 0;line-height: 1.4;}
+      #sh-{{ section.id }} .sh-page-width{max-width: {{ section.settings.section_max_width }}px;width: 100%;margin: 0 auto;padding: 0 20px;}
+      #sh-{{ section.id }} .sh-animated-img-scroll-heading {margin: 0 0 20px;font-size: {{ section.settings.image_title_font_size }}px;color: {{section.settings.image_title_color}};font-weight: 500;}
+      #sh-{{ section.id }} .sh-animated-img-scroll-item {display: flex;flex-wrap:wrap;background: {{section.settings.bg_color}};gap:20px;justify-content: end;}
+      #sh-{{ section.id }} .sh-animated-img-scroll-item.sh-media-position-right .sh-animated-img-scroll-media{order: 1;}
+      #sh-{{ section.id }} .sh-animated-img-scroll-text {line-height: 1.5;font-size: {{ section.settings.image_content_font_size }}px;color: {{section.settings.image_content_color}};}
+      #sh-{{ section.id }} .swiper-pagination {color: {{section.settings.pagination_color}};}
+      #sh-{{ section.id }} .sh-animated-img-scroll-media {flex: 0 0 45%;position: relative;padding-bottom: 45%;}
+      #sh-{{ section.id }} .sh-animated-img-scroll-media img{position: absolute;top: 0;left: 0;right: 0;bottom: 0;width: 100%;height: 100%;object-fit: cover;object-position: center;border-radius: {{section.settings.image_radius}}px;}
+      #sh-{{ section.id }} .sh-animated-img-scroll-content {flex:0 0 calc(40% - 20px);display: flex;}
+      #sh-{{ section.id }} .sh-animated-img-scroll-content-in{ padding: 0 20px;}
+      #sh-{{ section.id }} .sh-animated-img-scroll-content.sh-animated-img-scroll-content-middle{align-items: center;}
+      #sh-{{ section.id }} .sh-animated-img-scroll-content.sh-animated-img-scroll-content-top{align-items: flex-start;}
+      #sh-{{ section.id }} .sh-animated-img-scroll-content.sh-animated-img-scroll-content-bottom{align-items: flex-end;}
+      #sh-{{ section.id }} .sh-animated-img-scroll-content-in.sh-animated-img-scroll-align-center {text-align: center;}
+      #sh-{{ section.id }} .sh-animated-img-scroll-content-in.sh-animated-img-scroll-align-left {text-align: left;}
+      #sh-{{ section.id }} .sh-animated-img-scroll-content-in.sh-animated-img-scroll-align-right {text-align: right;}
+      #sh-{{ section.id }} .swiper-autoheight, #sh-{{ section.id }} .swiper-autoheight .swiper-slide {height: auto !important;}
+      #sh-{{ section.id }} .swiper-pagination-vertical.swiper-pagination-bullets, #sh-{{ section.id }} .swiper-vertical>.swiper-pagination-bullets {right: unset;left: 0;}
+      #sh-{{ section.id }} .swiper-pagination-bullet {margin: 20px 0;position: relative;opacity: .4;cursor: pointer;background: transparent;width: 100%;height: 100%;font-size: 20px;line-height: 1.3;box-shadow: none;}
+      #sh-{{ section.id }} .swiper-pagination-bullet.swiper-pagination-bullet-active {opacity: 1;}
+      #sh-{{ section.id }} .swiper-pagination-bullet:after {content: '';position: absolute;top: 13px;left: 30px;width: 0px;height: 2px;background: {{section.settings.pagination_color}};opacity: 0;transition: width 0.3s ease;}
+      #sh-{{ section.id }} .swiper-pagination-bullet:before {content: '';position: absolute;top: 10px;left: 36px;width: 8px;height: 8px;background: {{section.settings.pagination_color}};border-radius: 4px;opacity: 0;transition: left 0.3s ease;}
+      #sh-{{ section.id }} .swiper-pagination-bullet.swiper-pagination-bullet-active:after {opacity: 1;width: 106px;}
+      #sh-{{ section.id }} .swiper-pagination-bullet.swiper-pagination-bullet-active:before {opacity: 1;left: 135px;}
+      #sh-{{ section.id }} .swiper-button-next.sp-slider-arrow-next, #sh-{{ section.id }} .swiper-button-prev.sp-slider-arrow-prev{display: none;}
+
+      #sh-{{ section.id }} .sh-animated-img-scroll-media.sh-animated-img-scroll-media-large{padding-bottom:50%;}
+      #sh-{{ section.id }} .sh-animated-img-scroll-media.sh-animated-img-scroll-media-medium{padding-bottom:45%;}
+      #sh-{{ section.id }} .sh-animated-img-scroll-media.sh-animated-img-scroll-media-small{padding-bottom:40%;}
+    
+      @media only screen and (max-width: 991px){
+        #sh-{{ section.id }} .sp-animated_img_scroll_title h2 {font-size: 26px;margin: 0 0 10px;}
+        #sh-{{ section.id }} .sp-profile-section-desc.sp-section-desc p {font-size: 14px;}
+        #sh-{{ section.id }}.sh-animated-img-scroll-section {padding:{{ section.settings.mob_padding_top }}px 0 {{section.settings.mob_padding_bottom}}px 0;}
+        #sh-{{ section.id }} .sh-animated-img-scroll-media {flex: 0 0 85%;padding-bottom: 85% !important;}
+        #sh-{{ section.id }} .sh-animated-img-scroll-content {flex: 0 0 100%;padding:10px 0;}
+        #sh-{{ section.id }} .swiper-pagination{top:0px;left: 5px;bottom: unset;right: unset;display: flex;flex-direction: column;width: max-content;}
+        #sh-{{ section.id }} .swiper-pagination-bullet{display: inline-block;width: max-content;text-align: left;margin: 10px 0;}
+        #sh-{{ section.id }} .swiper-pagination-bullet:after {left: 25px;}
+        #sh-{{ section.id }} .swiper-pagination-bullet:before {left: 30px;}
+        #sh-{{ section.id }} .swiper-pagination-bullet.swiper-pagination-bullet-active:after {width: 50px;}
+        #sh-{{ section.id }} .swiper-pagination-bullet.swiper-pagination-bullet-active:before {left: 70px;}
+        #sh-{{ section.id }} .sh-animated-img-scroll-heading {margin: 0 0 10px;font-size: 22px;}
+        #sh-{{ section.id }} .sh-animated-img-scroll-text {font-size: 14px;}
+        #sh-{{ section.id }} swiper-pagination-vertical.swiper-pagination-bullets, .swiper-vertical>.swiper-pagination-bullets {top: 20% !important;}
+        #sh-{{ section.id }} .sh-animated-img-scroll-item.sh-media-position-right .sh-animated-img-scroll-media{order: unset;}
+        #sh-{{ section.id }} .sh-animated-img-scroll-item {display: flex;}
+        #sh-{{ section.id }} .sh-animated-img-scroll-content-in{ padding: 0;}
+        #sh-{{ section.id }} .swiper-button-next.sp-slider-arrow-next, 
+        #sh-{{ section.id }} .swiper-button-prev.sp-slider-arrow-prev {display:flex; width: 36px;height: 36px;background: #fff; border-radius: 50px;border: 1px solid #000;}
+        #sh-{{ section.id }} .swiper-button-next.sp-slider-arrow-next svg, 
+        #sh-{{ section.id }} .swiper-button-prev.sp-slider-arrow-prev svg {fill: #000;width: 16px;height: 16px;} 
+        #sh-{{ section.id }} a.sp-empty-overlay-link {position: absolute;top: 0;left: 0;bottom: 0;right: 0;width: 100%;height: 100%;z-index: 10;cursor: pointer;display: block;}
+      }
+    </style>
+  {% endcapture %}
+  {{ sp_animated_image_scroll_css | strip_newlines }}
+  
+  <div id="sh-{{ section.id }}" class="sh-animated-img-scroll-section">
+    <div class="sh-page-width">
+      {% if section.settings.title != blank or section.settings.content != blank %}
+        <div class="sp-animated_img_scroll_title sp-title-align-{{ section.settings.text_align }}">
+          {% if section.settings.title != blank %}
+            <h2>{{ section.settings.title }}</h2>
+          {% endif %}
+          {% if section.settings.content != blank %}
+            <div class="sp-profile-section-desc sp-section-desc">{{ section.settings.content }}</div>
+          {% endif %}
+        </div>
+      {% endif %}
+  
+      {% if section.blocks.size > 0 %} 
+        <div class="swiper sh-animated-img-scroll-slider">
+          <div class="swiper-wrapper">
+            {% for block in section.blocks %}
+              <div class="swiper-slide">
+                <div class="sh-animated-img-scroll-item sh-media-position-{{ section.settings.image_position }}">
+                  <div class="sh-animated-img-scroll-media sh-animated-img-scroll-media-{{ section.settings.image_height }}">
+                    {% if block.settings.image != blank %}
+                      <img src="{{ block.settings.image | image_url }}" width="" height="" loading="lazy" alt="{{ block.settings.image.alt }}">
+                    {% else %}
+                      <img src="data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg version='1.1' viewBox='0 0 500 500' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Crect x='2' y='2' width='496' height='496' fill='%23D8D8D8' stroke='%23D8D8D8' stroke-width='4'/%3E%3C/g%3E%3C/svg%3E" width="" height="" loading="lazy" alt="Animated image scroll">
+                    {% endif %}
+                  </div>
+                  {% if block.settings.title != blank or block.settings.content != blank %}
+                    <div class="sh-animated-img-scroll-content sh-animated-img-scroll-content-{{ section.settings.text_position }}">
+                      <div class="sh-animated-img-scroll-content-in sh-animated-img-scroll-align-{{ section.settings.content_text_align }}">
+                        {% if block.settings.title != blank %}
+                          <h2 class="sh-animated-img-scroll-heading">{{ block.settings.title }}</h2>
+                        {% endif %}
+                        {% if block.settings.content != blank %}
+                          <div class="sh-animated-img-scroll-text">{{ block.settings.content }}</div>
+                        {% endif %}
+                      </div>
+                    </div>
+                  {% endif %}
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+      {% endif %} 
+    </div>
+  </div>
+  
+  <script>
+    new Swiper("#sh-{{ section.id }} .sh-animated-img-scroll-slider", {
+      direction: "horizontal", 
+      slidesPerView: 1,
+      spaceBetween: 30,
+      effect: "fade",
+      fadeEffect: { crossFade: true },
+      freeMode: false,
+      allowTouchMove: true,
+      mousewheel: true,
+      autoHeight: false,
+      pagination: {
+        el: "#sh-{{ section.id }} .swiper-pagination",
+        clickable: true,
+        renderBullet: function (index, className) {
+          return '<span class="' + className + '">' + (index + 1) + "</span>";
+        },
+      },
+      breakpoints: {
+        0: {
+          direction: "horizontal",
+          mousewheel: false,
+        }, 
+        991: {
+          direction: "vertical",
+          autoHeight: true,
+          fadeEffect: { crossFade: true },
+        }
+      },
+      on: {
+        init() {
+          if (window.innerWidth >= 992) {
+            this.on('reachBeginning', function () {
+              window.scrollBy({
+                top: -window.innerHeight * 0.8,
+                behavior: 'smooth',
+              });
+            });
+    
+            this.on('reachEnd', function () {
+              window.scrollBy({
+                top: window.innerHeight * 0.8,
+                behavior: 'smooth',
+              });
+            });
+          }
+        },
+      },
+    });
+  </script>
+{% endif %} 
+  
+{% schema %}
+  {
+    "name": "SH: Animated image scroll",
+    "class": "sh-section-hub-main",
+    "tag": "section",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Team Of Highly Skilled"
+      },
+      {
+        "type": "richtext",
+        "id": "content",
+        "label": "Content",
+        "default": "<p>We are very fortunate to have formed excellent partnerships with many of our clients.</p>"
+      },
+      {
+        "type": "text_alignment",
+        "id": "text_align",
+        "label": "Text alignment",
+        "default": "center"
+      },
+      {
+        "type": "header",
+        "content": "Image content"
+      },
+      {
+        "type": "select",
+        "id": "image_height",
+        "label": "Image height (Desktop)",
+        "options": [
+          {"value": "small", "label": "Small"},
+          {"value": "medium", "label": "Medium"},
+          {"value": "large", "label": "Large"}
+        ],
+        "default": "medium"
+      },
+      {
+        "type": "select",
+        "id": "image_position",
+        "label": "Image position (Desktop)",
+        "options": [
+          { "label": "Left", "value": "left" },
+          { "label": "Right", "value": "right" }
+        ],
+        "default": "left"
+      },
+      {
+        "type": "range",
+        "id": "image_radius",
+        "min": 0,
+        "max": 20,
+        "step": 1,
+        "unit": "px",
+        "label": "Image border radius",
+        "default": 0
+      },
+      {
+        "type": "select",
+        "id": "text_position",
+        "label": "Text position (Desktop)",
+        "options": [
+          { "label": "Top", "value": "top" },
+          { "label": "Middle", "value": "middle" },
+          { "label": "Bottom", "value": "bottom" }
+        ],
+        "default": "middle"
+      },
+      {
+        "type": "text_alignment",
+        "id": "content_text_align",
+        "label": "Text alignment",
+        "default": "left"
+      },
+      {
+        "type": "header",
+        "content": "Font size"
+      },
+      {
+        "type": "range",
+        "id": "title_font_size",
+        "min": 5,
+        "max": 80,
+        "step": 1,
+        "unit": "px",
+        "label": "Heading",
+        "default": 30
+      },
+          {
+        "type": "range",
+        "id": "content_font_size",
+        "min": 5,
+        "max": 40,
+        "step": 1,
+        "unit": "px",
+        "label": "Content",
+        "default": 16
+      },
+      {
+        "type": "paragraph",
+        "content": "Image content"
+      },
+      {
+        "type": "range",
+        "id": "image_title_font_size",
+        "min": 5,
+        "max": 80,
+        "step": 1,
+        "unit": "px",
+        "label": "Heading",
+        "default": 26
+      },
+      {
+        "type": "range",
+        "id": "image_content_font_size",
+        "min": 5,
+        "max": 40,
+        "step": 1,
+        "unit": "px",
+        "label": "Content",
+        "default": 16
+      },
+      {
+        "type": "header",
+        "content": "Colors"
+      },
+      {
+        "type": "color",
+        "id": "bg_color",
+        "label": "Background color",
+        "default": "#fff"
+      },
+      {
+        "type": "color",
+        "id": "title_color",
+        "label": "Heading color",
+        "default": "#000"
+      },
+      {
+        "type": "color",
+        "id": "content_color",
+        "label": "Content color",
+        "default": "#121212"
+      },
+      {
+        "type": "paragraph",
+        "content": "Image content"
+      },
+      {
+        "type": "color",
+        "id": "image_title_color",
+        "label": "Heading color",
+        "default": "#000"
+      },
+      {
+        "type": "color",
+        "id": "image_content_color",
+        "label": "Content color",
+        "default": "#000"
+      },
+      {
+        "type": "color",
+        "id": "pagination_color",
+        "label": "Pagination Color",
+        "default": "#000"
+      },
+      {
+        "type": "header",
+        "content": "Section padding"
+      },
+      {
+        "type": "paragraph",
+        "content": "Desktop"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Padding top",
+        "default": 40
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Padding bottom",
+        "default": 40
+      },
+      {
+        "type": "paragraph",
+        "content": "Mobile"
+      },
+      {
+        "type": "range",
+        "id": "mob_padding_top",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Padding top",
+        "default": 30
+      },
+      {
+        "type": "range",
+        "id": "mob_padding_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Padding bottom",
+        "default": 30
+      },
+      {
+        "type": "header",
+        "content": "Section width"
+      },
+      {
+        "type": "text",
+        "id": "section_max_width",
+        "label": "Width (in px)",
+        "default": "1140"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "image",
+        "name": "Image with text",
+        "limit": 5,
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Heading",
+            "default": "Our inspirations from the beginning"
+          },
+          {
+            "type": "richtext",
+            "id": "content",
+            "label": "Content",
+            "default": "<p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "SH: Animated image scroll",
+        "blocks": [
+          {
+            "type": "image",
+            "settings": {
+              "title": "Research"
+            }
+          },
+          {
+            "type": "image",
+            "settings": {
+              "title": "Formulation"
+            }
+          },
+          {
+            "type": "image",
+            "settings": {
+              "title": "Sourcing"
+            }
+          }
+        ]
+      }
+    ],
+    "disabled_on": {
+      "groups": ["footer","header"]
+    }
+  }
+{% endschema %}

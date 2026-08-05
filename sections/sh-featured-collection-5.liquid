@@ -1,0 +1,897 @@
+{% capture sh_featured_collection_five_css %}
+  <style>
+    #sh-{{ section.id }}.sh-featured-coll-5-section {padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px 0;background: {{section.settings.bg_color}}; overflow: hidden;}
+    #sh-{{ section.id }} .sh-page-width {max-width: {{ section.settings.section_max_width }}px;width: 100%;padding: 0 20px;margin: 0 auto;}
+    #sh-{{ section.id }} .sh-page-width.sh-page-full-width {max-width: 100%;padding: 0 0 0 calc((100% - 1400px) / 2);}
+    #sh-{{ section.id }} .sh-fc-5-tabs {display: flex;flex-wrap: wrap;justify-content: center;gap: 16px 24px;margin-bottom: 28px;}
+    #sh-{{ section.id }} .sh-fc-5-tab-item {--tab-accent: {{ section.settings.btn_bg_color }};}
+    #sh-{{ section.id }} .sh-fc-5-tab-button {display: inline-flex;align-items: center;gap: 10px;border: 0; background: transparent;padding: 0 0 8px;cursor: pointer;border-bottom: 1px solid transparent;font-size: {{ section.settings.tab_title_font_size }}px;line-height: 1.3;font-weight: 600;color: {{ section.settings.pro_title_color }};opacity: .7;transition: opacity .25s ease,color .25s ease,border-color .25s ease;}
+    #sh-{{ section.id }} .sh-fc-5-tab-item.sh-fc-5-active .sh-fc-5-tab-button {opacity: 1;color: var(--tab-accent);border-color: var(--tab-accent);}
+    #sh-{{ section.id }} .sh-fc-5-tab-button:focus-visible {opacity: 1;color: var(--tab-accent);border-color: var(--tab-accent);outline: none;}
+    #sh-{{ section.id }} .sh-fc-5-tab-image {width: {{ section.settings.tab_image_size }}px;height: {{ section.settings.tab_image_size }}px;min-width: {{ section.settings.tab_image_size }}px;border-radius: 50%;object-fit: cover;object-position: center;display: block;}
+    #sh-{{ section.id }} .sh-fc-5-wrapper {display: flex;flex-wrap: wrap;gap: 20px;}
+    #sh-{{ section.id }} .sh-fc-5-media {width: 50%;}
+    #sh-{{ section.id }} .sh-fc-5-media-item {position: relative;padding-bottom: 100%;display: none;transition: all .3s ease-out;}
+    #sh-{{ section.id }} .sh-fc-5-media-item.sh-fc-5-active{display: block;} 
+    #sh-{{ section.id }} .sh-fc-5-main-media {position: absolute;top: 0;left: 0;right: 0;bottom: 0;width: 100%;height: 100%;object-fit: cover;object-position: center;}
+    #sh-{{ section.id }} .sh-fc-5-media-info {position: absolute;display: flex;row-gap: 24px;flex-direction: column;align-items: flex-start;justify-content: flex-end;height: 100%;width: 100%;z-index: 1;padding: 30px;}
+    #sh-{{ section.id }} .sh-fc-5-media-details p {font-size: {{ section.settings.content_font_size }}px;line-height: 1.4;margin: 0;}
+    #sh-{{ section.id }} .sh-fc-5-media-details .sh-button.sh-button-outline {color: #fff;border-color: #fff;background: transparent;} 
+    #sh-{{ section.id }} .sh-fc-5-content {width: calc(50% - 20px);padding-left: 20px;} 
+    #sh-{{ section.id }} .sh-fc-5-content-item{display: none;transition: all .3s ease-out;align-items: center;height: 100%;} 
+    #sh-{{ section.id }} .sh-fc-5-content-item.sh-fc-5-active{display: flex;} 
+    #sh-{{ section.id }} .swiper.sh-fc-5-coll-slider{width:100%;}  
+    #sh-{{ section.id }} .sh-fc-5-coll-slider .swiper-slide {height: auto;} 
+    {% comment %} #sh-{{ section.id }} .sh-product-card {height: 100%;display: flex;flex-direction: column;position: relative;border: 1px solid rgba(18,18,18,.12);box-sizing: border-box;} {% endcomment %}
+
+
+    #sh-{{ section.id }} .sh-product-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  border: 1px solid rgba(18,18,18,.10);
+  box-sizing: border-box;
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.10);
+  transition: all 0.3s ease;
+}
+
+
+    #sh-{{ section.id }} .sh-pro-media {position: relative;}
+    #sh-{{ section.id }} .sh-pro-image {position: relative;padding-bottom: 115%;display: block;}
+    #sh-{{ section.id }} .sh-pro-image img {position: absolute;top: 0;left: 0;right: 0;bottom: 0;width: 100%;height: 100%;object-fit: cover;object-position: top;}
+    #sh-{{ section.id }} .sh-pro-second-image {display: none;}
+    #sh-{{ section.id }} .sh-show-second-img:hover img.sh-pro-second-image {display: block;}
+    #sh-{{ section.id }} .sh-show-second-img:hover img.sh-pro-first-image {display: none;}
+    #sh-{{ section.id }} .sh-product-badge {position: absolute;top: 5px;left: 8px;} 
+    #sh-{{ section.id }} .sh-product-badge span {border: 1px solid {{section.settings.badge_bg_color}};display: inline-block;font-size: {{ section.settings.pro_tag_font_size }}px;letter-spacing: 0.2px;line-height: 1;padding: 4px 10px;text-align: center;background-color: {{section.settings.badge_bg_color}};color: {{section.settings.badge_text_color}};word-break: break-word;}
+    #sh-{{ section.id }} .sh-pro-info {display: flex;flex-direction: column;height: 100%;padding-top: 10px;}
+    #sh-{{ section.id }} .sh-pro-vendor {font-size: {{ section.settings.pro_vendor_font_size }}px;line-height: 1.3;margin: 0 0 5px;color: {{section.settings.pro_vendor_color}};opacity: 0.7;}
+    #sh-{{ section.id }} .sh-pro-info h2 {margin: 0 0 10px 0;font-size: {{ section.settings.pro_title_font_size }}px;line-height: 1.2;font-weight: 500;letter-spacing: 0.2px;color: {{section.settings.pro_title_color}};text-overflow: ellipsis;overflow: hidden;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical; padding-left: 10px; padding-right: 10px;}
+    #sh-{{ section.id }} .sh-product-price-wrapper {margin-bottom: 10px;display: flex;flex-wrap: wrap;gap: 10px 15px; padding-left: 10px; padding-right: 10px}
+    #sh-{{ section.id }} .sh-product-price-wrapper span {font-weight: 500;letter-spacing: 0.2px;font-size: {{ section.settings.pro_price_font_size }}px;line-height: 1.2;}
+    #sh-{{ section.id }} .sh-product-price-wrapper .sh-pro-reg-price {color: {{section.settings.pro_price_color}};}
+    #sh-{{ section.id }} .sh-product-price-wrapper .sh-pro-compare-price {color: {{section.settings.pro_compare_price_color}};text-decoration: line-through;}
+    #sh-{{ section.id }} .sh-pro-cart-link {margin-top: auto;padding: 0 0 5px;}
+    #sh-{{ section.id }} .sh-pro-cart-link .sh-button {font-size: 16px; line-height: 1.65;background: {{section.settings.btn_bg_color}}; color: {{section.settings.btn_label_color}}; padding: 6px 20px;display: block; border:1px solid {{section.settings.btn_border_color}};border-radius: {{ section.settings.btn_radius }}px;text-align: center; cursor:pointer;}
+    #sh-{{ section.id }} .sh-pro-cart-link .sh-button:hover{background: {{section.settings.btn_bg_hover_color}};color: {{section.settings.btn_label_hover_color}};border:1px solid {{section.settings.btn_border_hover_color}};box-shadow: 0 0 5px 0px {{ section.settings.btn_shadow_color }};}
+    #sh-{{ section.id }} .sh-pro-cart-link .sh-button.sh-button-outline {color: {{ section.settings.outline_btn_color }};border-color: {{ section.settings.outline_btn_color }};background: transparent;}
+    #sh-{{ section.id }} .sh-slider-arrow-next , #sh-{{ section.id }} .sh-slider-arrow-prev{width: {{ section.settings.arrow_size | plus:20 }}px;height: {{ section.settings.arrow_size | plus:20 }}px; background: {{ section.settings.arrow_bg_color }};border-radius: 50px;border: 1px solid {{section.settings.arrow_border_color}};}
+    #sh-{{ section.id }} .sh-slider-arrow-next svg, #sh-{{ section.id }} .sh-slider-arrow-prev svg{fill: {{section.settings.arrow_color}};width: {{ section.settings.arrow_size}}px;height: {{ section.settings.arrow_size}}px;}
+    #sh-{{ section.id }} .sh-slider-arrow-next.swiper-button-disabled,  #sh-{{ section.id }} .sh-slider-arrow-prev.swiper-button-disabled {opacity: 0;visibility: hidden;} 
+    @media only screen and (max-width: 767px){
+      #sh-{{ section.id }}.sh-featured-coll-5-section {padding:{{ section.settings.mobile_padding_top }}px 0 {{ section.settings.mobile_padding_bottom }}px 0;}
+      #sh-{{ section.id }} .sh-fc-5-media {width: 100%;}
+      #sh-{{ section.id }} .sh-fc-5-media-info{padding:20px;}
+      #sh-{{ section.id }} .sh-fc-5-media-details p {font-size: 14px;}
+      #sh-{{ section.id }} .sh-fc-5-media-details .sh-button { margin:15px 0 0 0;font-size: 15px; }
+      #sh-{{ section.id }} .sh-fc-5-tabs {gap: 12px 16px;margin-bottom: 22px;}
+      #sh-{{ section.id }} .sh-fc-5-tab-button {font-size: 20px;padding-bottom: 6px; font-weight: 600;}
+      #sh-{{ section.id }} .sh-fc-5-tab-image {width: max(24px, calc({{ section.settings.tab_image_size }}px * 0.60));height: max(24px, calc({{ section.settings.tab_image_size }}px * 0.60));min-width: max(24px, calc({{ section.settings.tab_image_size }}px * 0.60));}
+      #sh-{{ section.id }} .sh-fc-5-content {width: 100%;padding: 0;}  
+      #sh-{{ section.id }} .sh-pro-vendor {font-size: 13px;margin: 0 0 5px;}
+      #sh-{{ section.id }} .sh-product-badge span{padding: 3px 6px;font-size: 10px;}
+      #sh-{{ section.id }} .sh-pro-info h2 {margin: 0 0 10px 0;font-size: 12px;}
+      #sh-{{ section.id }} .sh-product-price-wrapper span {font-size: 12px;}
+      #sh-{{ section.id }} .sh-pro-cart-link .sh-button { font-size: 15px;}
+    }
+
+
+
+  </style>
+{% endcapture %}
+{{ sh_featured_collection_five_css | strip_newlines }}
+
+<div id="sh-{{ section.id }}" class="sh-featured-coll-5-section">
+  <div class="sh-page-width">
+    <div class="sh-fc-5-tabs" role="tablist" aria-label="Featured collections">
+      {% assign tab_index = 0 %}
+      {% for block in section.blocks %}
+        {% if block.settings.collection != blank or block.settings.tab_title != blank %}
+          <div
+            class="sh-fc-5-tab-item{% if tab_index == 0 %} sh-fc-5-active{% endif %}"
+            data-tab-index="{{ forloop.index0 }}"
+            style="--tab-accent: {{ block.settings.tab_title_color }};"
+          >
+            <button
+              type="button"
+              class="sh-fc-5-tab-button"
+              role="tab"
+              aria-selected="{% if tab_index == 0 %}true{% else %}false{% endif %}"
+              tabindex="{% if tab_index == 0 %}0{% else %}-1{% endif %}"
+              aria-controls="sh-fc-block-{{ block.id }}"
+            >
+              {% if block.settings.tab_image != blank %}
+                {{
+                  block.settings.tab_image
+                  | image_url: width: 80
+                  | image_tag:
+                    class: 'sh-fc-5-tab-image',
+                    widths: '28, 40, 56, 80',
+                    loading: 'lazy',
+                    alt: block.settings.tab_title | default: block.settings.collection.title
+                }}
+              {% endif %}
+              <span>{{ block.settings.tab_title | default: block.settings.collection.title }}</span>
+            </button>
+          </div>
+          {% assign tab_index = tab_index | plus: 1 %}
+        {% endif %}
+      {% endfor %}
+    </div>
+
+    <div class="sh-fc-5-wrapper">
+      <div class="sh-fc-5-media"> 
+        {% assign index = 0 %}
+        {% for block in section.blocks %}
+          {% if block.settings.collection != blank or block.settings.tab_title != blank %}
+            <div class="sh-fc-5-media-item {% if index == 0 %}sh-fc-5-active{% endif %}" id="sh-fc-block-{{ block.id }}" data-media-index="{{ forloop.index0 }}">  
+              {% if block.settings.video != blank %}
+                {{
+                  block.settings.video
+                  | video_tag:
+                    image_size: '1100x',
+                    autoplay: true,
+                    loop: true,
+                    controls: false,
+                    muted: true,
+                    playsinline: true,
+                    preload: 'auto',
+                    class: 'sh-fc-5-main-media'
+                }}
+              {% elsif block.settings.image != blank %}
+                <img
+                  src="{{ block.settings.image | image_url }}"
+                  class="sh-fc-5-main-media"
+                  height=""
+                  width=""
+                  loading="lazy"
+                  alt="{{ block.settings.image.alt }}"
+                >
+              {% else %}
+                <img src="data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg version='1.1' viewBox='0 0 500 500' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Crect x='2' y='2' width='496' height='496' fill='%23D8D8D8' stroke='%23D8D8D8' stroke-width='4'/%3E%3C/g%3E%3C/svg%3E" class="sh-fc-5-main-media" width="" height="" loading="lazy" alt="Featured collection" >
+              {% endif %}
+              <div class="sh-fc-5-media-info">
+                <div class="sh-fc-5-media-details">
+                  {{ block.settings.content }}
+                  {% if block.settings.btn_label != blank %}
+                    <a href="{{ block.settings.collection.url }}" class="sh-button{% if block.settings.outline_btn %} sh-button-outline{% endif %}">{{ block.settings.btn_label }}</a>
+                  {% endif %}             
+                </div>
+              </div>
+              {% style %}
+                #sh-{{ section.id }} .sh-fc-5-media #sh-fc-block-{{ block.id }} .sh-fc-5-media-details p {color: {{ block.settings.content_color }};}
+                #sh-{{ section.id }} .sh-fc-5-media #sh-fc-block-{{ block.id }} .sh-fc-5-media-details .sh-button { margin:25px 0 0 0;font-size: 16px; line-height: 1.5;background: {{block.settings.btn_bg_color}}; color: {{block.settings.btn_label_color}}; padding: 6px 20px; min-width: 140px; display: inline-block; border:1px solid {{block.settings.btn_border_color}};border-radius: {{ block.settings.btn_radius }}px;text-align: center; cursor:pointer;}
+                #sh-{{ section.id }} .sh-fc-5-media #sh-fc-block-{{ block.id }} .sh-fc-5-media-details .sh-button:hover{background: {{block.settings.btn_bg_hover_color}};color:{{block.settings.btn_label_hover_color}};border:1px solid {{block.settings.btn_border_hover_color}};box-shadow: 0 0 5px 0px {{ block.settings.btn_shadow_color }};} 
+                #sh-{{ section.id }} .sh-fc-5-media #sh-fc-block-{{ block.id }} .sh-fc-5-media-details .sh-button.sh-button-outline {color: {{ block.settings.outline_btn_color }};border-color: {{ block.settings.outline_btn_color }};background: transparent;}
+              {% endstyle %}
+            </div> 
+            {% assign index = index | plus: 1 %}
+          {% endif %}
+        {% endfor %}   
+      </div>
+
+      <div class="sh-fc-5-content">
+        {% assign pro_index = 0 %}
+        {% assign max_product = section.settings.max_product %}
+        {% for block in section.blocks %}
+          {% if block.settings.collection != blank or block.settings.tab_title != blank %}
+            <div class="sh-fc-5-content-item{% if pro_index == 0 %} sh-fc-5-active{% endif %}" data-content-index="{{ forloop.index0 }}">
+              <div class="swiper sh-fc-5-coll-slider-{{ forloop.index0 }} sh-fc-5-coll-slider">
+                <div class="swiper-wrapper">
+                  {% if block.settings.collection != blank %}
+                    {% for sh_product in block.settings.collection.products limit: max_product %}
+                      {% assign curr_var = sh_product.selected_or_first_available_variant %}
+                      <div class="swiper-slide">                      
+                        <div class="sh-product-card">
+                          <div class="sh-pro-media">
+                            <a href="{{ sh_product.url }}" class="sh-pro-image{% if section.settings.show_second_img and sh_product.images.size > 1 %} sh-show-second-img{% endif %}">
+                              <img src="{{ sh_product.featured_image | image_url: width: sh_product.featured_image.width  }}" class="sh-pro-first-image" alt="{{ sh_product.featured_image.alt | default: sh_product.title }}" loading="lazy" width="" height="">
+                              {% if section.settings.show_second_img and sh_product.images.size > 1 %}
+                                <img src="{{ sh_product.images[1] | image_url: width: sh_product.images[1].width }}" class="sh-pro-second-image" alt="{{ sh_product.images[1].alt }}" loading="lazy" width="" height="">
+                              {% endif %}
+                            </a>
+                            {% if section.settings.show_badge %}
+                              {% assign sh_badge_txt = "" %}
+                              {% unless sh_product.available %}
+                                {% assign sh_badge_txt = "Sold out" %}
+                              {% else %}
+                                {% if curr_var.compare_at_price > curr_var.price %}
+                                  {% if section.settings.sale_tag_content != blank %}
+                                    {% assign sh_badge_txt = section.settings.sale_tag_content %}
+                                  {% else %}
+                                    {% liquid
+                                      assign percentage = 0
+                                      assign saving = curr_var.compare_at_price | minus:curr_var.price | times:100 | divided_by: curr_var.compare_at_price | round
+                                      assign sh_badge_txt = saving | at_least: percentage | append:'%' | prepend: 'Save '   
+                                    %}
+                                  {% endif %}
+                                {% endif %}
+                              {% endunless %}
+                              {% if sh_badge_txt != blank %}
+                                <div class="sh-product-badge">
+                                  <span>{{ sh_badge_txt }}</span>
+                                </div>
+                              {% endif %}
+                            {% endif %}    
+                          </div>
+                          <div class="sh-pro-info">                 
+                            {% if section.settings.show_vendor %}
+                              <span class="sh-pro-vendor">{{ sh_product.vendor }}</span>
+                            {% endif %}
+                            <a href="{{ sh_product.url }}"><h2>{{ sh_product.title }}</h2></a>
+                            <div class="sh-product-price-wrapper">
+                              <span class="sh-pro-reg-price">{{ curr_var.price | money }}</span>
+                              {% if curr_var.compare_at_price > curr_var.price %}
+                                <span class="sh-pro-compare-price">{{ curr_var.compare_at_price | money }}</span>
+                              {% endif %}
+                            </div>            
+                            {% if section.settings.btn_label != blank %}
+                              <div class="sh-pro-cart-link">
+                                <a href="{{ sh_product.url }}" class="sh-button sh-view-product-btn{% if section.settings.outline_btn %} sh-button-outline{% endif %}">{{ section.settings.btn_label }}</a>
+                              </div>
+                            {% endif %}
+                          </div>
+                        </div>
+                      </div>
+                    {% endfor %}
+                  {% else %}
+                    {% for i in (1..10) limit: max_product %}
+                      <div class="swiper-slide">
+                        <div class="sh-product-card">
+                          <div class="sh-pro-media">
+                            <a href="javascript:void(0)" class="sh-pro-image">
+                              <img src="data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg version='1.1' viewBox='0 0 500 500' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Crect x='2' y='2' width='496' height='496' fill='%23D8D8D8' stroke='%23D8D8D8' stroke-width='4'/%3E%3C/g%3E%3C/svg%3E" class="sh-pro-first-image"  alt="bg-image" width="" height="" loading="lazy" >
+                            </a>
+                            {% if section.settings.show_badge %}
+                              <div class="sh-product-badge">
+                                <span>{% if section.settings.sale_tag_content != blank %}{{ section.settings.sale_tag_content }}{% else %}Save {{ 99999 | minus:45000 | times:100 | divided_by: 99999 | round -}}%{% endif %}</span>
+                              </div>
+                            {% endif %}
+                          </div>
+                          <div class="sh-pro-info">                                                                                                                                                                                                                                          
+                            {% if section.settings.show_vendor %}<span class="sh-pro-vendor">Vendor</span>{% endif %}
+                            <a href="javascript:void(0)"><h2>Product title - {{ forloop.parentloop.index }}</h2></a>
+                            <div class="sh-product-price-wrapper">
+                              <span class="sh-pro-reg-price">{{- 45000 | money -}}</span>
+                              <span class="sh-pro-compare-price">{{- 99999 | money -}}</span>
+                            </div>
+                            {% if section.settings.btn_label != blank %}
+                              <div class="sh-pro-cart-link">
+                                <a href="javascript:void(0)" class="sh-button sh-view-product-btn{% if section.settings.outline_btn %} sh-button-outline{% endif %}">{{ section.settings.btn_label }}</a>
+                              </div>
+                            {% endif %}
+                          </div>
+                        </div>
+                      </div>
+                    {% endfor %}
+                  {% endif %}
+                </div>
+                <div class="swiper-button-next sh-slider-arrow-next">{% render 'sh-arrows', arrow:'next' %}</div>
+                <div class="swiper-button-prev sh-slider-arrow-prev">{% render 'sh-arrows', arrow:'prev' %}</div> 
+              </div> 
+            </div>
+            {% assign pro_index = pro_index | plus: 1 %}
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const shFc5Root = document.querySelector("#sh-{{ section.id }}");
+  if(shFc5Root && shFc5Root.querySelectorAll(".sh-fc-5-coll-slider").length > 0){
+    shFc5Root.querySelectorAll(".sh-fc-5-coll-slider").forEach(tabData => {
+      let index = tabData.closest(".sh-fc-5-content-item").dataset.contentIndex;
+      new Swiper("#sh-{{ section.id }} .sh-fc-5-coll-slider-"+index, {
+        slidesPerView: 2,
+        spaceBetween: 10,
+        freeMode: false,
+        navigation: {
+          nextEl: "#sh-{{ section.id }} .sh-fc-5-coll-slider-"+index+" .swiper-button-next",
+          prevEl: "#sh-{{ section.id }} .sh-fc-5-coll-slider-"+index+" .swiper-button-prev",
+        },
+        breakpoints: {
+          767: {
+            slidesPerView: 2,
+            spaceBetween: 20,
+          },
+        }
+      });
+    });
+
+    const mediaItems = shFc5Root.querySelectorAll(".sh-fc-5-media-item");
+    const contentItems = shFc5Root.querySelectorAll(".sh-fc-5-content-item");
+    const tabItems = shFc5Root.querySelectorAll(".sh-fc-5-tab-item");
+
+    const setActiveTab = (tabIndex) => {
+        tabItems.forEach((tabItem) => {
+          const isActive = tabItem.dataset.tabIndex === tabIndex;
+          tabItem.classList.toggle("sh-fc-5-active", isActive);
+          const button = tabItem.querySelector(".sh-fc-5-tab-button");
+          if (button) {
+            button.setAttribute("aria-selected", isActive ? "true" : "false");
+            button.setAttribute("tabindex", isActive ? "0" : "-1");
+          }
+        });
+
+      mediaItems.forEach((mediaItem) => {
+        mediaItem.classList.toggle("sh-fc-5-active", mediaItem.dataset.mediaIndex === tabIndex);
+      });
+
+      contentItems.forEach((contentItem) => {
+        contentItem.classList.toggle("sh-fc-5-active", contentItem.dataset.contentIndex === tabIndex);
+      });
+    };
+
+    if(tabItems){
+      tabItems.forEach(function (tab) {
+        tab.addEventListener("click", function () {
+          setActiveTab(this.dataset.tabIndex);
+        });
+
+        const button = tab.querySelector(".sh-fc-5-tab-button");
+        button?.addEventListener("keydown", function (e) {
+          if (!["ArrowRight", "ArrowLeft", "Home", "End"].includes(e.key)) return;
+          e.preventDefault();
+
+          const buttons = Array.from(shFc5Root.querySelectorAll(".sh-fc-5-tab-button"));
+          const currentIndex = buttons.indexOf(this);
+          if (currentIndex === -1) return;
+
+          let nextIndex = currentIndex;
+          if (e.key === "ArrowRight") nextIndex = (currentIndex + 1) % buttons.length;
+          if (e.key === "ArrowLeft") nextIndex = (currentIndex - 1 + buttons.length) % buttons.length;
+          if (e.key === "Home") nextIndex = 0;
+          if (e.key === "End") nextIndex = buttons.length - 1;
+
+          const nextButton = buttons[nextIndex];
+          const nextTab = nextButton?.closest(".sh-fc-5-tab-item");
+          if (!nextTab) return;
+
+          setActiveTab(nextTab.dataset.tabIndex);
+          nextButton.focus();
+        });
+      });
+    }
+  }
+</script>
+
+{% schema %}
+{
+  "name": "SH: Featured collection 5",
+  "class": "sh-section-hub-main",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Product card"
+    },
+    {
+      "type": "range",
+      "id":"max_product",
+      "label": "Maximum products to show",
+      "min":2,
+      "max": 10,
+      "step": 1,
+      "default": 6
+    },
+    {
+      "type": "checkbox",
+      "id":"show_second_img",
+      "label": "Show second image on hover",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id":"show_vendor",
+      "label": "Show vendor",
+      "default": false
+    },
+    {
+      "type":"paragraph",
+      "content": "Tag"
+    },
+    {
+      "type": "checkbox",
+      "id":"show_badge",
+      "label": "Enable tag",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id":"sale_tag_content",
+      "label": "Sale tag content",
+      "info": "If the sale tag content is empty, the discount percentage will be calculated by default. E.g. Save 7%"
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "text",
+      "id": "btn_label",
+      "label": "Label",
+      "default": "View Product"
+    },
+    {
+      "type": "checkbox",
+      "id": "outline_btn",
+      "label": "Use outline button",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "outline_btn_color",
+      "label": "Outline color",
+      "default": "#121212"
+    },
+    {
+      "type": "range",
+      "id": "btn_radius",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Border radius",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Font size"
+    },
+    {
+      "type": "paragraph",
+      "content": "Tab"
+    },
+    {
+      "type": "range",
+      "id": "tab_title_font_size",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Title",
+      "default": 20 
+    },
+    {
+      "type": "range",
+      "id": "tab_image_size",
+      "min": 20,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "label": "Tab image size",
+      "default": 34
+    },
+    {
+      "type": "range",
+      "id": "content_font_size",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Content",
+      "default": 16 
+    },
+    {
+      "type": "paragraph",
+      "content": "Product card"
+    },
+    {
+      "type": "range",
+      "id": "pro_title_font_size",
+      "min": 5,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Title",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "pro_price_font_size",
+      "min": 5,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Price",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "pro_vendor_font_size",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Vendor",
+      "default": 14
+    },
+    {
+      "type": "paragraph",
+      "content": "Tag"
+    },
+    {
+      "type": "range",
+      "id": "pro_tag_font_size",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Text",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "paragraph",
+      "content": "Product card"
+    },
+    {
+      "type": "color",
+      "id": "pro_title_color",
+      "label": "Title color",
+      "default": "#121212"
+    },
+    {
+      "type": "color",
+      "id": "pro_price_color",
+      "label": "Sale price color",
+      "default": "#121212"
+    },
+    {
+      "type": "color",
+      "id": "pro_compare_price_color",
+      "label": "Regular price color",
+      "default": "#a6a6a6"
+    },
+    {
+      "type": "color",
+      "id": "pro_vendor_color",
+      "label": "Vendor color",
+      "default": "#121212"
+    },
+    {
+      "type": "paragraph",
+      "content": "Tag"
+    },
+    {
+      "type": "color",
+      "id": "badge_bg_color",
+      "label": "Background color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "badge_text_color",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "paragraph",
+      "content": "Button"
+    },
+    {
+      "type": "color",
+      "id": "btn_bg_color",
+      "label": "Background color",
+      "default": "#121212"
+    },
+    {
+      "type": "color",
+      "id": "btn_label_color",
+      "label": "Text color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "btn_border_color",
+      "label": "Border color",
+      "default": "#121212"
+    },
+    {
+      "type": "color",
+      "id": "btn_bg_hover_color",
+      "label": "Hover background color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "btn_label_hover_color",
+      "label": "Hover text color",
+      "default": "#121212"
+    },
+    {
+      "type": "color",
+      "id": "btn_border_hover_color",
+      "label": "Hover border color",
+      "default": "#121212"
+    },
+    {
+      "type": "color",
+      "id": "btn_shadow_color",
+      "label": "Shadow color",
+      "default": "#606060"
+    },
+    {
+      "type": "paragraph",
+      "content": "Arrow"
+    },
+    {
+      "type": "color",
+      "id": "arrow_bg_color",
+      "label": "Background color",
+      "default": "#121212"
+    },
+    {
+      "type": "color",
+      "id": "arrow_color",
+      "label": "Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "arrow_border_color",
+      "label":"Border color",
+      "default": "#121212"
+    },
+    {
+      "type": "range",
+      "id":"arrow_size",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Size (Desktop)",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "paragraph",
+      "content": "Desktop"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 40
+    },
+    {
+      "type": "paragraph",
+      "content": "Mobile"
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 30
+    },
+    {
+      "type": "header",
+      "content": "Section width"
+    },
+    {
+      "type": "text",
+      "id": "section_max_width",
+      "label": "Width (in px)",
+      "default": "1440"  
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product_tab",
+      "name": "Product tab",
+      "settings": [
+        {
+          "type": "text",
+          "id": "tab_title",
+          "label": "Tab title",
+          "default": "Tab title"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Main image"
+        },
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Main video"
+        },
+        {
+          "type": "image_picker",
+          "id": "tab_image",
+          "label": "Tab image"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content",
+          "default": "<p>Pair large text with an image to give focus to your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>"
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "paragraph",
+          "content": "Button"
+        },
+        {
+          "type": "text",
+          "id": "btn_label",
+          "label": "Label",
+          "default": "View colletion"
+        },
+        {
+          "type": "checkbox",
+          "id": "outline_btn",
+          "label": "Use outline button",
+          "default": false
+        },
+        {
+          "type": "color",
+          "id": "outline_btn_color",
+          "label": "Outline color",
+          "default": "#121212"
+        },
+        {
+          "type": "range",
+          "id": "btn_radius",
+          "min": 0,
+          "max": 20,
+          "step": 1,
+          "unit": "px",
+          "label": "Border radius",
+          "default": 0
+        },
+        {
+          "type": "header",
+          "content": "Colors"
+        },
+        {
+          "type": "paragraph",
+          "content": "Tab"
+        },
+        {
+          "type": "color",
+          "id": "tab_title_color",
+          "label": "Title color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "content_color",
+          "label": "Content color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "paragraph",
+          "content": "Button"
+        },
+        {
+          "type": "color",
+          "id": "btn_bg_color",
+          "label": "Background color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "btn_label_color",
+          "label": "Text color",
+          "default": "#121212"
+        },
+        {
+          "type": "color",
+          "id": "btn_border_color",
+          "label": "Border color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "btn_bg_hover_color",
+          "label": "Hover background color",
+          "default": "#121212"
+        },
+        {
+          "type": "color",
+          "id": "btn_label_hover_color",
+          "label": "Hover text color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "btn_border_hover_color",
+          "label": "Hover border color",
+          "default": "#121212"
+        },
+        {
+          "type": "color",
+          "id": "btn_shadow_color",
+          "label": "Shadow color",
+          "default": "#606060"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SH: Featured collection 5",
+      "blocks": [
+        {
+          "type": "product_tab",
+          "settings": {
+            "tab_title": "Comfort Living",
+            "content": "<p>Discover handcrafted pieces designed to bring warmth and character to every room. Built for comfort, made to last a lifetime</p>",
+            "btn_label": "Explore Collection"
+          }
+        },
+        {
+          "type": "product_tab",
+          "settings": {
+            "tab_title": "Timeless Design",
+            "content": "<p>Our furniture blends classic design with modern living needs. Create inviting spaces you’ll love to come home to.</p>",
+            "btn_label": "Shop Now"
+          }
+        },
+        {
+          "type": "product_tab",
+          "settings": {
+            "tab_title": "Live Beautifully",
+            "content": "<p>From elegant sofas to statement tables, our pieces redefine home style.</p>",
+            "btn_label": "View Collection"
+          }
+        }
+      ]
+    }
+  ],
+  "disabled_on": {
+    "groups": ["footer", "header"]
+  }
+}
+{% endschema %}

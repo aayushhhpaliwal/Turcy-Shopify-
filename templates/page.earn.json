@@ -1,0 +1,152 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
+    },
+    "sh_featured_banner_image_FcXTD9": {
+      "type": "sh-featured-banner-image",
+      "name": "SH: Featured banner image",
+      "settings": {
+        "image": "shopify://shop_images/cosmetics-or-skin-care-product-ads-with-bottle-banner-ad-for-beauty-products-and-leaf-background-glittering-light-effect-design-vector.jpg",
+        "mob_image": "shopify://shop_images/cosmetics-or-skin-care-product-ads-with-bottle-banner-ad-for-beauty-products-and-leaf-background-glittering-light-effect-design-vector.jpg",
+        "image_height": "small",
+        "heading": "Earn With Us!",
+        "text": "<p><strong>Earn Flat 10% Commission On Every Successful Referral.</strong></p>",
+        "button_label_1": "Join Now",
+        "button_link_1": "/",
+        "btn_outline": false,
+        "outline_btn_text_color": "#000",
+        "button_label_2": "",
+        "button_link_2": "",
+        "btn_outline2": false,
+        "outline_btn_text_color2": "#000",
+        "border_radius1": 0,
+        "desktop_content_position": "middle-center",
+        "desktop_content_alignment": "left",
+        "mobile_content_position": "middle",
+        "mobile_content_alignment": "left",
+        "heading_font_size": 17,
+        "content_font_size": 25,
+        "opacity": 20,
+        "overlay_color": "#000",
+        "heading_color": "#FFFFFF",
+        "content_color": "#FFFFFF",
+        "btn_bg_color": "#000",
+        "btn_text_color": "#fff",
+        "btn_border_color": "#000",
+        "btn_hover_bg_color": "#fff",
+        "btn_hover_text_color": "#000",
+        "btn_hover_border_color": "#000",
+        "btn_shadow_color": "#000",
+        "btn_bg_color2": "#000",
+        "btn_text_color2": "#fff",
+        "btn_border_color2": "#000",
+        "btn_hover_bg_color2": "#fff",
+        "btn_hover_text_color2": "#000",
+        "btn_hover_border_color2": "#000",
+        "btn_shadow_color2": "#000",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "mob_padding_top": 0,
+        "mob_padding_bottom": 0,
+        "section_max_width": "2000"
+      }
+    },
+    "bt_earn_Cfei9D": {
+      "type": "BT-earn",
+      "blocks": {
+        "step_q8YEJF": {
+          "type": "step",
+          "settings": {
+            "title": "Join",
+            "text": "<p>It's free and easy to join. Get up and running today.</p>"
+          }
+        },
+        "step_8VDycc": {
+          "type": "step",
+          "settings": {
+            "title": "Promote",
+            "text": "<p>Choose from our range of products to advertise to your customers & monetize with us.</p>"
+          }
+        },
+        "step_YXbWTq": {
+          "type": "step",
+          "settings": {
+            "title": "Earn",
+            "text": "<p>Get up to 10% in commissions from all qualifying purchases, not just the products you advertised.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "step_q8YEJF",
+        "step_8VDycc",
+        "step_YXbWTq"
+      ],
+      "name": "BT Earn Work",
+      "settings": {
+        "heading": "How Does It Work?",
+        "max_width": 1300,
+        "desktop_columns": 3,
+        "bg_color": "#ffffff",
+        "box_bg": "#ffffff",
+        "border_color": "#d4d4d4",
+        "bottom_border_color": "#e5e5e5",
+        "box_radius": 5,
+        "box_height": 135,
+        "box_padding_top": 20,
+        "box_padding_bottom": 24,
+        "heading_font": "serif",
+        "heading_color": "#1c2633",
+        "heading_size": 32,
+        "mobile_heading_size": 26,
+        "heading_weight": "400",
+        "heading_bottom_space": 16,
+        "title_font": "serif",
+        "title_color": "#1c2633",
+        "title_size": 30,
+        "mobile_title_size": 26,
+        "title_weight": "400",
+        "text_font": "serif",
+        "text_color": "#000000",
+        "text_size": 16,
+        "mobile_text_size": 15,
+        "text_weight": "600",
+        "button_label": "Join Now",
+        "button_link": "",
+        "button_top_space": 24,
+        "button_width": 90,
+        "button_height": 38,
+        "button_text_size": 16,
+        "button_radius": 6,
+        "button_bg": "#000000",
+        "button_hover_bg": "#FFFFFF",
+        "button_text_color": "#FFFFFF",
+        "button_hover_text_color": "#000000",
+        "button_border_color": "#000000",
+        "padding_top": 20,
+        "padding_bottom": 24,
+        "mobile_padding_top": 28,
+        "mobile_padding_bottom": 28
+      }
+    }
+  },
+  "order": [
+    "main",
+    "sh_featured_banner_image_FcXTD9",
+    "bt_earn_Cfei9D"
+  ]
+}

@@ -1,0 +1,585 @@
+<section id="WaveMarquee-{{ section.id }}" class="wave-marquee-canvas-section">
+  <canvas id="waveCanvas-{{ section.id }}"></canvas>
+</section>
+
+<style>
+  #WaveMarquee-{{ section.id }} {
+    width: 100%;
+    overflow: hidden;
+    background: {{ section.settings.bg_color }};
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+
+  #waveCanvas-{{ section.id }} {
+    width: 100%;
+    height: {{ section.settings.desktop_height }}px;
+    display: block;
+  }
+
+  @media screen and (max-width: 749px) {
+    #waveCanvas-{{ section.id }} {
+      height: {{ section.settings.mobile_height }}px;
+    }
+  }
+</style>
+
+{% comment %} <script>
+(function () {
+  class WaveMarquee {
+    constructor(canvas, options) {
+      this.canvas = canvas;
+      this.ctx = canvas.getContext("2d");
+      this.options = options;
+      this.textOffset = 0;
+      this.animationFrame = null;
+      this.isRunning = false;
+
+      this.resize = this.resize.bind(this);
+      this.animate = this.animate.bind(this);
+
+      window.addEventListener("resize", this.resize);
+      this.resize();
+    }
+
+    resize() {
+      const rect = this.canvas.getBoundingClientRect();
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+
+      this.canvas.width = rect.width * dpr;
+      this.canvas.height = rect.height * dpr;
+
+      this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      this.width = rect.width;
+      this.height = rect.height;
+      this.centerY = this.height / 2;
+    }
+
+    getY(x) {
+      const waveLength = this.width / this.options.waveCount;
+      return (
+        this.centerY +
+        Math.sin((x / waveLength) * Math.PI * 2) * this.options.waveHeight
+      );
+    }
+
+    drawRibbon() {
+      const ctx = this.ctx;
+      const o = this.options;
+
+      const topOffset = -o.ribbonThickness / 2;
+      const bottomOffset = o.ribbonThickness / 2;
+
+      ctx.beginPath();
+
+      for (let x = 0; x <= this.width; x += 3) {
+        const y = this.getY(x) + topOffset;
+        if (x === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+
+      for (let x = this.width; x >= 0; x -= 3) {
+        const y = this.getY(x) + bottomOffset;
+        ctx.lineTo(x, y);
+      }
+
+      ctx.closePath();
+
+      const gradient = ctx.createLinearGradient(0, 0, this.width, 0);
+      gradient.addColorStop(0, o.colorOne);
+      gradient.addColorStop(1, o.colorTwo);
+
+      ctx.fillStyle = gradient;
+      ctx.fill();
+
+      if (o.showBorder) {
+        ctx.lineWidth = o.borderWidth;
+        ctx.strokeStyle = o.borderColor;
+        ctx.stroke();
+      }
+    }
+
+    drawText() {
+      const ctx = this.ctx;
+      const o = this.options;
+
+      ctx.save();
+
+      ctx.font = `${o.fontWeight} ${o.fontSize}px ${o.fontFamily}`;
+      ctx.fillStyle = o.textColor;
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+
+      const text = o.text + "   ";
+      const textWidth = ctx.measureText(text).width;
+      const repeat = Math.ceil(this.width / textWidth) + 4;
+
+      for (let i = -2; i < repeat; i++) {
+        let currentX = i * textWidth - this.textOffset;
+
+        for (let c = 0; c < text.length; c++) {
+          const char = text[c];
+          const charWidth = ctx.measureText(char).width;
+          const x = currentX + charWidth / 2;
+
+          if (x > -80 && x < this.width + 80) {
+            const y = this.getY(x);
+            const yNext = this.getY(x + 2);
+            const angle = Math.atan2(yNext - y, 2);
+
+            ctx.save();
+            ctx.translate(x, y);
+            ctx.rotate(angle);
+            ctx.fillText(char, 0, 0);
+            ctx.restore();
+          }
+
+          currentX += charWidth;
+        }
+      }
+
+      ctx.restore();
+
+      this.textOffset += o.speed;
+
+      if (this.textOffset > textWidth) {
+        this.textOffset = 0;
+      }
+    }
+
+    animate() {
+      this.ctx.clearRect(0, 0, this.width, this.height);
+
+      this.drawRibbon(); // static wave
+      this.drawText();   // moving text only
+
+      requestAnimationFrame(this.animate);
+    }
+  }
+
+  function initWaveMarquee{{ section.id | replace: '-', '_' }}() {
+    const canvas = document.getElementById("waveCanvas-{{ section.id }}");
+    if (!canvas) return;
+
+    new WaveMarquee(canvas, {
+      text: {{ section.settings.marquee_text | json }},
+      waveCount: {{ section.settings.wave_count }},
+      waveHeight: {{ section.settings.wave_height }},
+      ribbonThickness: {{ section.settings.ribbon_thickness }},
+      speed: {{ section.settings.speed | divided_by: 10.0 }},
+      colorOne: {{ section.settings.color_1 | json }},
+      colorTwo: {{ section.settings.color_2 | json }},
+      textColor: {{ section.settings.text_color | json }},
+      fontSize: window.innerWidth < 750 ? {{ section.settings.mobile_font_size }} : {{ section.settings.desktop_font_size }},
+      fontWeight: "{{ section.settings.font_weight }}",
+      fontFamily: {{ section.settings.font_family | json }},
+      showBorder: {{ section.settings.show_border | json }},
+      borderColor: {{ section.settings.border_color | json }},
+      borderWidth: {{ section.settings.border_width }}
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initWaveMarquee{{ section.id | replace: '-', '_' }});
+  } else {
+    initWaveMarquee{{ section.id | replace: '-', '_' }}();
+  }
+})();
+</script> {% endcomment %}
+<script>
+(function () {
+  class WaveMarquee {
+    constructor(canvas, options) {
+      this.canvas = canvas;
+      this.ctx = canvas.getContext("2d");
+      this.options = options;
+      this.textOffset = 0;
+
+      this.resize = this.resize.bind(this);
+      this.animate = this.animate.bind(this);
+
+      window.addEventListener("resize", this.resize);
+      this.resize();
+      this.animate();
+    }
+
+    resize() {
+      const rect = this.canvas.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+
+      this.canvas.width = rect.width * dpr;
+      this.canvas.height = rect.height * dpr;
+
+      this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      this.width = rect.width;
+      this.height = rect.height;
+      this.centerY = this.height / 2;
+
+      // ✅ FIX: dynamic mobile adjustments
+      this.isMobile = window.innerWidth < 750;
+
+      this.fontSize = this.isMobile
+        ? this.options.mobileFontSize
+        : this.options.desktopFontSize;
+
+      this.speed = this.isMobile
+        ? this.options.speed * 0.6   // slower on mobile
+        : this.options.speed;
+
+      this.waveHeight = this.isMobile
+        ? this.options.waveHeight * 0.6
+        : this.options.waveHeight;
+    }
+
+    getY(x) {
+      const waveLength = this.width / this.options.waveCount;
+      return (
+        this.centerY +
+        Math.sin((x / waveLength) * Math.PI * 2) * this.waveHeight
+      );
+    }
+
+    drawRibbon() {
+      const ctx = this.ctx;
+      const o = this.options;
+
+      const topOffset = -o.ribbonThickness / 2;
+      const bottomOffset = o.ribbonThickness / 2;
+
+      ctx.beginPath();
+
+      for (let x = 0; x <= this.width; x += 3) {
+        const y = this.getY(x) + topOffset;
+        if (x === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+
+      for (let x = this.width; x >= 0; x -= 3) {
+        const y = this.getY(x) + bottomOffset;
+        ctx.lineTo(x, y);
+      }
+
+      ctx.closePath();
+
+      const gradient = ctx.createLinearGradient(0, 0, this.width, 0);
+      gradient.addColorStop(0, o.colorOne);
+      gradient.addColorStop(1, o.colorTwo);
+
+      ctx.fillStyle = gradient;
+      ctx.fill();
+
+      if (o.showBorder) {
+        ctx.lineWidth = o.borderWidth;
+        ctx.strokeStyle = o.borderColor;
+        ctx.stroke();
+      }
+    }
+
+    drawText() {
+      const ctx = this.ctx;
+      const o = this.options;
+
+      ctx.save();
+
+      ctx.font = `${o.fontWeight} ${this.fontSize}px ${o.fontFamily}`;
+      ctx.fillStyle = o.textColor;
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+
+      const text = o.text + "   ";
+      const textWidth = ctx.measureText(text).width;
+
+      // ✅ FIX: better repeat calculation
+      const repeat = Math.ceil(this.width / textWidth) + 6;
+
+      for (let i = -3; i < repeat; i++) {
+        let currentX = i * textWidth - this.textOffset;
+
+        for (let c = 0; c < text.length; c++) {
+          const char = text[c];
+          const charWidth = ctx.measureText(char).width;
+          const x = currentX + charWidth / 2;
+
+          if (x > -50 && x < this.width + 50) {
+            const y = this.getY(x);
+            const yNext = this.getY(x + 2);
+            const angle = Math.atan2(yNext - y, 2);
+
+            ctx.save();
+            ctx.translate(x, y);
+            ctx.rotate(angle);
+            ctx.fillText(char, 0, 0);
+            ctx.restore();
+          }
+
+          currentX += charWidth;
+        }
+      }
+
+      ctx.restore();
+
+      this.textOffset += this.speed;
+
+      if (this.textOffset > textWidth) {
+        this.textOffset = 0;
+      }
+    }
+
+    animate() {
+      if (!this.isRunning) return;
+      this.ctx.clearRect(0, 0, this.width, this.height);
+      this.drawRibbon();
+      this.drawText();
+      this.animationFrame = requestAnimationFrame(this.animate);
+    }
+
+    start() {
+      if (this.isRunning) return;
+      this.isRunning = true;
+      this.animate();
+    }
+
+    stop() {
+      this.isRunning = false;
+      if (this.animationFrame) {
+        cancelAnimationFrame(this.animationFrame);
+        this.animationFrame = null;
+      }
+    }
+  }
+
+  function initWaveMarquee{{ section.id | replace: '-', '_' }}() {
+    const canvas = document.getElementById("waveCanvas-{{ section.id }}");
+    if (!canvas) return;
+    const prefersReducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let isVisible = false;
+
+    const marquee = new WaveMarquee(canvas, {
+      text: {{ section.settings.marquee_text | json }},
+      waveCount: {{ section.settings.wave_count }},
+      waveHeight: {{ section.settings.wave_height }},
+      ribbonThickness: {{ section.settings.ribbon_thickness }},
+      speed: {{ section.settings.speed | divided_by: 10.0 }},
+      colorOne: {{ section.settings.color_1 | json }},
+      colorTwo: {{ section.settings.color_2 | json }},
+      textColor: {{ section.settings.text_color | json }},
+      desktopFontSize: {{ section.settings.desktop_font_size }},
+      mobileFontSize: {{ section.settings.mobile_font_size }},
+      fontWeight: "{{ section.settings.font_weight }}",
+      fontFamily: {{ section.settings.font_family | json }},
+      showBorder: {{ section.settings.show_border | json }},
+      borderColor: {{ section.settings.border_color | json }},
+      borderWidth: {{ section.settings.border_width }}
+    });
+
+    marquee.drawRibbon();
+    marquee.drawText();
+
+    if (prefersReducedMotion) return;
+
+    if ("IntersectionObserver" in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          isVisible = entry.isIntersecting;
+          if (entry.isIntersecting && !document.hidden) {
+            marquee.start();
+          } else {
+            marquee.stop();
+          }
+        });
+      }, { rootMargin: "120px 0px" });
+
+      observer.observe(canvas);
+    } else {
+      marquee.start();
+    }
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) marquee.stop();
+      else if (isVisible) marquee.start();
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initWaveMarquee{{ section.id | replace: '-', '_' }});
+  } else {
+    initWaveMarquee{{ section.id | replace: '-', '_' }}();
+  }
+})();
+
+</script>
+
+
+{% schema %}
+{
+  "name": "Static Wave Marquee",
+  "settings": [
+    {
+      "type": "text",
+      "id": "marquee_text",
+      "label": "Marquee text",
+      "default": "BY QUEENS   0% FUSS   100% SMOOTH   FOR QUEENS"
+    },
+    {
+      "type": "range",
+      "id": "wave_count",
+      "label": "Number of waves",
+      "min": 1,
+      "max": 8,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "wave_height",
+      "label": "Wave height",
+      "min": 5,
+      "max": 60,
+      "step": 5,
+      "default": 25
+    },
+    {
+      "type": "range",
+      "id": "ribbon_thickness",
+      "label": "Ribbon thickness",
+      "min": 20,
+      "max": 120,
+      "step": 5,
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "label": "Text speed",
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "desktop_height",
+      "label": "Desktop section height",
+      "min": 80,
+      "max": 240,
+      "step": 10,
+      "default": 130
+    },
+    {
+      "type": "range",
+      "id": "mobile_height",
+      "label": "Mobile section height",
+      "min": 70,
+      "max": 180,
+      "step": 10,
+      "default": 100
+    },
+    {
+      "type": "color",
+      "id": "color_1",
+      "label": "Gradient color 1",
+      "default": "#ff8b8b"
+    },
+    {
+      "type": "color",
+      "id": "color_2",
+      "label": "Gradient color 2",
+      "default": "#f579d5"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_border",
+      "label": "Show ribbon border",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "border_width",
+      "label": "Border width",
+      "min": 1,
+      "max": 8,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "desktop_font_size",
+      "label": "Desktop font size",
+      "min": 12,
+      "max": 42,
+      "step": 1,
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "mobile_font_size",
+      "label": "Mobile font size",
+      "min": 10,
+      "max": 28,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "select",
+      "id": "font_weight",
+      "label": "Font weight",
+      "default": "700",
+      "options": [
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi Bold" },
+        { "value": "700", "label": "Bold" }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "font_family",
+      "label": "Font family",
+      "default": "Arial, sans-serif"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "default": 20
+    }
+  ],
+  "presets": [
+    {
+      "name": "Static Wave Marquee"
+    }
+  ]
+}
+{% endschema %}

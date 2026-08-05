@@ -1,0 +1,230 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "breadcrumb_zCN6Tn": {
+      "type": "breadcrumb",
+      "name": "Breadcrumb Navigation",
+      "settings": {
+        "breadcrumbs_home_icon_bool": true,
+        "breadcrumb_delimeter": "heavy_angle_right",
+        "breadcrumb_bg_color": "#ffffff",
+        "breadcrumb_text_color": "#4e4b45",
+        "breadcrumb_accent_color_bool": true,
+        "breadcrumb_accent_color": "#000000",
+        "enable_product_page": false,
+        "enable_collection_page": false,
+        "enable_complete_site": true
+      }
+    },
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "vendor": {
+          "type": "text",
+          "settings": {
+            "text": "{{ product.vendor }}",
+            "text_style": "uppercase"
+          }
+        },
+        "title": {
+          "type": "title",
+          "settings": {}
+        },
+        "custom_liquid_tUpwqd": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<div class=\"reviews-container\">\n  <div class=\"avatars\">\n    <img\n      src=\"https://img.freepik.com/free-photo/stylish-african-american-woman-smiling_23-2148770405.jpg\"\n      alt=\"Customer 1\"\n      class=\"avatar\"\n    />\n    <img\n      src=\"https://thumbs.dreamstime.com/b/beautiful-african-american-woman-relaxing-outside-happy-middle-aged-smiling-46298787.jpg\"\n      alt=\"Customer 2\"\n      class=\"avatar\"\n    />\n    <img\n      src=\"https://media.istockphoto.com/id/1320651997/photo/young-woman-close-up-isolated-studio-portrait.jpg?s=612x612&w=0&k=20&c=lV6pxz-DknISGT2jjiSvUmSaw0hpMDf-dBpT8HTSAUI=\"\n      alt=\"Customer 3\"\n      class=\"avatar\"\n    />\n  </div>\n  <span class=\"text-grey\">\nRated <strong>4.5/5</strong> by Bio Mystery customers\n</span>\n</div>\n\n<style>\n  .reviews-container {\n    display: flex;\n    align-items: center;\n\n  }\n\n  .avatars {\n    display: flex;\n    margin-right: 5px;\nmargin-left: 7px;\n  }\n\n  .avatar {\n    width: 22px;\n    height: 22px;\n    border-radius: 50%;\n    border: 2px solid white;\n    margin-left: -7px;\n    object-fit: cover;\n  }\n\n  .text-grey {\n    font-weight: normal;\n    font-size: 12px;\n    color: #868686;\n  line-height: 0px;\n\n  }\n\n  .text-grey strong {\n    font-weight: 800;\n\ncolor: #2e2f3c\n  }\n\n</style>"
+          }
+        },
+        "price": {
+          "type": "price",
+          "settings": {}
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "dropdown",
+            "swatch_shape": "circle"
+          }
+        },
+        "custom_liquid_n4HdRT": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "{% assign nf_variant = product.selected_or_first_available_variant %}\n\n{% assign nf_inventory_class = 'ok' %}\n\n{% if nf_variant.available == false %}\n  {% assign nf_inventory_class = 'out' %}\n{% elsif nf_variant.inventory_management and nf_variant.inventory_quantity > 0 and nf_variant.inventory_quantity <= 5 %}\n  {% assign nf_inventory_class = 'low' %}\n{% endif %}\n\n<div class=\"nf-urgency-wrapper\" id=\"nf-urgency-{{ product.id }}\">\n\n  <!-- Live Checkout -->\n  <div class=\"nf-live-checkout\">\n    <div class=\"nf-live-dot\"></div>\n    <div class=\"nf-live-text\">\n      <strong class=\"nf-live-number\">86</strong> people are checking out right now\n    </div>\n  </div>\n\n  <!-- Inventory Status -->\n  <div class=\"nf-inventory-status nf-inventory-{{ nf_inventory_class }}\">\n    <span class=\"nf-inventory-dot\"></span>\n    <span class=\"nf-inventory-text\">\n      {% if nf_variant.available %}\n        {% if nf_variant.inventory_management and nf_variant.inventory_quantity > 0 %}\n          {% if nf_variant.inventory_quantity <= 5 %}\n            Only {{ nf_variant.inventory_quantity }} left in stock\n          {% elsif nf_variant.inventory_quantity <= 20 %}\n            {{ nf_variant.inventory_quantity }} items available\n          {% else %}\n            In stock, ready to ship\n          {% endif %}\n        {% elsif nf_variant.inventory_policy == 'continue' %}\n          Available to order\n        {% else %}\n          In stock, ready to ship\n        {% endif %}\n      {% else %}\n        Out of stock\n      {% endif %}\n    </span>\n  </div>\n\n</div>\n\n<script type=\"application/json\" id=\"nf-inventory-data-{{ product.id }}\">\n{\n  {% for variant in product.variants %}\n    \"{{ variant.id }}\": {\n      \"available\": {{ variant.available | json }},\n      \"inventory_quantity\": {{ variant.inventory_quantity | json }},\n      \"inventory_management\": {{ variant.inventory_management | json }},\n      \"inventory_policy\": {{ variant.inventory_policy | json }}\n    }{% unless forloop.last %},{% endunless %}\n  {% endfor %}\n}\n</script>\n\n<script>\n(function(){\n  const wrapper = document.querySelector('#nf-urgency-{{ product.id }}');\n  if (!wrapper) return;\n\n  let currentCount = 86;\n  const minCount = 5;\n  const maxCount = 120;\n\n  const liveNumber = wrapper.querySelector('.nf-live-number');\n\n  function updateCheckoutMessage() {\n    const changeFactor = Math.random() < 0.5 ? -1 : 1;\n    const changeValue = Math.floor(Math.random() * 3) + 1;\n\n    currentCount += changeFactor * changeValue;\n\n    if (currentCount < minCount) currentCount = minCount;\n    if (currentCount > maxCount) currentCount = maxCount;\n\n    if (liveNumber) {\n      liveNumber.textContent = currentCount;\n    }\n  }\n\n  setInterval(updateCheckoutMessage, 8000);\n\n  const inventoryDataScript = document.querySelector('#nf-inventory-data-{{ product.id }}');\n  const inventoryBox = wrapper.querySelector('.nf-inventory-status');\n  const inventoryText = wrapper.querySelector('.nf-inventory-text');\n\n  if (!inventoryDataScript || !inventoryBox || !inventoryText) return;\n\n  const inventoryData = JSON.parse(inventoryDataScript.textContent);\n\n  function updateInventoryStatus(variantId) {\n    const variant = inventoryData[variantId];\n    if (!variant) return;\n\n    inventoryBox.classList.remove('nf-inventory-ok', 'nf-inventory-low', 'nf-inventory-out');\n\n    let message = '';\n    let statusClass = 'nf-inventory-ok';\n\n    if (!variant.available) {\n      message = 'Out of stock';\n      statusClass = 'nf-inventory-out';\n    } else if (variant.inventory_management && variant.inventory_quantity > 0) {\n      if (variant.inventory_quantity <= 5) {\n        message = `Only ${variant.inventory_quantity} left in stock`;\n        statusClass = 'nf-inventory-low';\n      } else if (variant.inventory_quantity <= 20) {\n        message = `${variant.inventory_quantity} items available`;\n        statusClass = 'nf-inventory-ok';\n      } else {\n        message = 'In stock, ready to ship';\n        statusClass = 'nf-inventory-ok';\n      }\n    } else if (variant.inventory_policy === 'continue') {\n      message = 'Available to order';\n      statusClass = 'nf-inventory-ok';\n    } else {\n      message = 'In stock, ready to ship';\n      statusClass = 'nf-inventory-ok';\n    }\n\n    inventoryText.textContent = message;\n    inventoryBox.classList.add(statusClass);\n  }\n\n  document.addEventListener('change', function(event) {\n    const variantInput = document.querySelector('form[action*=\"/cart/add\"] [name=\"id\"]');\n    if (variantInput && variantInput.value) {\n      updateInventoryStatus(variantInput.value);\n    }\n  });\n\n  document.addEventListener('variant:change', function(event) {\n    if (event.detail && event.detail.variant && event.detail.variant.id) {\n      updateInventoryStatus(event.detail.variant.id);\n    }\n  });\n})();\n</script>\n\n<style>\n/* Main Wrapper */\n.nf-urgency-wrapper {\n  display: flex;\n  flex-direction: row;\n  align-items: flex-start;\n  gap: 8px;\n  margin: 25px 0;\n}\n\n/* Live Checkout Container */\n.nf-live-checkout {\n  display: inline-flex;\n  align-items: center;\n  gap: 10px;\n  background: #ffffff;\n  border: 1px solid #00000020;\n  padding: 8px 14px;\n  border-radius: 50px;\n  font-size: 13px;\n  color: #111;\n  font-weight: 500;\n  box-shadow: 0 4px 12px rgba(0,0,0,0.05);\n  transition: all 0.3s ease;\n}\n\n/* Hover Effect */\n.nf-live-checkout:hover {\n  box-shadow: 0 6px 18px rgba(0,0,0,0.08);\n  transform: translateY(-1px);\n}\n\n/* Live Dot */\n.nf-live-dot {\n  width: 8px;\n  height: 8px;\n  background: #000;\n  border-radius: 50%;\n  animation: nfPulseBlack 1.4s infinite;\n}\n\n/* Number Styling */\n.nf-live-number {\n  font-weight: 700;\n  color: #000;\n}\n\n/* Text */\n.nf-live-text {\n  color: #333;\n}\n\n/* Inventory Status */\n.nf-inventory-status {\n  display: inline-flex;\n  align-items: center;\n  gap: 9px;\n  background: #f7fff9;\n  border: 1px solid rgba(31, 122, 52, 0.18);\n  padding: 8px 14px;\n  border-radius: 50px;\n  font-size: 13px;\n  font-weight: 600;\n  color: #1f7a34;\n  box-shadow: 0 4px 12px rgba(0,0,0,0.04);\n}\n\n/* Inventory Dot */\n.nf-inventory-dot {\n  width: 8px;\n  height: 8px;\n  border-radius: 50%;\n  background: #1f7a34;\n  animation: nfPulseGreen 1.4s infinite;\n}\n\n/* Low Stock */\n.nf-inventory-low {\n  background: #fff8ed;\n  border-color: rgba(215, 122, 0, 0.22);\n  color: #b56200;\n}\n\n.nf-inventory-low .nf-inventory-dot {\n  background: #d77a00;\n}\n\n/* Out of Stock */\n.nf-inventory-out {\n  background: #fff1f1;\n  border-color: rgba(190, 30, 30, 0.22);\n  color: #b91c1c;\n}\n\n.nf-inventory-out .nf-inventory-dot {\n  background: #b91c1c;\n}\n\n/* Animations */\n@keyframes nfPulseBlack {\n  0% { transform: scale(1); opacity: 1; }\n  50% { transform: scale(1.5); opacity: 0.3; }\n  100% { transform: scale(1); opacity: 1; }\n}\n\n@keyframes nfPulseGreen {\n  0% { transform: scale(1); opacity: 1; }\n  50% { transform: scale(1.5); opacity: 0.35; }\n  100% { transform: scale(1); opacity: 1; }\n}\n\n/* Mobile */\n@media (max-width: 749px) {\n  .nf-urgency-wrapper {\n    gap: 7px;\n  }\n\n  .nf-live-checkout,\n  .nf-inventory-status {\n    font-size: 12px;\n    padding: 6px 10px;\n  }\n}\n</style>"
+          }
+        },
+        "quantity_selector": {
+          "type": "quantity_selector",
+          "settings": {}
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": true,
+            "show_gift_card_recipient": true
+          }
+        },
+        "custom_liquid_r9x6XB": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<div style=\"text-align:center;\nmargin-top:5px;\nmargin-bottom:12px;\nmax-width: 60rem;\">\n                  <img style=\"width:100%;display:block;margin:0 auto;\" src=\"https://cdn.shopify.com/s/files/1/0688/3075/7033/files/trust_page_3.png?v=1752215350\" alt=\"Trust\">\n                </div>"
+          }
+        },
+        "custom_liquid_xwxV4U": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<style>\n  .nail-usp-section {\n    width: 100%;\n    background: #fff;\n    padding: 8px 15px;\n    font-family: 'Playpen Sans';\n  }\n\n  .nail-usp-wrapper {\n    max-width: 760px;\n    margin: 0 auto;\n    display: grid;\n    grid-template-columns: repeat(2, 1fr); /* Always 2 columns */\n    column-gap: 80px;\n    row-gap: 5px;\n  }\n\n  .nail-usp-item {\n    display: flex;\n    align-items: center;\n    gap: 12px;\n    color: #000;\n  }\n\n  .nail-usp-icon {\n    width: 35px;\n    height: 35px;\n    object-fit: contain;\n    flex-shrink: 0;\n    filter: grayscale(1);\nborder: 1px solid gray;\n    border-radius: 20px;\n  }\n\n  .nail-usp-title {\n    margin: 0;\n    font-size: 13px;\n    line-height: 1.2;\n    font-weight: 700;\n    text-transform: uppercase;\n    letter-spacing: -0.2px;\n  }\n\n  /* MOBILE */\n  @media screen and (max-width: 749px) {\n    .nail-usp-section {\n      padding: 10px 10px;\n    }\n\n    .nail-usp-wrapper {\n      grid-template-columns: repeat(2, 1fr); /* KEEP 2 columns */\n      column-gap: 20px;\n      row-gap: 6px;\n    }\n\n    .nail-usp-icon {\n      width: 25px;\n      height: 25px;\n    }\n\n    .nail-usp-title {\n      font-size: 7.5px;\n    }\n  }\n</style>\n\n<section class=\"nail-usp-section\">\n  <div class=\"nail-usp-wrapper\">\n\n    <div class=\"nail-usp-item\">\n      <img class=\"nail-usp-icon\" src=\"https://chillhouse.com/cdn/shop/files/0f3ffbac93875b4b61fc727f26d1c378eacfa053.png?v=1756909509&width=100\">\n      <p class=\"nail-usp-title\">Science Backed Care</p>\n    </div>\n\n    <div class=\"nail-usp-item\">\n      <img class=\"nail-usp-icon\" src=\"https://chillhouse.com/cdn/shop/files/28255342d693c392d7d223893d0b7ca938659b09.png?v=1756909608&width=100\">\n      <p class=\"nail-usp-title\">Daily Beauty Routine</p>\n    </div>\n\n    <div class=\"nail-usp-item\">\n      <img class=\"nail-usp-icon\" src=\"https://chillhouse.com/cdn/shop/files/2f66b0ed8ce996358e36e657ad19d8ab315c55f6.png?v=1756909662&width=100\">\n      <p class=\"nail-usp-title\">Paraben Free</p>\n    </div>\n\n    <div class=\"nail-usp-item\">\n      <img class=\"nail-usp-icon\" src=\"https://chillhouse.com/cdn/shop/files/77616dad5c4d94ca055739292feb59c32a26e0e5.png?v=1756909566&width=100\">\n      <p class=\"nail-usp-title\">No Sulphates</p>\n    </div>\n\n   \n\n    \n\n  </div>\n</section>"
+          }
+        },
+        "custom_liquid_aebTqa": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<section class=\"offer-strip-section\">\n  <div class=\"offer-strip-wrapper\">\n    \n    <div class=\"offer-strip-item\">\n      <h3>Get FLAT 5% OFF</h3>\n      <p>on prepaid beauty orders</p>\n    </div>\n\n    <div class=\"offer-strip-item\">\n      <h3>Build Your Routine</h3>\n      <p>special offer on combos</p>\n    </div>\n\n    <div class=\"offer-strip-item\">\n      <h3>Buy 3 items, get</h3>\n      <p>Flat 20% OFF</p>\n    </div>\n\n  </div>\n</section>\n\n<style>\n  .offer-strip-section {\n    width: 100%;\n    background: #FCF8F2;\n  }\n\n  .offer-strip-wrapper {\n    max-width: 1240px;\n    margin: 0 auto;\n    background:#dee4ff;\n    border-radius: 12px;\n    padding: 16px 20px;\n    display: grid;\n    grid-template-columns: repeat(3, 1fr);\n    gap: 10px;\n    align-items: center;\n    text-align: center;\n  }\n\n  .offer-strip-item {\n    padding: 4px 8px;\n  }\n\n  .offer-strip-item h3 {\n    margin: 0;\n    font-size: 13px;\n    line-height: 1.2;\n    font-weight: 700;\n    color: #1f2430;\n  }\n\n  .offer-strip-item p {\n    margin: 2px 0 0;\n    font-size: 11px;\n    line-height: 1.25;\n    font-weight: 500;\n    color: #c06d11;\n  }\n\n  @media (max-width: 767px) {\n    .offer-strip-section {\n      padding: 6px 8px;\n    }\n\n    .offer-strip-wrapper {\n      grid-template-columns: repeat(3, 1fr);\n      gap: 4px;\n      padding: 10px 6px;\n      border-radius: 10px;\n    }\n\n    .offer-strip-item {\n      padding: 2px 3px;\n    }\n\n    .offer-strip-item h3 {\n      font-size: 10px;\n      line-height: 1.15;\n    }\n\n    .offer-strip-item p {\n      font-size: 9px;\n      line-height: 1.15;\n      margin-top: 2px;\n    }\n  }\n\n  @media (max-width: 380px) {\n    .offer-strip-wrapper {\n      gap: 2px;\n      padding: 8px 4px;\n    }\n\n    .offer-strip-item h3 {\n      font-size: 9px;\n    }\n\n    .offer-strip-item p {\n      font-size: 8px;\n    }\n  }\n</style>"
+          }
+        },
+        "custom_liquid_Kg437N": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "{% render 'BT-pincode-checker' %}"
+          }
+        },
+        "custom_liquid_mqqMQr": {
+          "type": "custom_liquid",
+          "disabled": true,
+          "settings": {
+            "custom_liquid": "<div class=\"offer-section\">\n  <h2 class=\"offer-heading\">OFFERS</h2>\n\n  <div class=\"offer-card\">\n    <div class=\"offer-top-tag\">Extra ₹220</div>\n\n    <div class=\"offer-main\">\n      <div class=\"offer-icon\">★</div>\n      <div class=\"offer-content\">\n        <p class=\"offer-line\">\n          Get this for <span class=\"highlight-price\">₹879</span>\n        </p>\n        <p class=\"offer-line second-line\">\n          Buy 2 products get flat 20% off.\n        </p>\n      </div>\n    </div>\n\n    <div class=\"offer-footer\">\n      FLAT 20% OFF\n    </div>\n  </div>\n</div>\n\n<style>\n  .offer-section {\n    max-width: 65rem;\n    width: 100%;\n    margin: 0;\n    font-family: Arial, sans-serif;\n  }\n\n  .offer-heading {\n    font-size: 14px;\n    font-weight: 700;\n    color: #000;\n    margin: 0 0 10px;\n    letter-spacing: 0.5px;\n    text-transform: uppercase;\n  }\n\n  .offer-card {\n    position: relative;\n    width: 100%;\n    border: 1px solid #d9d9d9;\n    background: #fff;\n    box-sizing: border-box;\n  }\n\n  .offer-top-tag {\n    position: absolute;\n    top: 0;\n    right: 0;\n    background: #d85a4f;\n    color: #fff;\n    font-size: 12px;\n    font-weight: 600;\n    padding: 4px 10px;\n    line-height: 1;\n  }\n\n  .offer-main {\n    display: flex;\n    align-items: flex-start;\n    gap: 12px;\n    padding: 14px 16px 12px;\n    border-bottom: 1px solid #d9d9d9;\n  }\n\n  .offer-icon {\n    font-size: 20px;\n    color: #000;\n    line-height: 1;\n    flex-shrink: 0;\n    margin-top: 2px;\n  }\n\n  .offer-content {\n    flex: 1;\n  }\n\n  .offer-line {\n    margin: 0;\n    font-size: 14px;\n    color: #222;\n    line-height: 1.35;\n  }\n\n  .second-line {\n    margin-top: 2px;\n  }\n\n  .highlight-price {\n    color: #d85a4f;\n    font-weight: 500;\n  }\n\n  .offer-footer {\n    padding: 10px 16px;\n    font-size: 13px;\n    font-weight: 500;\n    color: #222;\n    text-transform: uppercase;\n    letter-spacing: 0.3px;\n  }\n\n  @media (max-width: 767px) {\n    .offer-section {\n      max-width: 100%;\n    }\n\n    .offer-heading {\n      font-size: 13px;\n      margin-bottom: 8px;\n    }\n\n    .offer-main {\n      gap: 10px;\n      padding: 12px 12px 10px;\n    }\n\n    .offer-icon {\n      font-size: 18px;\n    }\n\n    .offer-line {\n      font-size: 13px;\n    }\n\n    .offer-footer {\n      font-size: 12px;\n      padding: 10px 12px;\n    }\n\n    .offer-top-tag {\n      font-size: 11px;\n      padding: 4px 8px;\n    }\n  }\n</style>"
+          }
+        },
+        "collapsible_tab_GR983k": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "DESCRIPTION",
+            "icon": "none",
+            "content": "{{ product.description }}",
+            "page": ""
+          }
+        },
+        "collapsible_tab_YrPPxF": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "SHIPPING & RETURN",
+            "icon": "none",
+            "content": "<p>Domestic Shipping: We offer flat-rate shipping across India.<br/>Standard Shipping: Delivery within 5-7 business days.<br/>Free Shipping: We offer Free Standard Shipping on all orders above ₹999.<br/>(Please note: Delivery timelines are estimates provided by our courier partners and are not guaranteed.)</p>",
+            "page": ""
+          }
+        },
+        "description": {
+          "type": "description",
+          "disabled": true,
+          "settings": {}
+        },
+        "ag_shoppable_video_mp_tiktok_block_GbtUUU": {
+          "type": "shopify://apps/ag-shoppable-video/blocks/mp_tiktok_block/1216543a-6237-4445-a5f2-61991cd76022",
+          "settings": {
+            "mp_tiktok_feed_id": "2505-948749"
+          }
+        },
+        "share": {
+          "type": "share",
+          "settings": {
+            "share_label": "Share"
+          }
+        }
+      },
+      "block_order": [
+        "vendor",
+        "title",
+        "custom_liquid_tUpwqd",
+        "price",
+        "variant_picker",
+        "custom_liquid_n4HdRT",
+        "quantity_selector",
+        "buy_buttons",
+        "custom_liquid_r9x6XB",
+        "custom_liquid_xwxV4U",
+        "custom_liquid_aebTqa",
+        "custom_liquid_Kg437N",
+        "custom_liquid_mqqMQr",
+        "collapsible_tab_GR983k",
+        "collapsible_tab_YrPPxF",
+        "description",
+        "ag_shoppable_video_mp_tiktok_block_GbtUUU",
+        "share"
+      ],
+      "custom_css": [
+        ".button--full-width {display: flex; width: calc(100% - 150px) !important; margin-top: -72px; margin-left: 150px;}",
+        ".product-form__buttons {max-width: 65rem;}"
+      ],
+      "settings": {
+        "enable_sticky_info": true,
+        "color_scheme": "scheme-1",
+        "media_size": "small",
+        "constrain_to_viewport": true,
+        "media_fit": "cover",
+        "gallery_layout": "thumbnail_slider",
+        "mobile_thumbnails": "show",
+        "media_position": "left",
+        "image_zoom": "lightbox",
+        "hide_variants": true,
+        "enable_video_looping": false,
+        "padding_top": 20,
+        "padding_bottom": 12
+      }
+    },
+    "related-products": {
+      "type": "related-products",
+      "custom_css": [
+        ".card__heading a {font-weight: 600;}"
+      ],
+      "settings": {
+        "heading": "<strong>You may also like</strong>",
+        "heading_size": "h2",
+        "products_to_show": 4,
+        "columns_desktop": 4,
+        "columns_mobile": "2",
+        "color_scheme": "scheme-1",
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "padding_top": 36,
+        "padding_bottom": 28
+      }
+    },
+    "1777984343d8c7ff81": {
+      "type": "apps",
+      "blocks": {
+        "ag_product_reviews_app_block_review_list_WaK7Vq": {
+          "type": "shopify://apps/ag-product-reviews/blocks/app-block-review-list/c4e1e9ca-4d46-4e76-bc39-7e42417cb327",
+          "settings": {
+            "air_blockreviews_summaryHeading": "Reviews",
+            "air_blockreviews_layout": "grid",
+            "air_blockreviews_singleStarColor": "#16a086",
+            "air_blockreviews_primaryColor": "#121212"
+          }
+        }
+      },
+      "block_order": [
+        "ag_product_reviews_app_block_review_list_WaK7Vq"
+      ],
+      "settings": {
+        "include_margins": true
+      }
+    }
+  },
+  "order": [
+    "breadcrumb_zCN6Tn",
+    "main",
+    "related-products",
+    "1777984343d8c7ff81"
+  ]
+}

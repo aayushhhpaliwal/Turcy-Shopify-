@@ -1,0 +1,1062 @@
+{% comment %} {{ 'weekend-special.css' | asset_url | stylesheet_tag }} {% endcomment %}
+
+<div class="weekend-special-section" id="weekend-special-{{ section.id }}">
+  <div class="weekend-special-container">
+    <!-- Left Banner -->
+    <div class="weekend-special-banner">
+      {% liquid
+        assign desktop_banner_image = section.settings.banner_image
+        if desktop_banner_image == blank
+          assign desktop_banner_image = section.settings.banner_image_mobile
+        endif
+      %}
+      {% if desktop_banner_image != blank %}
+        <picture>
+          {% if section.settings.banner_image_mobile != blank %}
+            <source
+              media="(max-width: 767.98px)"
+              srcset="{{ section.settings.banner_image_mobile | image_url: width: 900 }}"
+            >
+          {% endif %}
+          <img
+            src="{{ desktop_banner_image | image_url: width: 1200 }}"
+            alt="{{ desktop_banner_image.alt | default: section.settings.banner_heading | escape }}"
+            loading="lazy"
+            width="{{ desktop_banner_image.width }}"
+            height="{{ desktop_banner_image.height }}"
+            class="banner-image"
+          >
+        </picture>
+      {% else %}
+        <div class="banner-placeholder">
+          {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+        </div>
+      {% endif %}
+      <div class="banner-overlay"></div>
+      <div class="banner-content">
+        <h2 class="banner-heading">{{ section.settings.banner_heading }}</h2>
+        <p class="banner-subheading">{{ section.settings.banner_subheading }}</p>
+        {% if section.settings.banner_button_text != blank %}
+          <a href="{{ section.settings.banner_button_link }}" class="banner-button">
+            {{ section.settings.banner_button_text }}
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Right Product Slider -->
+    <div class="weekend-special-products">
+      <!-- Header -->
+      <div class="products-header">
+        <h2 class="products-title">{{ section.settings.section_heading }}</h2>
+        {% if section.settings.view_all_link != blank %}
+          <a href="{{ section.settings.view_all_link }}" class="view-all-link">
+            View all
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
+        {% endif %}
+      </div>
+
+      <!-- Product Slider Wrapper -->
+      <div class="products-slider-wrapper">
+        <!-- Side Arrows -->
+        <button class="slider-arrow slider-arrow-side slider-arrow-prev" id="sliderPrev-{{ section.id }}" aria-label="Previous">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+        </button>
+
+        <div class="products-slider" id="weekendSpecialSlider-{{ section.id }}">
+          {% assign collection = collections[section.settings.collection] %}
+          {% if collection != blank and collection.products.size > 0 %}
+            {% for product in collection.products limit: section.settings.products_limit %}
+              <div class="product-card">
+                {% if product.compare_at_price > product.price %}
+                  {% assign discount = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round %}
+                  <div class="discount-badge">{{ discount }}% OFF</div>
+                {% endif %}
+
+                <a href="{{ product.url }}" class="product-image-wrapper">
+                  {% if product.featured_image != blank %}
+                    <img
+                      src="{{ product.featured_image | image_url: width: 300 }}"
+                      alt="{{ product.title | escape }}"
+                      loading="lazy"
+                      width="{{ product.featured_image.width }}"
+                      height="{{ product.featured_image.height }}"
+                      class="product-image"
+                    >
+                  {% else %}
+                    <div class="product-image-placeholder">
+                      {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                    </div>
+                  {% endif %}
+                </a>
+
+                <div class="product-info">
+                  <a href="{{ product.url }}" class="product-title">{{ product.title }}</a>
+                  <div class="product-price">
+                    <span class="current-price">{{ product.price | money }}</span>
+                    {% if product.compare_at_price > product.price %}
+                      <span class="compare-price">{{ product.compare_at_price | money }}</span>
+                    {% endif %}
+                  </div>
+
+                  {% if product.available %}
+                    <form method="post" action="{{ routes.cart_add_url }}" class="product-form">
+                      <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+                      <input type="hidden" name="quantity" value="1">
+                      <button type="submit" class="add-to-cart-btn">
+                        Add to cart
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <line x1="5" y1="12" x2="19" y2="12"></line>
+                          <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                      </button>
+                    </form>
+                  {% else %}
+                    <button type="button" class="add-to-cart-btn sold-out" disabled>
+                      Sold out
+                    </button>
+                  {% endif %}
+                </div>
+              </div>
+            {% endfor %}
+          {% else %}
+            {% for block in section.blocks %}
+              {% if block.type == 'product_item' %}
+                {% assign block_product = block.settings.product %}
+                {% if block_product != blank %}
+                  <div class="product-card" {{ block.shopify_attributes }}>
+                    {% if block_product.compare_at_price > block_product.price %}
+                      {% assign discount = block_product.compare_at_price | minus: block_product.price | times: 100.0 | divided_by: block_product.compare_at_price | round %}
+                      <div class="discount-badge">{{ discount }}% OFF</div>
+                    {% endif %}
+
+                    <a href="{{ block_product.url }}" class="product-image-wrapper">
+                      {% if block_product.featured_image != blank %}
+                        <img
+                          src="{{ block_product.featured_image | image_url: width: 300 }}"
+                          alt="{{ block_product.title | escape }}"
+                          loading="lazy"
+                          width="{{ block_product.featured_image.width }}"
+                          height="{{ block_product.featured_image.height }}"
+                          class="product-image"
+                        >
+                      {% else %}
+                        <div class="product-image-placeholder">
+                          {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                        </div>
+                      {% endif %}
+                    </a>
+
+                    <div class="product-info">
+                      <a href="{{ block_product.url }}" class="product-title">{{ block_product.title }}</a>
+                      <div class="product-price">
+                        <span class="current-price">{{ block_product.price | money }}</span>
+                        {% if block_product.compare_at_price > block_product.price %}
+                          <span class="compare-price">{{ block_product.compare_at_price | money }}</span>
+                        {% endif %}
+                      </div>
+
+                      {% if block_product.available %}
+                        <form method="post" action="{{ routes.cart_add_url }}" class="product-form">
+                          <input type="hidden" name="id" value="{{ block_product.variants.first.id }}">
+                          <input type="hidden" name="quantity" value="1">
+                          <button type="submit" class="add-to-cart-btn">
+                            Add to cart
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                              <line x1="5" y1="12" x2="19" y2="12"></line>
+                              <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
+                          </button>
+                        </form>
+                      {% else %}
+                        <button type="button" class="add-to-cart-btn sold-out" disabled>
+                          Sold out
+                        </button>
+                      {% endif %}
+                    </div>
+                  </div>
+                {% endif %}
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+        </div>
+
+        <button class="slider-arrow slider-arrow-side slider-arrow-next" id="sliderNext-{{ section.id }}" aria-label="Next">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Bottom Controls -->
+      <div class="slider-controls">
+        <div class="slider-progress">
+          <div class="slider-progress-bar" id="sliderProgressBar-{{ section.id }}"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function() {
+    function initWeekendSpecialSlider(sectionId) {
+      var slider = document.getElementById('weekendSpecialSlider-' + sectionId);
+      var prevBtn = document.getElementById('sliderPrev-' + sectionId);
+      var nextBtn = document.getElementById('sliderNext-' + sectionId);
+      var progressBar = document.getElementById('sliderProgressBar-' + sectionId);
+
+      if (!slider || !prevBtn || !nextBtn) return;
+
+      function getScrollAmount() {
+        var card = slider.querySelector('.product-card');
+        if (card) {
+          var style = window.getComputedStyle(slider);
+          var gap = parseFloat(style.gap) || 16;
+          return card.offsetWidth + gap;
+        }
+        return 250;
+      }
+
+      function updateProgress() {
+        if (!progressBar) return;
+        var maxScroll = slider.scrollWidth - slider.clientWidth;
+
+        if (maxScroll <= 0) {
+          progressBar.style.width = '100%';
+          return;
+        }
+
+        var progress = (slider.scrollLeft / maxScroll) * 100;
+        var visibleWidth = (slider.clientWidth / slider.scrollWidth) * 100;
+        progressBar.style.width = Math.max(visibleWidth, progress + visibleWidth) + '%';
+      }
+
+      function updateArrows() {
+        var maxScroll = slider.scrollWidth - slider.clientWidth;
+        var atStart = slider.scrollLeft <= 2;
+        var atEnd = slider.scrollLeft >= maxScroll - 2 || maxScroll <= 0;
+
+        prevBtn.disabled = atStart;
+        nextBtn.disabled = atEnd;
+      }
+
+      prevBtn.addEventListener('click', function() {
+        slider.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' });
+      });
+
+      nextBtn.addEventListener('click', function() {
+        slider.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
+      });
+
+      slider.addEventListener('scroll', function() {
+        updateProgress();
+        updateArrows();
+      });
+
+      window.addEventListener('resize', function() {
+        updateProgress();
+        updateArrows();
+      });
+
+      var touchStartX = 0;
+      var touchEndX = 0;
+
+      slider.addEventListener('touchstart', function(e) {
+        touchStartX = e.changedTouches[0].screenX;
+      }, { passive: true });
+
+      slider.addEventListener('touchend', function(e) {
+        touchEndX = e.changedTouches[0].screenX;
+        var diff = touchStartX - touchEndX;
+
+        if (Math.abs(diff) > 50) {
+          if (diff > 0) {
+            slider.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
+          } else {
+            slider.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' });
+          }
+        }
+      }, { passive: true });
+
+      updateProgress();
+      updateArrows();
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      initWeekendSpecialSlider('{{ section.id }}');
+    });
+
+    document.addEventListener('shopify:section:load', function(event) {
+      if (event.detail && event.detail.sectionId === '{{ section.id }}') {
+        initWeekendSpecialSlider('{{ section.id }}');
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Weekend Special",
+  "tag": "section",
+  "class": "weekend-special-wrapper",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Banner Settings"
+    },
+    {
+      "type": "image_picker",
+      "id": "banner_image",
+      "label": "Banner Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "banner_image_mobile",
+      "label": "Banner Image (Mobile)"
+    },
+    {
+      "type": "text",
+      "id": "banner_heading",
+      "label": "Banner Heading",
+      "default": "Save Up to $50 on Grocery Shopping"
+    },
+    {
+      "type": "text",
+      "id": "banner_subheading",
+      "label": "Banner Subheading",
+      "default": "Good Quality Food Daily"
+    },
+    {
+      "type": "text",
+      "id": "banner_button_text",
+      "label": "Banner Button Text",
+      "default": "Shop Now"
+    },
+    {
+      "type": "url",
+      "id": "banner_button_link",
+      "label": "Banner Button Link"
+    },
+    {
+      "type": "header",
+      "content": "Product Settings"
+    },
+    {
+      "type": "text",
+      "id": "section_heading",
+      "label": "Section Heading",
+      "default": "Weekend Special"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Select Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_limit",
+      "label": "Maximum Products to Show",
+      "min": 4,
+      "max": 20,
+      "step": 1,
+      "default": 8
+    },
+    {
+      "type": "url",
+      "id": "view_all_link",
+      "label": "View All Link"
+    },
+    {
+      "type": "header",
+      "content": "Color Settings"
+    },
+    {
+      "type": "color",
+      "id": "section_bg_color",
+      "label": "Section Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "badge_bg_color",
+      "label": "Discount Badge Background",
+      "default": "#f0fdf4"
+    },
+    {
+      "type": "color",
+      "id": "badge_text_color",
+      "label": "Discount Badge Text Color",
+      "default": "#166534"
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color",
+      "label": "Add to Cart Button Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Add to Cart Button Text Color",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "color",
+      "id": "button_border_color",
+      "label": "Add to Cart Button Border Color",
+      "default": "#e5e5e5"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Section Max Width (px)",
+      "min": 900,
+      "max": 1800,
+      "step": 20,
+      "default": 1400
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top (px)",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom (px)",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product_item",
+      "name": "Product",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Select Product"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Weekend Special",
+      "category": "Products",
+      "blocks": []
+    }
+  ]
+}
+{% endschema %}
+
+<style>
+  .weekend-special-section {
+    background-color: {{ section.settings.section_bg_color }};
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    padding-left: max(20px, calc((100% - {{ section.settings.max_width }}px) / 2));
+    padding-right: max(20px, calc((100% - {{ section.settings.max_width }}px) / 2));
+  }
+
+  .weekend-special-container {
+    display: flex;
+    gap: 24px;
+    align-items: stretch;
+  }
+
+  .weekend-special-banner {
+    flex: 0 0 320px;
+    min-width: 280px;
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    min-height: 420px;
+  }
+
+  .banner-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .banner-placeholder {
+    width: 100%;
+    height: 100%;
+    background: #2d5a3d;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .banner-placeholder .placeholder-svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .banner-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.45) 0%, rgba(0, 0, 0, 0.15) 60%, rgba(0, 0, 0, 0.3) 100%);
+    z-index: 1;
+  }
+
+  .banner-content {
+    position: relative;
+    z-index: 2;
+    padding: 32px 28px;
+    color: #ffffff;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  .banner-heading {
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.25;
+    margin: 0 0 10px 0;
+    color: #ffffff;
+  }
+
+  .banner-subheading {
+    font-size: 15px;
+    font-weight: 400;
+    margin: 0 0 24px 0;
+    opacity: 0.9;
+    color: #ffffff;
+  }
+
+  .banner-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 28px;
+    background-color: #ffffff;
+    color: #1a1a1a;
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    width: fit-content;
+    border: none;
+  }
+
+  .banner-button:hover {
+    background-color: #f0f0f0;
+    transform: translateX(4px);
+  }
+
+  .weekend-special-products {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .products-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 12px;
+  }
+
+  .products-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0;
+  }
+
+  .view-all-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #166534;
+    text-decoration: none;
+    transition: gap 0.3s ease;
+    white-space: nowrap;
+  }
+
+  .view-all-link:hover {
+    gap: 8px;
+    color: #14532d;
+  }
+
+  .products-slider-wrapper {
+    overflow: hidden;
+    flex: 1;
+    position: relative;
+  }
+
+  .products-slider {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    padding-bottom: 4px;
+  }
+
+  .products-slider::-webkit-scrollbar {
+    display: none;
+  }
+
+  .product-card {
+    flex: 0 0 calc((100% - 48px) / 4);
+    min-width: calc((100% - 48px) / 4);
+    background: #ffffff;
+    border: 1px solid #f0f0f0;
+    border-radius: 12px;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .product-card:hover {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+  }
+
+  .discount-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: {{ section.settings.badge_bg_color }};
+    color: {{ section.settings.badge_text_color }};
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 50px;
+    z-index: 2;
+  }
+
+  .product-image-wrapper {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    height: auto;
+    margin-bottom: 0;
+    text-decoration: none;
+    background: #ffffff;
+  }
+
+  .product-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    transition: transform 0.3s ease;
+  }
+
+  .product-card:hover .product-image {
+    transform: scale(1.05);
+  }
+
+  .product-image-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f9f9f9;
+    border-radius: 0;
+  }
+
+  .product-image-placeholder .placeholder-svg {
+    width: 65%;
+    height: 65%;
+    object-fit: contain;
+  }
+
+  .product-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    flex: 1;
+    padding: 12px 16px 16px;
+  }
+
+  .product-title {
+    font-size: 13px;
+    {% comment %} font-weight: 600; {% endcomment %}
+    color: #1a1a1a;
+    text-decoration: none;
+    margin-bottom: 6px;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .product-title:hover {
+    color: #166534;
+  }
+
+  .product-price {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .current-price {
+    font-size: 15px;
+    {% comment %} font-weight: 700; {% endcomment %}
+    color: #1a1a1a;
+  }
+
+  .compare-price {
+    font-size: 13px;
+    font-weight: 400;
+    color: #999;
+    text-decoration: line-through;
+  }
+
+  .product-form {
+    width: 100%;
+    margin-top: auto;
+  }
+
+  .add-to-cart-btn {
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 20px;
+    background-color: {{ section.settings.button_bg_color }};
+    color: {{ section.settings.button_text_color }};
+    border: 1px solid {{ section.settings.button_border_color }};
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+  }
+
+  .add-to-cart-btn:hover {
+    background-color: #1a1a1a;
+    color: #ffffff;
+    border-color: #1a1a1a;
+  }
+
+  .add-to-cart-btn.sold-out {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .slider-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 20px;
+  }
+
+  .slider-progress {
+    flex: 1;
+    height: 4px;
+    background: #e5e5e5;
+    border-radius: 999px;
+    overflow: hidden;
+  }
+
+  .slider-progress-bar {
+    height: 100%;
+    background: #1a1a1a;
+    border-radius: 999px;
+    width: 0%;
+    transition: width 0.3s ease;
+  }
+
+  .slider-arrow {
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+    border-radius: 50%;
+    border: 1px solid #e5e5e5;
+    background: #ffffff;
+    color: #1a1a1a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0;
+    z-index: 4;
+  }
+
+  .slider-arrow svg {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+  }
+
+  .slider-arrow:hover:not(:disabled) {
+    background: #1a1a1a;
+    color: #ffffff;
+    border-color: #1a1a1a;
+  }
+
+  .slider-arrow:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  .slider-arrow-side {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  }
+
+  .slider-arrow-prev.slider-arrow-side {
+    left: 8px;
+  }
+
+  .slider-arrow-next.slider-arrow-side {
+    right: 8px;
+  }
+
+  @media (max-width: 1200px) {
+    .weekend-special-banner {
+      flex: 0 0 280px;
+      min-width: 250px;
+    }
+  }
+
+  @media (max-width: 1024px) and (min-width: 769px) {
+    .product-card {
+      flex: 0 0 calc((100% - 32px) / 3);
+      min-width: calc((100% - 32px) / 3);
+    }
+  }
+
+  @media (max-width: 991px) {
+    .weekend-special-container {
+      flex-direction: column;
+    }
+
+    .weekend-special-banner {
+      flex: 0 0 auto;
+      min-height: 280px;
+      width: 100%;
+    }
+
+    .banner-heading {
+      font-size: 24px;
+    }
+
+  }
+
+  @media (max-width: 768px) {
+    .weekend-special-section {
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+
+    .weekend-special-banner {
+      min-height: 240px;
+    }
+
+    .banner-heading {
+      font-size: 22px;
+    }
+
+    .banner-content {
+      padding: 24px 20px;
+    }
+
+    .products-title {
+      font-size: 20px;
+    }
+
+    .product-card {
+      flex: 0 0 calc((100% - 16px) / 2);
+      min-width: calc((100% - 16px) / 2);
+    }
+
+    .product-info {
+      padding: 10px 12px 12px;
+    }
+
+    .product-title {
+      font-size: 13px;
+    }
+
+    .current-price {
+      font-size: 14px;
+    }
+
+    .compare-price {
+      font-size: 12px;
+    }
+
+    .add-to-cart-btn {
+      padding: 8px 16px;
+      font-size: 12px;
+    }
+
+    .slider-arrow {
+      width: 36px;
+      height: 36px;
+      min-width: 36px;
+    }
+
+    .slider-arrow svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .slider-arrow-prev.slider-arrow-side {
+      left: 6px;
+    }
+
+    .slider-arrow-next.slider-arrow-side {
+      right: 6px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .weekend-special-section {
+      padding-left: 12px;
+      padding-right: 12px;
+    }
+
+    .weekend-special-banner {
+      min-height: 220px;
+      border-radius: 12px;
+    }
+
+    .banner-heading {
+      font-size: 20px;
+    }
+
+    .banner-subheading {
+      font-size: 13px;
+    }
+
+    .banner-content {
+      padding: 20px 16px;
+    }
+
+    .banner-button {
+      padding: 10px 22px;
+      font-size: 13px;
+    }
+
+    .products-header {
+      margin-bottom: 14px;
+    }
+
+    .products-title {
+      font-size: 18px;
+    }
+
+    .view-all-link {
+      font-size: 13px;
+    }
+
+    .product-card {
+      border-radius: 10px;
+    }
+
+    .product-info {
+      padding: 8px 10px 10px;
+    }
+
+    .discount-badge {
+      font-size: 10px;
+      padding: 3px 8px;
+      top: 8px;
+      right: 8px;
+    }
+
+    .product-title {
+      font-size: 12px;
+      margin-bottom: 4px;
+    }
+
+    .current-price {
+      font-size: 13px;
+    }
+
+    .compare-price {
+      font-size: 11px;
+    }
+
+    .add-to-cart-btn {
+      padding: 8px 12px;
+      font-size: 11px;
+    }
+
+    .slider-controls {
+      margin-top: 16px;
+    }
+
+    .slider-arrow {
+      width: 34px;
+      height: 34px;
+      min-width: 34px;
+    }
+
+    .slider-arrow svg {
+      width: 15px;
+      height: 15px;
+    }
+
+    .slider-arrow-prev.slider-arrow-side {
+      left: 4px;
+    }
+
+    .slider-arrow-next.slider-arrow-side {
+      right: 4px;
+    }
+  }
+</style>

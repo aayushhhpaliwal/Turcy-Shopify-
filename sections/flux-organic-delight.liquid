@@ -1,0 +1,527 @@
+<section class="flux-feature flux-feature-{{ section.id }}">
+  <div class="flux-feature__container">
+
+    <div class="flux-feature__image">
+      {% if section.settings.image != blank %}
+        <img
+          src="{{ section.settings.image | image_url: width: 1200 }}"
+          alt="{{ section.settings.heading | escape }}"
+          loading="lazy"
+          width="{{ section.settings.image.width }}"
+          height="{{ section.settings.image.height }}"
+        >
+      {% else %}
+        {{ 'lifestyle-1' | placeholder_svg_tag }}
+      {% endif %}
+    </div>
+
+    <div class="flux-feature__side-text">
+      {{ section.settings.vertical_text }}
+    </div>
+
+    <div class="flux-feature__content">
+      {% if section.settings.shape_image != blank %}
+        <div class="flux-feature__shape">
+          <img
+            src="{{ section.settings.shape_image | image_url: width: 600 }}"
+            alt=""
+            loading="lazy"
+            width="{{ section.settings.shape_image.width }}"
+            height="{{ section.settings.shape_image.height }}"
+          >
+        </div>
+      {% endif %}
+
+      <p class="flux-feature__eyebrow">{{ section.settings.eyebrow }}</p>
+      <h2>{{ section.settings.heading }}</h2>
+      <div class="flux-feature__desc">{{ section.settings.description }}</div>
+
+      {% if section.settings.button_label != blank %}
+        <a href="{{ section.settings.button_link }}" class="flux-feature__btn">
+          {{ section.settings.button_label }}
+          <span>›</span>
+        </a>
+      {% endif %}
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .flux-feature-{{ section.id }} {
+    background: {{ section.settings.background }};
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    overflow: hidden;
+  }
+
+  .flux-feature-{{ section.id }} .flux-feature__container {
+    max-width: {{ section.settings.section_width }}px;
+    margin: 0 auto;
+    padding: 0 28px;
+    display: grid;
+    grid-template-columns: 46% 70px 1fr;
+    align-items: center;
+    gap: 28px;
+  }
+
+  .flux-feature-{{ section.id }} .flux-feature__image {
+    border-radius: {{ section.settings.image_radius }}px;
+    overflow: hidden;
+    background: {{ section.settings.image_bg }};
+    height: {{ section.settings.image_height }}px;
+  }
+
+  .flux-feature-{{ section.id }} .flux-feature__image img,
+  .flux-feature-{{ section.id }} .flux-feature__image svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .flux-feature-{{ section.id }} .flux-feature__side-text {
+    height: {{ section.settings.image_height }}px;
+    border-right: 1px solid {{ section.settings.divider_color }};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-size: 13px;
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    color: {{ section.settings.vertical_color }};
+    font-weight: 500;
+  }
+
+  .flux-feature-{{ section.id }} .flux-feature__content {
+    position: relative;
+    padding: 42px 30px 42px 28px;
+    min-height: {{ section.settings.image_height }}px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .flux-feature-{{ section.id }} .flux-feature__shape {
+    position: absolute;
+    right: {{ section.settings.shape_right }}px;
+    top: {{ section.settings.shape_top }}px;
+    width: {{ section.settings.shape_width }}px;
+    opacity: {{ section.settings.shape_opacity | divided_by: 100.0 }};
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .flux-feature-{{ section.id }} .flux-feature__shape img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .flux-feature-{{ section.id }} .flux-feature__eyebrow,
+  .flux-feature-{{ section.id }} h2,
+  .flux-feature-{{ section.id }} .flux-feature__desc,
+  .flux-feature-{{ section.id }} .flux-feature__btn {
+    position: relative;
+    z-index: 2;
+  }
+
+  .flux-feature-{{ section.id }} .flux-feature__eyebrow {
+    margin: 0 0 6px;
+    font-size: 11px;
+    letter-spacing: 7px;
+    text-transform: uppercase;
+    color: {{ section.settings.eyebrow_color }};
+  }
+
+  .flux-feature-{{ section.id }} h2 {
+    margin: 0 0 22px;
+    font-size: clamp(36px, 4vw, {{ section.settings.heading_size }}px);
+    line-height: 1.04;
+    color: {{ section.settings.heading_color }};
+    font-weight: 800;
+    letter-spacing: -1px;
+  }
+
+  .flux-feature-{{ section.id }} .flux-feature__desc {
+    max-width: 620px;
+    font-size: {{ section.settings.text_size }}px;
+    line-height: 1.9;
+    color: {{ section.settings.text_color }};
+  }
+
+  .flux-feature-{{ section.id }} .flux-feature__desc p {
+    margin: 0;
+  }
+
+  .flux-feature-{{ section.id }} .flux-feature__btn {
+    margin-top: 28px;
+    display: inline-flex;
+    width: fit-content;
+    align-items: center;
+    gap: 8px;
+    background: {{ section.settings.button_bg }};
+    color: {{ section.settings.button_color }};
+    padding: 12px 18px;
+    border-radius: 9px;
+    font-size: 14px;
+    line-height: 1;
+    font-weight: 800;
+    text-decoration: none;
+    box-shadow: 0 9px 18px rgba(0,0,0,.18);
+  }
+
+  .flux-feature-{{ section.id }} .flux-feature__btn span {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.18);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+  }
+
+  @media screen and (max-width: 989px) {
+    .flux-feature-{{ section.id }} .flux-feature__container {
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+
+    .flux-feature-{{ section.id }} .flux-feature__image {
+      height: {{ section.settings.mobile_image_height }}px;
+    }
+
+    .flux-feature-{{ section.id }} .flux-feature__side-text {
+      height: auto;
+      writing-mode: horizontal-tb;
+      transform: none;
+      border-right: 0;
+      border-top: 1px solid {{ section.settings.divider_color }};
+      border-bottom: 1px solid {{ section.settings.divider_color }};
+      padding: 14px 0;
+      letter-spacing: 6px;
+    }
+
+    .flux-feature-{{ section.id }} .flux-feature__content {
+      min-height: auto;
+      text-align: center;
+      padding: 34px 10px;
+      align-items: center;
+    }
+
+    .flux-feature-{{ section.id }} .flux-feature__shape {
+      left: 50%;
+      right: auto;
+      top: {{ section.settings.mobile_shape_top }}px;
+      width: {{ section.settings.mobile_shape_width }}px;
+      transform: translateX(-50%);
+    }
+  }
+
+  @media screen and (max-width: 600px) {
+    .flux-feature-{{ section.id }} {
+      padding-top: {{ section.settings.mobile_padding_top }}px;
+      padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
+    }
+
+    .flux-feature-{{ section.id }} .flux-feature__container {
+      padding: 0 16px;
+    }
+
+    .flux-feature-{{ section.id }} h2 {
+      font-size: {{ section.settings.mobile_heading_size }}px;
+    }
+
+    .flux-feature-{{ section.id }} .flux-feature__desc {
+      font-size: {{ section.settings.mobile_text_size }}px;
+      line-height: 1.7;
+    }
+
+    .flux-feature-{{ section.id }} .flux-feature__eyebrow {
+      letter-spacing: 4px;
+      font-size: 10px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Flux Image Feature",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Left image"
+    },
+    {
+      "type": "image_picker",
+      "id": "shape_image",
+      "label": "Right shape image GIF SVG PNG"
+    },
+    {
+      "type": "text",
+      "id": "vertical_text",
+      "label": "Vertical text",
+      "default": "NEW SUMMER COLLECTION"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Small heading",
+      "default": "DISCOVER A PLANT POWERED PARADISE"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Main heading",
+      "default": "Organic Delights"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Indulge guilt-free with our organic delights! Explore protein-rich powders and sumptuous chocolates for a nourishing boost. Elevate your snacking experience with Flux. Crafted with care, our products are the perfect fusion of health and flavor.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Shop Meals"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "range",
+      "id": "section_width",
+      "label": "Section width",
+      "min": 1000,
+      "max": 1600,
+      "step": 50,
+      "default": 1400
+    },
+    {
+      "type": "range",
+      "id": "image_height",
+      "label": "Desktop image height",
+      "min": 300,
+      "max": 620,
+      "step": 10,
+      "default": 370
+    },
+    {
+      "type": "range",
+      "id": "mobile_image_height",
+      "label": "Mobile image height",
+      "min": 240,
+      "max": 500,
+      "step": 10,
+      "default": 320
+    },
+    {
+      "type": "range",
+      "id": "image_radius",
+      "label": "Image radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Desktop heading size",
+      "min": 36,
+      "max": 76,
+      "step": 2,
+      "default": 46
+    },
+    {
+      "type": "range",
+      "id": "mobile_heading_size",
+      "label": "Mobile heading size",
+      "min": 26,
+      "max": 48,
+      "step": 2,
+      "default": 34
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "label": "Desktop text size",
+      "min": 13,
+      "max": 22,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "mobile_text_size",
+      "label": "Mobile text size",
+      "min": 12,
+      "max": 18,
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "header",
+      "content": "Right shape settings"
+    },
+    {
+      "type": "range",
+      "id": "shape_width",
+      "label": "Desktop shape width",
+      "min": 80,
+      "max": 400,
+      "step": 10,
+      "default": 220
+    },
+    {
+      "type": "range",
+      "id": "shape_top",
+      "label": "Desktop shape top",
+      "min": -100,
+      "max": 300,
+      "step": 10,
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "shape_right",
+      "label": "Desktop shape right",
+      "min": -100,
+      "max": 300,
+      "step": 10,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "mobile_shape_width",
+      "label": "Mobile shape width",
+      "min": 80,
+      "max": 280,
+      "step": 10,
+      "default": 170
+    },
+    {
+      "type": "range",
+      "id": "mobile_shape_top",
+      "label": "Mobile shape top",
+      "min": -50,
+      "max": 200,
+      "step": 10,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "shape_opacity",
+      "label": "Shape opacity",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "default": 80
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Section background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "image_bg",
+      "label": "Image background",
+      "default": "#bed2cf"
+    },
+    {
+      "type": "color",
+      "id": "divider_color",
+      "label": "Divider color",
+      "default": "#eeeeee"
+    },
+    {
+      "type": "color",
+      "id": "vertical_color",
+      "label": "Vertical text color",
+      "default": "#777777"
+    },
+    {
+      "type": "color",
+      "id": "eyebrow_color",
+      "label": "Small heading color",
+      "default": "#777777"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#202020"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Description color",
+      "default": "#656565"
+    },
+    {
+      "type": "color",
+      "id": "button_bg",
+      "label": "Button background",
+      "default": "#222222"
+    },
+    {
+      "type": "color",
+      "id": "button_color",
+      "label": "Button text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Desktop padding top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Desktop padding bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "label": "Mobile padding top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_bottom",
+      "label": "Mobile padding bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "default": 28
+    }
+  ],
+  "presets": [
+    {
+      "name": "Flux Image Feature"
+    }
+  ]
+}
+{% endschema %}

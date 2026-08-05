@@ -1,0 +1,50 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "form": {
+      "type": "contact-form",
+      "settings": {
+        "heading": "Contact Us",
+        "heading_size": "h1",
+        "align": "center",
+        "subheading": "<p><strong>Legal name</strong>-Tarun Kumar Kansal</p><p><strong>Trade Name</strong>- Shopgenx Ventures</p><p><strong>GST no- </strong>09ACRPK9837E2ZY</p><p><strong>Address - </strong>Ground Floor, Building No. C-166, H-001, Hall No-02, H 01 Sector 63A, Noida, Gautam buddha Nagar</p><p><strong>State:</strong> Uttar Pradesh</p><p><strong>Pin code: </strong>201301</p><p><br/><br/></p>",
+        "form_title": "Send us a message",
+        "form_desc": "We usually reply within 24 hours on business days.",
+        "button_text": "Submit",
+        "form_note": "By submitting, you agree to be contacted via email/phone for support.",
+        "info_title": "Reach us directly",
+        "info_desc": "Use any of the following channels for quick support.",
+        "store_email": "care@bio-mystery.com",
+        "whatsapp": "+91 8929884147",
+        "timing": "Monday to Saturday, 10:00 AM – 6:00 PM",
+        "address": "Ground Floor C-166, H-001, Hall No-02 Sector Noida 63A",
+        "enable_whatsapp_cta": true,
+        "whatsapp_cta_text": "Chat on WhatsApp",
+        "whatsapp_prefill": "Hi Joyfrog Support, I need help with my order.",
+        "color_scheme": "scheme-1",
+        "padding_top": 24,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": [
+    "main",
+    "form"
+  ]
+}

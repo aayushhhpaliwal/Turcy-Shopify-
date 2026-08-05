@@ -1,0 +1,730 @@
+{% liquid
+  assign sid = 'pmy-' | append: section.id
+%}
+
+<section id="{{ sid }}" class="pmy-section">
+  <div class="pmy-container{% if section.settings.full_width %} pmy-container--full{% endif %}">
+    {% if section.settings.label_text != blank %}
+      <div class="pmy-head">
+        <span class="pmy-label">{{ section.settings.label_text }}</span>
+      </div>
+    {% endif %}
+
+    <div class="pmy-carousel" data-pmy-carousel>
+      <button class="pmy-arrow pmy-arrow--prev" type="button" aria-label="Previous">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M14.5 6L8.5 12L14.5 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+
+      <div class="pmy-stage" data-pmy-stage>
+        {% for block in section.blocks %}
+          <div class="pmy-slide" data-slide {{ block.shopify_attributes }}>
+            <a class="pmy-card" href="{{ block.settings.link | default: '#' }}">
+              <div class="pmy-media">
+                {% if block.settings.image != blank %}
+                  {{
+                    block.settings.image
+                    | image_url: width: 1600
+                    | image_tag:
+                      loading: 'lazy',
+                      widths: '375, 550, 750, 900, 1100, 1400, 1600',
+                      sizes: '(max-width: 768px) 72vw, 32vw',
+                      class: 'pmy-image',
+                      alt: block.settings.title
+                  }}
+                {% else %}
+                  {{ 'lifestyle-1' | placeholder_svg_tag: 'pmy-image pmy-placeholder' }}
+                {% endif %}
+
+                <div class="pmy-overlay"></div>
+
+                {% if block.settings.title != blank %}
+                  <div class="pmy-caption">
+                    <span>{{ block.settings.title }}</span>
+                  </div>
+                {% endif %}
+              </div>
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+
+      <button class="pmy-arrow pmy-arrow--next" type="button" aria-label="Next">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M9.5 6L15.5 12L9.5 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+<style>
+  #{{ sid }}{
+    --bg: {{ section.settings.section_bg }};
+    --label-bg: {{ section.settings.label_bg }};
+    --label-color: {{ section.settings.label_color }};
+    --caption-color: {{ section.settings.caption_color }};
+    --arrow-bg: {{ section.settings.arrow_bg }};
+    --arrow-color: {{ section.settings.arrow_color }};
+    --overlay-strength: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
+    --desk-height: {{ section.settings.desktop_height }}px;
+    --mob-height: {{ section.settings.mobile_height }}px;
+    --card-size: clamp(260px, 30vw, 540px);
+    --card-shadow: 0 18px 44px rgba(18,18,18,.12);
+
+    background: var(--bg);
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    overflow: hidden;
+    isolation: isolate;
+    position: relative;
+    z-index: 0;
+  }
+
+  #{{ sid }} .pmy-container{
+    max-width: 1600px;
+    margin: 0 auto;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  #{{ sid }} .pmy-container--full{
+    max-width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  #{{ sid }} .pmy-head{
+    text-align: center;
+    margin-bottom: 22px;
+  }
+
+  #{{ sid }} .pmy-label{
+    display: inline-block;
+    background: var(--label-bg);
+    color: var(--label-color);
+    font-size: {{ section.settings.label_size }}px;
+    line-height: 1;
+    letter-spacing: .06em;
+    {% comment %} text-transform: uppercase; {% endcomment %}
+    font-weight: 600;
+    padding: 6px 10px;
+  }
+
+  #{{ sid }} .pmy-carousel{
+    position: relative;
+    z-index: 0;
+  }
+
+  #{{ sid }} .pmy-stage{
+    position: relative;
+    height: calc(var(--card-size) + 52px);
+    overflow: hidden;
+    z-index: 0;
+  }
+
+  #{{ sid }} .pmy-slide{
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: var(--card-size);
+    max-width: 540px;
+    min-width: 260px;
+    transform-origin: center center;
+    transition:
+      transform .55s cubic-bezier(.22,.61,.36,1),
+      opacity .55s ease,
+      filter .55s ease;
+    will-change: transform, opacity;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  #{{ sid }} .pmy-slide.is-active{
+    opacity: 1;
+    pointer-events: auto;
+    z-index: 2;
+    transform: translateX(-50%) translateY(0) scale(1) rotate(0deg);
+  }
+
+  #{{ sid }} .pmy-slide.is-prev-1{
+    opacity: 1;
+    pointer-events: auto;
+    z-index: 1;
+    transform: translateX(calc(-50% - 27vw)) translateY(18px) scale(.84) rotate(-6deg);
+  }
+
+  #{{ sid }} .pmy-slide.is-next-1{
+    opacity: 1;
+    pointer-events: auto;
+    z-index: 1;
+    transform: translateX(calc(-50% + 27vw)) translateY(18px) scale(.84) rotate(6deg);
+  }
+
+  #{{ sid }} .pmy-slide.is-prev-2{
+    opacity: .45;
+    z-index: 0;
+    transform: translateX(calc(-50% - 42vw)) translateY(34px) scale(.7) rotate(-8deg);
+  }
+
+  #{{ sid }} .pmy-slide.is-next-2{
+    opacity: .45;
+    z-index: 0;
+    transform: translateX(calc(-50% + 42vw)) translateY(34px) scale(.7) rotate(8deg);
+  }
+
+  #{{ sid }} .pmy-slide.is-hidden{
+    opacity: 0;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  #{{ sid }} .pmy-card{
+    box-sizing: border-box;
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    padding: 0px;
+    border: 1px solid rgba(18,18,18,.08);
+    border-radius: 20px;
+    background: rgba(255,255,255,.92);
+    box-shadow: var(--card-shadow);
+    transition: transform .28s ease, box-shadow .28s ease, border-color .28s ease, background .28s ease;
+  }
+
+  #{{ sid }} .pmy-card:hover{
+    transform: translateY(-4px);
+    border-color: rgba(18,18,18,.14);
+    background: #ffffff;
+    box-shadow: 0 22px 54px rgba(18,18,18,.16);
+  }
+
+  #{{ sid }} .pmy-card:focus-visible{
+    outline: 2px solid currentColor;
+    outline-offset: 4px;
+  }
+
+  #{{ sid }} .pmy-media{
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    height: auto;
+    overflow: hidden;
+    border-radius: 14px;
+    background: #f2f2f2;
+    z-index: 0;
+  }
+
+  #{{ sid }} .pmy-image,
+  #{{ sid }} .pmy-placeholder{
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    position: relative;
+    z-index: 0;
+    transform: scale(1.001);
+    transition: transform .45s ease, filter .45s ease;
+  }
+
+  #{{ sid }} .pmy-card:hover .pmy-image,
+  #{{ sid }} .pmy-card:hover .pmy-placeholder{
+    transform: scale(1.045);
+    filter: saturate(1.03) contrast(1.02);
+  }
+
+  #{{ sid }} .pmy-overlay{
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(0,0,0, calc(var(--overlay-strength) + 0.18)) 0%,
+      rgba(0,0,0, calc(var(--overlay-strength) * 0.45)) 34%,
+      rgba(0,0,0, 0) 68%
+    );
+    pointer-events: none;
+  }
+
+  #{{ sid }} .pmy-caption{
+    position: absolute;
+    left: 50%;
+    bottom: 18px;
+    transform: translateX(-50%);
+    z-index: 3;
+    text-align: center;
+    width: calc(100% - 28px);
+    background-color: white;
+        border-radius: 40px;
+  }
+
+  #{{ sid }} .pmy-caption span{
+    display: inline-block;
+    position: relative;
+    color: var(--caption-color);
+    font-size: {{ section.settings.caption_size }}px;
+    line-height: 1.1;
+    letter-spacing: 0;
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: 8px 12px;
+    border: 1px solid rgba(255,255,255,.28);
+    border-radius: 999px;
+    /* background: rgba(0,0,0,.26); */
+    backdrop-filter: blur(8px);
+  }
+
+  #{{ sid }} .pmy-caption span::after{
+    content: none;
+  }
+
+  #{{ sid }} .pmy-arrow{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 44px;
+    height: 44px;
+    border: 0;
+    border-radius: 50%;
+    background: var(--arrow-bg);
+    color: var(--arrow-color);
+    box-shadow: 0 10px 28px rgba(18,18,18,.14);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 2;
+    transition: transform .2s ease, opacity .2s ease;
+  }
+
+  #{{ sid }} .pmy-arrow:hover{
+    transform: translateY(-50%) scale(1.06);
+  }
+
+  #{{ sid }} .pmy-arrow svg{
+    width: 18px;
+    height: 18px;
+  }
+
+  #{{ sid }} .pmy-arrow--prev{
+    left: {{ section.settings.arrow_offset }}px;
+  }
+
+  #{{ sid }} .pmy-arrow--next{
+    right: {{ section.settings.arrow_offset }}px;
+  }
+
+  @media screen and (max-width: 1199px){
+    #{{ sid }}{
+      --card-size: clamp(240px, 34vw, 460px);
+    }
+
+    #{{ sid }} .pmy-stage{
+      height: calc(var(--card-size) + 46px);
+    }
+
+    #{{ sid }} .pmy-slide.is-prev-1{
+      transform: translateX(calc(-50% - 25vw)) translateY(14px) scale(.82) rotate(-6deg);
+    }
+
+    #{{ sid }} .pmy-slide.is-next-1{
+      transform: translateX(calc(-50% + 25vw)) translateY(14px) scale(.82) rotate(6deg);
+    }
+  }
+
+  @media screen and (max-width: 989px){
+    #{{ sid }}{
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+      --card-size: clamp(200px, 68vw, 320px);
+    }
+
+    #{{ sid }} .pmy-label{
+      font-size: {{ section.settings.label_size_mobile }}px;
+      font-weight: 600;
+    }
+
+    #{{ sid }} .pmy-stage{
+      height: calc(var(--card-size) + 40px);
+    }
+
+    #{{ sid }} .pmy-slide{
+      width: var(--card-size);
+      min-width: 200px;
+    }
+
+    #{{ sid }} .pmy-slide.is-active{
+      transform: translateX(-50%) translateY(0) scale(1);
+    }
+
+    #{{ sid }} .pmy-slide.is-prev-1{
+      transform: translateX(calc(-50% - 36vw)) translateY(12px) scale(.8) rotate(-5deg);
+    }
+
+    #{{ sid }} .pmy-slide.is-next-1{
+      transform: translateX(calc(-50% + 36vw)) translateY(12px) scale(.8) rotate(5deg);
+    }
+
+    #{{ sid }} .pmy-slide.is-prev-2,
+    #{{ sid }} .pmy-slide.is-next-2{
+      opacity: 0;
+    }
+
+    #{{ sid }} .pmy-caption{
+      bottom: 18px;
+    }
+
+    #{{ sid }} .pmy-caption span{
+      font-size: {{ section.settings.caption_size_mobile }}px;
+    }
+
+    #{{ sid }} .pmy-arrow{
+      width: 40px;
+      height: 40px;
+    }
+
+    #{{ sid }} .pmy-arrow--prev{
+      left: 10px;
+    }
+
+    #{{ sid }} .pmy-arrow--next{
+      right: 10px;
+    }
+  }
+
+  @media screen and (max-width: 749px){
+    #{{ sid }}{
+      --card-size: clamp(210px, 72vw, 280px);
+    }
+
+    #{{ sid }} .pmy-stage{
+      height: calc(var(--card-size) + 36px);
+    }
+
+    #{{ sid }} .pmy-slide.is-prev-1{
+      transform: translateX(calc(-50% - 38vw)) translateY(8px) scale(.78) rotate(-5deg);
+    }
+
+    #{{ sid }} .pmy-slide.is-next-1{
+      transform: translateX(calc(-50% + 38vw)) translateY(8px) scale(.78) rotate(5deg);
+    }
+  }
+</style>
+
+<script>
+  (() => {
+    const root = document.getElementById('{{ sid }}');
+    if (!root) return;
+
+    const slides = Array.from(root.querySelectorAll('[data-slide]'));
+    const prevBtn = root.querySelector('.pmy-arrow--prev');
+    const nextBtn = root.querySelector('.pmy-arrow--next');
+
+    if (!slides.length) return;
+
+    let current = Math.min({{ section.settings.start_from | default: 1 }}, slides.length - 1);
+
+    function mod(n, m) {
+      return ((n % m) + m) % m;
+    }
+
+    function clearClasses(el) {
+      el.classList.remove('is-active', 'is-prev-1', 'is-prev-2', 'is-next-1', 'is-next-2', 'is-hidden');
+    }
+
+    function render() {
+      const total = slides.length;
+
+      slides.forEach((slide, index) => {
+        clearClasses(slide);
+
+        const prev1 = mod(current - 1, total);
+        const prev2 = mod(current - 2, total);
+        const next1 = mod(current + 1, total);
+        const next2 = mod(current + 2, total);
+
+        if (index === current) {
+          slide.classList.add('is-active');
+        } else if (index === prev1) {
+          slide.classList.add('is-prev-1');
+        } else if (index === prev2) {
+          slide.classList.add('is-prev-2');
+        } else if (index === next1) {
+          slide.classList.add('is-next-1');
+        } else if (index === next2) {
+          slide.classList.add('is-next-2');
+        } else {
+          slide.classList.add('is-hidden');
+        }
+      });
+    }
+
+    function nextSlide() {
+      current = mod(current + 1, slides.length);
+      render();
+    }
+
+    function prevSlide() {
+      current = mod(current - 1, slides.length);
+      render();
+    }
+
+    nextBtn?.addEventListener('click', nextSlide);
+    prevBtn?.addEventListener('click', prevSlide);
+
+    let startX = 0;
+    let deltaX = 0;
+
+    root.addEventListener('touchstart', (e) => {
+      startX = e.changedTouches[0].clientX;
+    }, { passive: true });
+
+    root.addEventListener('touchend', (e) => {
+      deltaX = e.changedTouches[0].clientX - startX;
+      if (Math.abs(deltaX) > 45) {
+        if (deltaX < 0) {
+          nextSlide();
+        } else {
+          prevSlide();
+        }
+      }
+    }, { passive: true });
+
+    {% if section.settings.autoplay %}
+      let auto = setInterval(nextSlide, {{ section.settings.autoplay_speed | times: 1000 }});
+
+      root.addEventListener('mouseenter', () => clearInterval(auto));
+      root.addEventListener('mouseleave', () => {
+        auto = setInterval(nextSlide, {{ section.settings.autoplay_speed | times: 1000 }});
+      });
+    {% endif %}
+
+    render();
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "For Every You Palmonas",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Full width",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "label_text",
+      "label": "Top label",
+      "default": "FOR EVERY YOU"
+    },
+    {
+      "type": "range",
+      "id": "label_size",
+      "label": "Label size desktop",
+      "min": 10,
+      "max": 50,
+      "step": 1,
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "label_size_mobile",
+      "label": "Label size mobile",
+      "min": 9,
+      "max": 30,
+      "step": 1,
+      "default": 11
+    },
+    {
+      "type": "range",
+      "id": "caption_size",
+      "label": "Caption size desktop",
+      "min": 14,
+      "max": 34,
+      "step": 1,
+      "default": 22
+    },
+    {
+      "type": "range",
+      "id": "caption_size_mobile",
+      "label": "Caption size mobile",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "desktop_height",
+      "label": "Card height desktop",
+      "min": 420,
+      "max": 900,
+      "step": 10,
+      "default": 640
+    },
+    {
+      "type": "range",
+      "id": "mobile_height",
+      "label": "Card height mobile",
+      "min": 280,
+      "max": 600,
+      "step": 10,
+      "default": 420
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Overlay opacity",
+      "min": 0,
+      "max": 60,
+      "step": 5,
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "arrow_offset",
+      "label": "Arrow offset desktop",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "start_from",
+      "label": "Start from slide number",
+      "min": 0,
+      "max": 8,
+      "step": 1,
+      "default": 1
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Enable autoplay",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "label": "Autoplay speed (seconds)",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "color",
+      "id": "section_bg",
+      "label": "Section background",
+      "default": "#f3f3f3"
+    },
+    {
+      "type": "color",
+      "id": "label_bg",
+      "label": "Label background",
+      "default": "#2f62ff"
+    },
+    {
+      "type": "color",
+      "id": "label_color",
+      "label": "Label text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "caption_color",
+      "label": "Caption color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "arrow_bg",
+      "label": "Arrow background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "arrow_color",
+      "label": "Arrow icon color",
+      "default": "#222222"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding desktop",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding desktop",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Top padding mobile",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Bottom padding mobile",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "default": 28
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "limit": 8,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "OFFICE WEAR"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "For Every You Palmonas",
+      "blocks": [
+        { "type": "slide", "settings": { "title": "OFFICE WEAR" } },
+        { "type": "slide", "settings": { "title": "DAILY WEAR" } },
+        { "type": "slide", "settings": { "title": "PARTY WEAR" } },
+        { "type": "slide", "settings": { "title": "DAY OUT" } },
+        { "type": "slide", "settings": { "title": "WEDDING WEAR" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

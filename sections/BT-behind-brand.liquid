@@ -1,0 +1,975 @@
+<section class="bs-people-section-{{ section.id }}">
+  <div class="bs-bg-overlay"></div>
+
+  <div class="bs-people-inner">
+    <div class="bs-people-slider">
+      {% for block in section.blocks %}
+        <div class="bs-people-slide{% if forloop.first %} active{% endif %}" {{ block.shopify_attributes }}>
+          
+          <div class="bs-content-card">
+            {% if block.settings.heading_top != blank %}
+              <h2>
+                {{ block.settings.heading_top }}
+                {% if block.settings.heading_highlight != blank %}
+                  <span>{{ block.settings.heading_highlight }}</span>
+                {% endif %}
+              </h2>
+            {% endif %}
+
+            {% if block.settings.role != blank %}
+              <div class="bs-role">{{ block.settings.role }}</div>
+            {% endif %}
+
+            {% if block.settings.description != blank %}
+              <div class="bs-description">
+                {{ block.settings.description }}
+              </div>
+            {% endif %}
+
+            {% if block.settings.name != blank %}
+              <div class="bs-name">{{ block.settings.name }}</div>
+            {% endif %}
+
+            {% if section.blocks.size > 1 %}
+              <div class="bs-slider-buttons">
+                <button class="bs-people-prev" aria-label="Previous">‹</button>
+                <button class="bs-people-next" aria-label="Next">›</button>
+              </div>
+            {% endif %}
+          </div>
+
+<div
+  class="bs-image-area"
+  {% if block.settings.person_image != blank %}
+    style="--person-bg-image: url('{{ block.settings.person_image | image_url: width: 1200 }}');"
+  {% endif %}
+>
+</div>
+
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<style>
+.bs-people-section-{{ section.id }} {
+  position: relative;
+  background-color: {{ section.settings.section_bg }};
+  {% if section.settings.background_image != blank %}
+    background-image: url('{{ section.settings.background_image | image_url: width: 2400 }}');
+  {% endif %}
+  background-size: {{ section.settings.background_size }};
+  background-position: {{ section.settings.background_position }};
+  background-repeat: no-repeat;
+  padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+  overflow: hidden;
+}
+
+.bs-people-section-{{ section.id }} .bs-bg-overlay {
+  position: absolute;
+  inset: 0;
+  background: {{ section.settings.bg_overlay_color }};
+  opacity: {{ section.settings.bg_overlay_opacity | times: 0.01 }};
+  pointer-events: none;
+  z-index: 0;
+}
+
+.bs-people-section-{{ section.id }} .bs-people-inner {
+  position: relative;
+  z-index: 2;
+  max-width: {% if section.settings.full_width %}100%{% else %}{{ section.settings.max_width }}px{% endif %};
+  min-height: {{ section.settings.section_height }}px;
+  margin: 0 auto;
+}
+
+.bs-people-section-{{ section.id }} .bs-people-slider {
+  position: relative;
+  z-index: 2;
+}
+
+.bs-people-section-{{ section.id }} .bs-people-slide {
+  display: none;
+  grid-template-columns: {{ section.settings.content_width }}% 1fr;
+  align-items: end;
+  min-height: {{ section.settings.section_height }}px;
+}
+
+.bs-people-section-{{ section.id }} .bs-people-slide.active {
+  display: grid;
+}
+
+.bs-people-section-{{ section.id }} .bs-content-card {
+  background: {{ section.settings.card_bg }};
+  min-height: {{ section.settings.card_height }}px;
+  margin-left: {{ section.settings.card_left_spacing }}px;
+  margin-bottom: {{ section.settings.card_bottom_spacing }}px;
+  padding: {{ section.settings.card_padding_top }}px {{ section.settings.card_padding_x }}px {{ section.settings.card_padding_bottom }}px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: {{ section.settings.card_radius }}px;
+  box-shadow: {% if section.settings.enable_card_shadow %}0 18px 45px rgba(0,0,0,0.06){% else %}none{% endif %};
+}
+
+.bs-people-section-{{ section.id }} .bs-content-card h2 {
+  margin: 0 0 {{ section.settings.heading_bottom_spacing }}px;
+  color: {{ section.settings.heading_color }};
+  font-size: {{ section.settings.heading_size }}px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: {{ section.settings.heading_letter_spacing }}px;
+}
+
+.bs-people-section-{{ section.id }} .bs-content-card h2 span {
+  display: block;
+  margin-top: 8px;
+  color: {{ section.settings.accent_color }};
+  font-size: {{ section.settings.highlight_size }}px;
+  font-weight: 700;
+  letter-spacing: {{ section.settings.highlight_letter_spacing }}px;
+  text-transform: uppercase;
+}
+
+.bs-people-section-{{ section.id }} .bs-role {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: {{ section.settings.role_width }}px;
+  margin-bottom: {{ section.settings.role_bottom_spacing }}px;
+  padding: 11px 22px;
+  background: {{ section.settings.accent_color }};
+  color: {{ section.settings.role_text_color }};
+  font-size: {{ section.settings.role_font_size }}px;
+  font-weight: 500;
+  line-height: 1;
+  border-radius: {{ section.settings.role_radius }}px;
+}
+
+.bs-people-section-{{ section.id }} .bs-description {
+  max-width: {{ section.settings.text_width }}px;
+  margin: 0 auto {{ section.settings.name_top_spacing }}px;
+  color: {{ section.settings.text_color }};
+  font-size: {{ section.settings.text_size }}px;
+  font-weight: 400;
+  line-height: 1.55;
+}
+
+.bs-people-section-{{ section.id }} .bs-name {
+  color: {{ section.settings.name_color }};
+  font-size: {{ section.settings.name_size }}px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.bs-people-section-{{ section.id }} .bs-slider-buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: {{ section.settings.arrow_top_spacing }}px;
+}
+
+.bs-people-section-{{ section.id }} .bs-slider-buttons button {
+  width: {{ section.settings.arrow_size }}px;
+  height: {{ section.settings.arrow_size }}px;
+  border: none;
+  border-radius: 50%;
+  background: {{ section.settings.arrow_bg }};
+  color: {{ section.settings.arrow_color }};
+  font-size: {{ section.settings.arrow_font_size }}px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: .25s ease;
+}
+
+.bs-people-section-{{ section.id }} .bs-slider-buttons button:hover {
+  background: {{ section.settings.accent_color }};
+  color: #ffffff;
+}
+
+{% comment %} .bs-people-section-{{ section.id }} .bs-image-area {
+  position: relative;
+  min-height: {{ section.settings.section_height }}px;
+  display: flex;
+  align-items: end;
+  justify-content: center;
+}
+
+.bs-people-section-{{ section.id }} .bs-image-area img {
+  display: block;
+  max-width: {{ section.settings.image_width }}px;
+  max-height: {{ section.settings.image_height }}px;
+  width: 100%;
+  object-fit: contain;
+  position: relative;
+  z-index: 3;
+} {% endcomment %}
+.bs-people-section-{{ section.id }} .bs-image-area {
+  position: relative;
+  min-height: {{ section.settings.section_height }}px;
+  background-image: var(--person-bg-image);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: bottom center;
+  z-index: 3;
+}
+
+@media screen and (max-width: 989px) {
+  .bs-people-section-{{ section.id }} {
+    {% if section.settings.mobile_background_image != blank %}
+      background-image: url('{{ section.settings.mobile_background_image | image_url: width: 1000 }}');
+    {% endif %}
+    background-position: {{ section.settings.mobile_background_position }};
+    padding: {{ section.settings.mobile_padding_top }}px 0 {{ section.settings.mobile_padding_bottom }}px;
+  }
+
+  .bs-people-section-{{ section.id }} .bs-people-inner {
+    min-height: auto;
+  }
+
+  .bs-people-section-{{ section.id }} .bs-people-slide,
+  .bs-people-section-{{ section.id }} .bs-people-slide.active {
+    display: flex;
+    flex-direction: column-reverse;
+    min-height: auto;
+  }
+
+  .bs-people-section-{{ section.id }} .bs-content-card {
+    width: calc(100% - 32px);
+    min-height: auto;
+    margin: -20px auto 0;
+    padding: {{ section.settings.mobile_card_padding_top }}px {{ section.settings.mobile_card_padding_x }}px {{ section.settings.mobile_card_padding_bottom }}px;
+    position: relative;
+    z-index: 5;
+  }
+
+  .bs-people-section-{{ section.id }} .bs-content-card h2 {
+    font-size: {{ section.settings.mobile_heading_size }}px;
+  }
+
+  .bs-people-section-{{ section.id }} .bs-content-card h2 span {
+    font-size: {{ section.settings.mobile_highlight_size }}px;
+  }
+
+  .bs-people-section-{{ section.id }} .bs-description {
+    font-size: {{ section.settings.mobile_text_size }}px;
+  }
+
+  {% comment %} .bs-people-section-{{ section.id }} .bs-image-area {
+    min-height: auto;
+    width: 100%;
+  }
+
+  .bs-people-section-{{ section.id }} .bs-image-area img {
+    max-width: {{ section.settings.mobile_image_width }}px;
+    max-height: {{ section.settings.mobile_image_height }}px;
+  } {% endcomment %}
+  .bs-people-section-{{ section.id }} .bs-image-area {
+  min-height: {{ section.settings.mobile_image_height }}px;
+  width: 100%;
+  background-image: var(--person-bg-image);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: bottom center;
+}
+}
+</style>
+
+<script>
+(function () {
+  function initPeopleSlider{{ section.id | replace: '-', '_' }}() {
+    const section = document.querySelector('.bs-people-section-{{ section.id }}');
+    if (!section || section.dataset.peopleInit === 'true') return;
+
+    section.dataset.peopleInit = 'true';
+
+    const slides = section.querySelectorAll('.bs-people-slide');
+    const prevButtons = section.querySelectorAll('.bs-people-prev');
+    const nextButtons = section.querySelectorAll('.bs-people-next');
+
+    if (!slides.length) return;
+
+    let current = 0;
+
+    function showSlide(index) {
+      slides.forEach(function (slide) {
+        slide.classList.remove('active');
+      });
+
+      slides[index].classList.add('active');
+    }
+
+    function nextSlide() {
+      current = current + 1 >= slides.length ? 0 : current + 1;
+      showSlide(current);
+    }
+
+    function prevSlide() {
+      current = current - 1 < 0 ? slides.length - 1 : current - 1;
+      showSlide(current);
+    }
+
+    nextButtons.forEach(function (button) {
+      button.addEventListener('click', nextSlide);
+    });
+
+    prevButtons.forEach(function (button) {
+      button.addEventListener('click', prevSlide);
+    });
+
+    {% if section.settings.enable_autoplay %}
+      setInterval(nextSlide, {{ section.settings.autoplay_speed | times: 1000 }});
+    {% endif %}
+  }
+
+  document.addEventListener('DOMContentLoaded', initPeopleSlider{{ section.id | replace: '-', '_' }});
+  document.addEventListener('shopify:section:load', initPeopleSlider{{ section.id | replace: '-', '_' }});
+})();
+</script>
+
+{% schema %}
+{
+  "name": "People Behind Brand",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Main Layout"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Full Width",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Max Width",
+      "min": 1000,
+      "max": 1900,
+      "step": 50,
+      "default": 1500
+    },
+    {
+      "type": "range",
+      "id": "section_height",
+      "label": "Desktop Section Height",
+      "min": 420,
+      "max": 800,
+      "step": 20,
+      "default": 540
+    },
+    {
+      "type": "range",
+      "id": "content_width",
+      "label": "Content Area Width",
+      "min": 40,
+      "max": 70,
+      "step": 1,
+      "default": 56
+    },
+    {
+      "type": "color",
+      "id": "section_bg",
+      "label": "Section Background",
+      "default": "#f4f2fa"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent Color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Background Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Desktop Background Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_background_image",
+      "label": "Mobile Background Image"
+    },
+    {
+      "type": "select",
+      "id": "background_size",
+      "label": "Background Size",
+      "default": "cover",
+      "options": [
+        {
+          "value": "cover",
+          "label": "Cover"
+        },
+        {
+          "value": "contain",
+          "label": "Contain"
+        },
+        {
+          "value": "auto",
+          "label": "Original"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "background_position",
+      "label": "Desktop Background Position",
+      "default": "center center",
+      "options": [
+        {
+          "value": "center center",
+          "label": "Center"
+        },
+        {
+          "value": "top center",
+          "label": "Top Center"
+        },
+        {
+          "value": "bottom center",
+          "label": "Bottom Center"
+        },
+        {
+          "value": "center left",
+          "label": "Center Left"
+        },
+        {
+          "value": "center right",
+          "label": "Center Right"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "mobile_background_position",
+      "label": "Mobile Background Position",
+      "default": "center center",
+      "options": [
+        {
+          "value": "center center",
+          "label": "Center"
+        },
+        {
+          "value": "top center",
+          "label": "Top Center"
+        },
+        {
+          "value": "bottom center",
+          "label": "Bottom Center"
+        },
+        {
+          "value": "center left",
+          "label": "Center Left"
+        },
+        {
+          "value": "center right",
+          "label": "Center Right"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bg_overlay_color",
+      "label": "Background Overlay Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "bg_overlay_opacity",
+      "label": "Background Overlay Opacity",
+      "min": 0,
+      "max": 90,
+      "step": 5,
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Desktop Padding Top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Desktop Padding Bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "label": "Mobile Padding Top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_bottom",
+      "label": "Mobile Padding Bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "default": 32
+    },
+    {
+      "type": "header",
+      "content": "Content Card"
+    },
+    {
+      "type": "color",
+      "id": "card_bg",
+      "label": "Card Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_card_shadow",
+      "label": "Enable Card Shadow",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Card Border Radius",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "card_height",
+      "label": "Desktop Card Height",
+      "min": 300,
+      "max": 650,
+      "step": 10,
+      "default": 470
+    },
+    {
+      "type": "range",
+      "id": "card_left_spacing",
+      "label": "Desktop Card Left Spacing",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "card_bottom_spacing",
+      "label": "Desktop Card Bottom Spacing",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "card_padding_top",
+      "label": "Desktop Card Padding Top",
+      "min": 20,
+      "max": 140,
+      "step": 4,
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "card_padding_bottom",
+      "label": "Desktop Card Padding Bottom",
+      "min": 20,
+      "max": 140,
+      "step": 4,
+      "default": 44
+    },
+    {
+      "type": "range",
+      "id": "card_padding_x",
+      "label": "Desktop Card Side Padding",
+      "min": 20,
+      "max": 160,
+      "step": 4,
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "mobile_card_padding_top",
+      "label": "Mobile Card Padding Top",
+      "min": 20,
+      "max": 100,
+      "step": 4,
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "mobile_card_padding_bottom",
+      "label": "Mobile Card Padding Bottom",
+      "min": 20,
+      "max": 100,
+      "step": 4,
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "mobile_card_padding_x",
+      "label": "Mobile Card Side Padding",
+      "min": 16,
+      "max": 60,
+      "step": 2,
+      "default": 24
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Desktop Heading Size",
+      "min": 24,
+      "max": 70,
+      "step": 1,
+      "default": 42
+    },
+    {
+      "type": "range",
+      "id": "mobile_heading_size",
+      "label": "Mobile Heading Size",
+      "min": 20,
+      "max": 44,
+      "step": 1,
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "heading_letter_spacing",
+      "label": "Heading Letter Spacing",
+      "min": 0,
+      "max": 8,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "heading_bottom_spacing",
+      "label": "Heading Bottom Spacing",
+      "min": 8,
+      "max": 50,
+      "step": 2,
+      "default": 26
+    },
+    {
+      "type": "range",
+      "id": "highlight_size",
+      "label": "Desktop Highlight Size",
+      "min": 20,
+      "max": 60,
+      "step": 1,
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "mobile_highlight_size",
+      "label": "Mobile Highlight Size",
+      "min": 18,
+      "max": 40,
+      "step": 1,
+      "default": 26
+    },
+    {
+      "type": "range",
+      "id": "highlight_letter_spacing",
+      "label": "Highlight Letter Spacing",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Description Color",
+      "default": "#1f1f1f"
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "label": "Desktop Description Size",
+      "min": 13,
+      "max": 28,
+      "step": 1,
+      "default": 19
+    },
+    {
+      "type": "range",
+      "id": "mobile_text_size",
+      "label": "Mobile Description Size",
+      "min": 12,
+      "max": 22,
+      "step": 1,
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "text_width",
+      "label": "Description Width",
+      "min": 300,
+      "max": 800,
+      "step": 20,
+      "default": 580
+    },
+    {
+      "type": "color",
+      "id": "name_color",
+      "label": "Name Color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "name_size",
+      "label": "Name Font Size",
+      "min": 14,
+      "max": 28,
+      "step": 1,
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "name_top_spacing",
+      "label": "Space Before Name",
+      "min": 10,
+      "max": 60,
+      "step": 2,
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Role Badge"
+    },
+    {
+      "type": "color",
+      "id": "role_text_color",
+      "label": "Role Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "role_width",
+      "label": "Role Badge Min Width",
+      "min": 80,
+      "max": 240,
+      "step": 4,
+      "default": 124
+    },
+    {
+      "type": "range",
+      "id": "role_font_size",
+      "label": "Role Font Size",
+      "min": 12,
+      "max": 22,
+      "step": 1,
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "role_radius",
+      "label": "Role Badge Radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "role_bottom_spacing",
+      "label": "Role Bottom Spacing",
+      "min": 10,
+      "max": 60,
+      "step": 2,
+      "default": 22
+    },
+    {
+      "type": "header",
+      "content": "Person Image"
+    },
+    {
+      "type": "range",
+      "id": "image_width",
+      "label": "Desktop Image Width",
+      "min": 300,
+      "max": 800,
+      "step": 20,
+      "default": 520
+    },
+    {
+      "type": "range",
+      "id": "image_height",
+      "label": "Desktop Image Height",
+      "min": 350,
+      "max": 780,
+      "step": 10,
+      "default": 530
+    },
+    {
+      "type": "range",
+      "id": "mobile_image_width",
+      "label": "Mobile Image Width",
+      "min": 220,
+      "max": 500,
+      "step": 10,
+      "default": 340
+    },
+    {
+      "type": "range",
+      "id": "mobile_image_height",
+      "label": "Mobile Image Height",
+      "min": 250,
+      "max": 600,
+      "step": 10,
+      "default": 380
+    },
+    {
+      "type": "header",
+      "content": "Slider Arrows"
+    },
+    {
+      "type": "color",
+      "id": "arrow_bg",
+      "label": "Arrow Background",
+      "default": "#f4f4f4"
+    },
+    {
+      "type": "color",
+      "id": "arrow_color",
+      "label": "Arrow Color",
+      "default": "#222222"
+    },
+    {
+      "type": "range",
+      "id": "arrow_size",
+      "label": "Arrow Size",
+      "min": 28,
+      "max": 60,
+      "step": 2,
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "arrow_font_size",
+      "label": "Arrow Icon Size",
+      "min": 18,
+      "max": 42,
+      "step": 1,
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "arrow_top_spacing",
+      "label": "Arrow Top Spacing",
+      "min": 12,
+      "max": 70,
+      "step": 2,
+      "default": 34
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_autoplay",
+      "label": "Enable Autoplay",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "label": "Autoplay Speed Seconds",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "default": 4
+    }
+  ],
+  "blocks": [
+    {
+      "type": "person",
+      "name": "Person",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "person_image",
+          "label": "Person Image"
+        },
+        {
+          "type": "text",
+          "id": "heading_top",
+          "label": "Heading Top",
+          "default": "The People Behind"
+        },
+        {
+          "type": "text",
+          "id": "heading_highlight",
+          "label": "Heading Highlight",
+          "default": "BIO MYSTERY"
+        },
+        {
+          "type": "text",
+          "id": "role",
+          "label": "Role Badge",
+          "default": "Founder"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "With a clear focus on safe, effective, and customer-first beauty solutions, our team works to create skincare and haircare products designed for everyday confidence."
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Name",
+          "default": "Founder Name"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "People Behind Brand",
+      "blocks": [
+        {
+          "type": "person"
+        },
+        {
+          "type": "person",
+          "settings": {
+            "role": "Co-Founder",
+            "description": "Driven by quality, trust, and innovation, our team keeps Bio Mystery focused on clean beauty, reliable formulas, and a premium skincare experience.",
+            "name": "Co-Founder Name"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

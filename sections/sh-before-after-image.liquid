@@ -1,0 +1,361 @@
+{%- capture sp_before_after_image_css -%}
+  <style>
+    #sp-{{ section.id }}.sp-comparison-section{padding-top: {{section.settings.padding_top}}px; padding-bottom: {{ section.settings.padding_bottom }}px;background: {{section.settings.bg_color}};}
+    #sp-{{ section.id }} .sp-page-width{max-width: {{section.settings.section_max_width}}px;width: 100%;padding: 0 20px;margin: 0 auto;}
+    #sp-{{ section.id }} .sp-comparison-title{margin: 0 auto 30px;}
+    #sp-{{ section.id }} .sp-comparison-title h2{font-size: {{ section.settings.heading_font_size }}px;font-weight: 500;margin: 0 0 20px;color: {{section.settings.heading_color}};}
+    #sp-{{ section.id }} .sp-comparison-section-desc p{margin: 0;font-size: {{section.settings.content_font_size}}px;line-height: 1.4;color: {{section.settings.content_color}};}
+    #sp-{{ section.id }} .sp-img-comp-container {position: relative;height: 200px;}
+    #sp-{{ section.id }} .sp-img-comp-img {position: absolute;width: auto;height: auto;overflow:hidden;}
+    #sp-{{ section.id }} .sp-img-comp-img img {display:block;vertical-align:middle;max-width: unset;}
+    #sp-{{ section.id }} .sp-img-comp-slider {position: absolute;z-index:9;cursor: ew-resize;/*set the appearance of the slider:*/width: 40px;height: 40px;background-color: #2196F3;opacity: 0.7;border-radius: 50%;}
+    #sp-{{ section.id }} .sp-container {aspect-ratio: {{section.settings.image_aspect_ratio}};width: 100%;margin: 0 auto;position: relative;overflow: hidden;border-radius: {{ section.settings.media_radius }}px;}
+    #sp-{{ section.id }} .sp-container img {object-fit: cover;width: 100%;height: 100%;}
+    #sp-{{ section.id }} .sp-comparison-wraper{width: 100%;height: 100%;position: absolute;}
+    #sp-{{ section.id }} .sp-container .sp-after:after{content: "{{section.settings.after_text}}";position: absolute;color: {{section.settings.btn_text_color}};font-size:{{ section.settings.text_font_size }}px;z-index: 0;background-color: {{section.settings.btn_bg_color}};line-height: 1.5;padding: 0px 15px;border-radius: 20px;}
+    #sp-{{ section.id }} .sp-container .sp-after.sp-after-top:after{top: 10px;right: 10px;}
+    #sp-{{ section.id }} .sp-container .sp-before.sp-before-top:before{top: 10px;left: 10px;}
+    #sp-{{ section.id }} .sp-container .sp-after.sp-after-middle:after{top: 50%;right: 10px;transform: translateY(-50%);}
+    #sp-{{ section.id }} .sp-container .sp-before.sp-before-middle:before{top: 50%;left: 10px;transform: translateY(-50%);}
+    #sp-{{ section.id }} .sp-container .sp-after.sp-after-bottom:after{bottom: 10px;right: 10px;}
+    #sp-{{ section.id }} .sp-container .sp-before.sp-before-bottom:before{bottom: 10px;left: 10px;}
+    #sp-{{ section.id }} .sp-container .sp-before:before{content: "{{section.settings.before_text}}";position: absolute;color: {{section.settings.btn_text_color}};font-size:{{ section.settings.text_font_size }}px;z-index: 0;background-color: {{section.settings.btn_bg_color}};line-height: 1.5;padding: 0px 15px;border-radius: 20px;}
+    #sp-{{ section.id }} .sp-comparison-wraper.sp-after-top{width: 100%;height: 100%;display: flex;align-items: center;justify-content: center;}
+    #sp-{{ section.id }} .sp-comparison-wraper.sp-after-top img{height: 99.90%;width: 99.90%;}
+    #sp-{{ section.id }} .sp-comparison-btn:focus {outline: unset !important;outline-offset: unset !important;}
+  
+    /* Starting point */
+    .sp-comparison-wraper + .sp-comparison-wraper {clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);}
+
+    #sp-{{ section.id }} .sp-comparison-btn[type=range] {position: relative;-webkit-appearance: none;width: calc(100% + 40px);height: 100%;margin:0;margin-left: -20px;background-color: transparent;outline: none;max-width: unset;border: unset;padding:0}
+    
+    /* WebKit/Blink */
+    #sp-{{ section.id }} .sp-comparison-btn[type=range]::-webkit-slider-thumb{-webkit-appearance: none;height: 40px;width: 40px;background: {{section.settings.sep_bg_color}};border: 3px solid {{section.settings.sep_border_color}};border-radius: 50%;background-size: contain;cursor: ew-resize;}
+
+    /* Firefox */
+    #sp-{{ section.id }} .sp-comparison-btn[type=range]::-moz-range-thumb{height: 40px;width: 40px;background: {{section.settings.sep_bg_color}};border: 3px solid {{section.settings.sep_border_color}};border-radius: 50%;background-size: contain;cursor: ew-resize;}
+    
+    /* IE */
+    #sp-{{ section.id }} .sp-comparison-btn[type=range]::-ms-thumb {height: 40px;width: 40px;background: {{section.settings.sep_bg_color}};border: 3px solid {{section.settings.sep_border_color}};border-radius: 50%;background-size: contain;cursor: ew-resize;}  
+    @media only screen and (max-width: 767px){
+      #sp-{{ section.id }}.sp-comparison-section{padding-top: {{section.settings.mob_padding_top}}px; padding-bottom: {{ section.settings.mob_padding_bottom }}px;}
+      #sp-{{ section.id }} .sp-container{min-height: 25rem;border-radius: {{ section.settings.media_radius }}px;}
+      #sp-{{ section.id }} .sp-comparison-title h2 {margin: 0 0 10px;font-size: 26px;}
+      #sp-{{ section.id }} .sp-comparison-section-desc p{font-size: 14px;}
+      #sp-{{ section.id }} .sp-container .sp-before:before,
+      #sp-{{ section.id }} .sp-container .sp-after:after{max-width: 128px;line-height: 1.1;font-size:14px;padding: 5px 15px;}
+    }
+  </style>
+{%- endcapture -%}
+{{ sp_before_after_image_css | strip_newlines }}
+
+<div id="sp-{{ section.id }}" class="sp-comparison-section">
+  <div class="sp-page-width">
+    {% if section.settings.title != blank or section.settings.content != blank %}
+      <div class="sp-comparison-title sp-title-align-{{ section.settings.text_align }}">
+        {% if section.settings.title != blank %}
+          <h2>{{ section.settings.title }}</h2>
+        {% endif %}
+        {% if section.settings.content != blank %}
+          <div class="sp-comparison-section-desc sp-section-desc">
+            {{ section.settings.content }}
+          </div>
+        {% endif %}
+      </div>
+    {% endif %}
+   
+    <div class="sp-container">
+      <div class="sp-comparison-wraper sp-after sp-after-{{ section.settings.text_position }}">
+        {% if section.settings.after_image != blank %}
+          <img src="{{ section.settings.after_image | image_url: width: section.settings.after_image.width}}" class="sp-comparison-img" height="" width="" loading="lazy" alt="{{ section.settings.after_image.alt}}">
+        {% else %}
+          <img src="data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg version='1.1' viewBox='0 0 500 500' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Crect x='2' y='2' width='496' height='496' fill='%23747474' stroke='%23747474' stroke-width='4'/%3E%3C/g%3E%3C/svg%3E" width="" height="" loading="lazy" alt="Slideshow">
+        {% endif %}
+      </div>
+      
+      <div class="sp-comparison-wraper sp-before sp-before-{{ section.settings.text_position }}" id="sp-compare">
+        {% if section.settings.before_image != blank %}
+          <img src="{{ section.settings.before_image | image_url: width: section.settings.before_image.width}}" class="sp-comparison-img" height="" width="" loading="lazy" alt="{{section.settings.before_image.alt}}">
+        {% else %}
+          <img src="data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg version='1.1' viewBox='0 0 500 500' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Crect x='2' y='2' width='496' height='496' fill='%23D8D8D8' stroke='%23D8D8D8' stroke-width='4'/%3E%3C/g%3E%3C/svg%3E" width="" height="" loading="lazy" alt="Slideshow">
+        {% endif %}
+      </div>
+      <input class="sp-comparison-btn" type="range" min="0" max="100" value="50" id="sp-slider" oninput="slide_{{ section.index }}()">
+    </div>
+    
+  </div>
+</div>
+
+<script>
+  function slide_{{ section.index }}() {
+    let slideValue = document.querySelector("#sp-{{ section.id }}").querySelector("#sp-slider").value;
+    document.querySelector("#sp-{{ section.id }}").querySelector("#sp-compare").style.clipPath = "polygon(0 0," + slideValue + "% 0," + slideValue + "% 101%, 0 101%)";
+  }
+</script>
+
+{% schema %}
+{
+  "name": "SH: Before / After image",
+  "tag": "section",
+  "class": "sh-section-hub-main",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default":"After before image heading"
+    },
+    {
+      "type": "richtext",
+      "id": "content",
+      "label": "Content",
+      "default":"<p>Describe about you after before images</p>"
+    },
+    {
+      "type":"text_alignment",
+      "id":"text_align",
+      "label": "Text alignment",
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Before"
+    },
+    {
+      "type": "image_picker",
+      "id": "before_image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "before_text",
+      "label": "Text",
+      "default":"Before"
+    },
+    {
+      "type": "header",
+      "content": "After"
+    },
+    {
+      "type": "image_picker",
+      "id": "after_image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "after_text",
+      "label": "Text",
+      "default":"After"
+    },
+    {
+      "type": "select",
+      "id": "image_aspect_ratio",
+      "label": "Image height (Desktop)",  
+      "options": [
+        {
+          "value": "16 / 6",
+          "label": "Small"
+        },
+        {
+          "value": "16 / 7",
+          "label": "Medium"
+        },
+        {
+          "value": "16 / 8",
+          "label": "Large"
+        }
+      ],
+      "default": "16 / 7"
+    },
+    {
+      "type": "range",
+      "id": "media_radius",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Media border radius",
+      "default": 5
+    },
+    {
+      "type": "select",
+      "id": "text_position",
+      "label": "Text position",
+      "default": "top",
+      "options": [
+        {
+          "value": "top",
+          "label": "Top"
+        },
+        {
+          "value": "middle",
+          "label": "Middle"
+        },
+        {
+          "value": "bottom",
+          "label": "Bottom"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Font size"
+    },
+    {
+      "type": "range",
+      "id": "heading_font_size",
+      "min": 5,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Heading",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "content_font_size",
+      "min": 5,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Content",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "text_font_size",
+      "min": 5,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Before/After text",
+      "default": 16
+    },
+    {
+      "type":"header",
+      "content": "Colors"
+    },
+    {
+        "type": "color",
+        "id": "bg_color",
+        "label": "Background color",
+        "default": "#fff"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+     "default": "#000"
+    },
+    {
+      "type": "color",
+      "id": "content_color",
+      "label": "Content color",
+      "default": "#000"
+    },
+    {
+      "type": "paragraph",
+      "content": "Before/After text"
+    },
+    {
+      "type": "color",
+      "id": "btn_bg_color",
+      "label": "Background color",
+       "default": "#fff"
+    },
+    {
+      "type": "color",
+      "id": "btn_text_color",
+      "label": "Text color",
+      "default": "#000"
+    },
+    {
+      "type": "paragraph",
+      "content": "Separator"
+    },
+    {
+      "type": "color",
+      "id": "sep_bg_color",
+      "label": "Background color",
+       "default": "transparent"
+    },
+    {
+      "type": "color",
+      "id": "sep_border_color",
+      "label": "Border color",
+      "default": "#ffffff"
+    },
+    
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "paragraph",
+      "content": "Desktop"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 1,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 1,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 40
+    },
+    {
+      "type": "paragraph",
+      "content": "Mobile"
+    },
+    {
+      "type": "range",
+      "id": "mob_padding_top",
+      "min": 1,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "mob_padding_bottom",
+      "min": 1,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 30
+    },
+    {
+      "type": "header",
+      "content": "Section width"
+    },
+    {
+      "type": "text",
+      "id": "section_max_width",
+      "label": "Width",
+      "default": "1140"
+    }
+  ],
+  "presets": [
+    {
+      "name": "SH: Before / After image"
+    }
+  ],
+  "disabled_on": {
+    "groups": ["footer","header"]
+  }
+}
+{% endschema %}

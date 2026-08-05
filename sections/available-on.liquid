@@ -1,0 +1,679 @@
+{% style %}
+  #shopify-section-{{ section.id }} .simple-available {
+    background: {{ section.settings.section_bg }};
+    padding: {{ section.settings.padding_top }}px 16px {{ section.settings.padding_bottom }}px;
+  }
+
+  #shopify-section-{{ section.id }} .simple-available__inner {
+    max-width: {{ section.settings.container_width }}px;
+    margin: 0 auto;
+  }
+
+  #shopify-section-{{ section.id }} .simple-available__heading {
+    margin: 0 0 24px;
+    text-align: center;
+    color: {{ section.settings.heading_color }};
+    font-size: {{ section.settings.heading_size }}px;
+    line-height: 1.2;
+    font-weight: 600;
+  }
+
+  #shopify-section-{{ section.id }} .simple-available__grid {
+    display: grid;
+    grid-template-columns: repeat({{ section.settings.desktop_columns }}, minmax(0, 1fr));
+    gap: {{ section.settings.logo_gap }}px;
+    align-items: center;
+  }
+
+  #shopify-section-{{ section.id }} .simple-available__slider {
+    display: flex !important;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: {{ section.settings.logo_gap }}px;
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+  }
+
+  #shopify-section-{{ section.id }} .simple-available__slider::-webkit-scrollbar {
+    display: none;
+  }
+
+  #shopify-section-{{ section.id }} .simple-available__slider .simple-available__item {
+    flex: 0 0 calc((100% - ({{ section.settings.logo_gap }}px * {{ section.settings.desktop_slider_items | minus: 1 }})) / {{ section.settings.desktop_slider_items }});
+    scroll-snap-align: start;
+  }
+
+  #shopify-section-{{ section.id }} .simple-available__item {
+    min-height: {{ section.settings.card_height }}px;
+    padding: 14px 18px;
+    background: {{ section.settings.card_bg }};
+    border: 1px solid {{ section.settings.card_border }};
+    border-radius: {{ section.settings.card_radius }}px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+
+  #shopify-section-{{ section.id }} .simple-available__item:hover {
+    transform: translateY(-2px);
+    border-color: {{ section.settings.card_hover_border }};
+  }
+
+  #shopify-section-{{ section.id }} .simple-available__logo {
+    display: block;
+    max-width: {{ section.settings.logo_max_width }}px;
+    max-height: {{ section.settings.logo_max_height }}px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+  }
+
+  #shopify-section-{{ section.id }} .simple-available__text {
+    color: {{ section.settings.text_logo_color }};
+    font-size: 18px;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  #shopify-section-{{ section.id }} .simple-available__arrows {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 22px;
+  }
+
+  #shopify-section-{{ section.id }} .simple-available__arrow {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1px solid {{ section.settings.card_border }};
+    background: {{ section.settings.card_bg }};
+    color: {{ section.settings.text_logo_color }};
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+  }
+
+  #shopify-section-{{ section.id }} .simple-available__arrow:hover {
+    border-color: {{ section.settings.card_hover_border }};
+    transform: translateY(-2px);
+  }
+
+  {% if section.settings.layout_type == 'grid' %}
+    #shopify-section-{{ section.id }} .simple-available__arrows {
+      display: none;
+    }
+  {% endif %}
+
+  @media screen and (max-width: 989px) {
+    #shopify-section-{{ section.id }} .simple-available__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    #shopify-section-{{ section.id }} .simple-available__slider .simple-available__item {
+      flex: 0 0 calc((100% - ({{ section.settings.logo_gap }}px * 2)) / 3);
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    #shopify-section-{{ section.id }} .simple-available {
+      padding: {{ section.settings.mobile_padding_top }}px 14px {{ section.settings.mobile_padding_bottom }}px;
+    }
+
+    #shopify-section-{{ section.id }} .simple-available__heading {
+      font-size: {{ section.settings.mobile_heading_size }}px;
+      margin-bottom: 18px;
+    }
+
+    #shopify-section-{{ section.id }} .simple-available__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: {{ section.settings.mobile_logo_gap }}px;
+    }
+
+    #shopify-section-{{ section.id }} .simple-available__slider {
+      gap: {{ section.settings.mobile_logo_gap }}px;
+    }
+
+    #shopify-section-{{ section.id }} .simple-available__slider .simple-available__item {
+      flex: 0 0 calc((100% - ({{ section.settings.mobile_logo_gap }}px * {{ section.settings.mobile_slider_items | minus: 1 }})) / {{ section.settings.mobile_slider_items }});
+    }
+
+    #shopify-section-{{ section.id }} .simple-available__item {
+      min-height: {{ section.settings.mobile_card_height }}px;
+      padding: 12px;
+      border-radius: {{ section.settings.mobile_card_radius }}px;
+    }
+
+    #shopify-section-{{ section.id }} .simple-available__logo {
+      max-width: {{ section.settings.mobile_logo_max_width }}px;
+      max-height: {{ section.settings.mobile_logo_max_height }}px;
+    }
+
+    #shopify-section-{{ section.id }} .simple-available__text {
+      font-size: 15px;
+    }
+  }
+{% endstyle %}
+
+<section class="simple-available">
+  <div class="simple-available__inner">
+    {% if section.settings.heading != blank %}
+      <h2 class="simple-available__heading">
+        {{ section.settings.heading }}
+      </h2>
+    {% endif %}
+
+    <div class="simple-available__grid{% if section.settings.layout_type == 'slider' %} simple-available__slider{% endif %}">
+      {% for block in section.blocks %}
+        {% assign alt_text = block.settings.logo_alt | default: block.settings.platform_name %}
+
+        {% if block.settings.platform_link != blank %}
+          <a
+            href="{{ block.settings.platform_link }}"
+            class="simple-available__item"
+            target="_blank"
+            rel="noopener"
+            {{ block.shopify_attributes }}
+          >
+        {% else %}
+          <div class="simple-available__item" {{ block.shopify_attributes }}>
+        {% endif %}
+
+          {% if block.settings.logo_image != blank %}
+            {{
+              block.settings.logo_image
+              | image_url: width: 360
+              | image_tag:
+                class: 'simple-available__logo',
+                loading: 'lazy',
+                alt: alt_text
+            }}
+          {% elsif block.settings.logo_external_url != blank %}
+            <img
+              src="{{ block.settings.logo_external_url | escape }}"
+              alt="{{ alt_text | escape }}"
+              class="simple-available__logo"
+              loading="lazy"
+            >
+          {% elsif block.settings.platform_name != blank %}
+            <span class="simple-available__text">
+              {{ block.settings.platform_name }}
+            </span>
+          {% endif %}
+
+        {% if block.settings.platform_link != blank %}
+          </a>
+        {% else %}
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+
+    {% if section.settings.layout_type == 'slider' and section.settings.show_arrows %}
+      <div class="simple-available__arrows">
+        <button type="button" class="simple-available__arrow simple-available__arrow--prev" aria-label="Previous">
+          &#10094;
+        </button>
+        <button type="button" class="simple-available__arrow simple-available__arrow--next" aria-label="Next">
+          &#10095;
+        </button>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% if section.settings.layout_type == 'slider' %}
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const section = document.querySelector('#shopify-section-{{ section.id }}');
+      if (!section) return;
+
+      const slider = section.querySelector('.simple-available__slider');
+      const nextBtn = section.querySelector('.simple-available__arrow--next');
+      const prevBtn = section.querySelector('.simple-available__arrow--prev');
+
+      if (!slider) return;
+
+      const getScrollStep = function () {
+        const item = slider.querySelector('.simple-available__item');
+        if (!item) return 200;
+
+        const gap = window.innerWidth <= 749
+          ? {{ section.settings.mobile_logo_gap }}
+          : {{ section.settings.logo_gap }};
+
+        return item.offsetWidth + gap;
+      };
+
+      if (nextBtn) {
+        nextBtn.addEventListener('click', function () {
+          slider.scrollBy({
+            left: getScrollStep(),
+            behavior: 'smooth'
+          });
+        });
+      }
+
+      if (prevBtn) {
+        prevBtn.addEventListener('click', function () {
+          slider.scrollBy({
+            left: -getScrollStep(),
+            behavior: 'smooth'
+          });
+        });
+      }
+
+      {% if section.settings.enable_autoplay %}
+        let autoplayTimer;
+
+        const startAutoplay = function () {
+          autoplayTimer = setInterval(function () {
+            const maxScroll = slider.scrollWidth - slider.clientWidth;
+
+            if (slider.scrollLeft >= maxScroll - 5) {
+              slider.scrollTo({
+                left: 0,
+                behavior: 'smooth'
+              });
+            } else {
+              slider.scrollBy({
+                left: getScrollStep(),
+                behavior: 'smooth'
+              });
+            }
+          }, {{ section.settings.slider_speed | times: 1000 }});
+        };
+
+        const stopAutoplay = function () {
+          clearInterval(autoplayTimer);
+        };
+
+        slider.addEventListener('mouseenter', stopAutoplay);
+        slider.addEventListener('mouseleave', startAutoplay);
+        slider.addEventListener('touchstart', stopAutoplay, { passive: true });
+        slider.addEventListener('touchend', startAutoplay);
+
+        startAutoplay();
+      {% endif %}
+    });
+  </script>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Simple Available On",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "We are Available on"
+    },
+    {
+      "type": "select",
+      "id": "layout_type",
+      "label": "Layout type",
+      "default": "grid",
+      "options": [
+        {
+          "value": "grid",
+          "label": "Grid"
+        },
+        {
+          "value": "slider",
+          "label": "Slider"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "label": "Show slider arrows",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_autoplay",
+      "label": "Enable slider autoplay",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "slider_speed",
+      "label": "Slider speed",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "unit": "sec",
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "desktop_slider_items",
+      "label": "Desktop slider items",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "mobile_slider_items",
+      "label": "Mobile slider items",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "color",
+      "id": "section_bg",
+      "label": "Section background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "card_bg",
+      "label": "Logo card background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "card_border",
+      "label": "Logo card border",
+      "default": "#E8E8E8"
+    },
+    {
+      "type": "color",
+      "id": "card_hover_border",
+      "label": "Logo card hover border",
+      "default": "#BDBDBD"
+    },
+    {
+      "type": "color",
+      "id": "text_logo_color",
+      "label": "Text logo color",
+      "default": "#111111"
+    },
+    {
+      "type": "range",
+      "id": "container_width",
+      "label": "Container width",
+      "min": 800,
+      "max": 1400,
+      "step": 50,
+      "unit": "px",
+      "default": 1100
+    },
+    {
+      "type": "range",
+      "id": "desktop_columns",
+      "label": "Desktop columns",
+      "min": 3,
+      "max": 6,
+      "step": 1,
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Desktop heading size",
+      "min": 20,
+      "max": 44,
+      "step": 1,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "mobile_heading_size",
+      "label": "Mobile heading size",
+      "min": 18,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "card_height",
+      "label": "Desktop card height",
+      "min": 50,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 76
+    },
+    {
+      "type": "range",
+      "id": "mobile_card_height",
+      "label": "Mobile card height",
+      "min": 44,
+      "max": 90,
+      "step": 2,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Desktop card radius",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "mobile_card_radius",
+      "label": "Mobile card radius",
+      "min": 0,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "logo_max_width",
+      "label": "Desktop logo max width",
+      "min": 70,
+      "max": 190,
+      "step": 10,
+      "unit": "px",
+      "default": 130
+    },
+    {
+      "type": "range",
+      "id": "logo_max_height",
+      "label": "Desktop logo max height",
+      "min": 20,
+      "max": 70,
+      "step": 2,
+      "unit": "px",
+      "default": 42
+    },
+    {
+      "type": "range",
+      "id": "mobile_logo_max_width",
+      "label": "Mobile logo max width",
+      "min": 60,
+      "max": 150,
+      "step": 10,
+      "unit": "px",
+      "default": 110
+    },
+    {
+      "type": "range",
+      "id": "mobile_logo_max_height",
+      "label": "Mobile logo max height",
+      "min": 18,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 34
+    },
+    {
+      "type": "range",
+      "id": "logo_gap",
+      "label": "Desktop logo gap",
+      "min": 8,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "mobile_logo_gap",
+      "label": "Mobile logo gap",
+      "min": 8,
+      "max": 28,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Desktop top padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Desktop bottom padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "label": "Mobile top padding",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_bottom",
+      "label": "Mobile bottom padding",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 32
+    }
+  ],
+  "blocks": [
+    {
+      "type": "logo",
+      "name": "Logo",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "logo_image",
+          "label": "Upload logo image"
+        },
+        {
+          "type": "text",
+          "id": "logo_external_url",
+          "label": "External logo image URL"
+        },
+        {
+          "type": "text",
+          "id": "platform_name",
+          "label": "Platform name",
+          "default": "Amazon"
+        },
+        {
+          "type": "text",
+          "id": "logo_alt",
+          "label": "Logo alt text",
+          "default": "Platform logo"
+        },
+        {
+          "type": "url",
+          "id": "platform_link",
+          "label": "Platform link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Simple Available On",
+      "blocks": [
+        {
+          "type": "logo",
+          "settings": {
+            "platform_name": "Amazon",
+            "logo_alt": "Amazon logo",
+            "logo_external_url": "https://suroskie.com/cdn/shop/files/pngwing.com_1.png?v=1758097580"
+          }
+        },
+        {
+          "type": "logo",
+          "settings": {
+            "platform_name": "BigBasket",
+            "logo_alt": "BigBasket logo",
+            "logo_external_url": "https://suroskie.com/cdn/shop/files/pngwing.com.png?v=1758097575"
+          }
+        },
+        {
+          "type": "logo",
+          "settings": {
+            "platform_name": "Blinkit",
+            "logo_alt": "Blinkit logo",
+            "logo_external_url": "https://suroskie.com/cdn/shop/files/pngwing.com_2.png?v=1758097663"
+          }
+        },
+        {
+          "type": "logo",
+          "settings": {
+            "platform_name": "Zepto",
+            "logo_alt": "Zepto logo",
+            "logo_external_url": "https://suroskie.com/cdn/shop/files/8c60911d-63aa-4e4c-953b-30d85c9a8c82.png?v=1758097759"
+          }
+        },
+        {
+          "type": "logo",
+          "settings": {
+            "platform_name": "Instamart",
+            "logo_alt": "Instamart logo",
+            "logo_external_url": "https://suroskie.com/cdn/shop/files/instamart-logo-vector_logoshape.com.png?v=1767000384"
+          }
+        },
+        {
+          "type": "logo",
+          "settings": {
+            "platform_name": "Flipkart",
+            "logo_alt": "Flipkart logo",
+            "logo_external_url": "https://suroskie.com/cdn/shop/files/pngfind.com-flipkart-logo-png-3288902.png?v=1759829326"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

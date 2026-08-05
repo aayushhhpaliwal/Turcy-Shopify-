@@ -1,0 +1,861 @@
+{% comment %} 
+                    Custom Apart Slider Section
+                    Compatible with Shopify Dawn theme 
+{% endcomment %}
+
+<section
+  id="custom-apart-{{ section.id }}"
+  class="custom-apart-section"
+  style="
+    --section-bg: {{ section.settings.section_bg }};
+    --heading-color: {{ section.settings.heading_color }};
+    --card-bg: {{ section.settings.card_bg }};
+    --text-color: {{ section.settings.text_color }};
+    --subtext-color: {{ section.settings.subtext_color }};
+    --icon-bg: {{ section.settings.icon_bg }};
+    --icon-color: {{ section.settings.icon_color }};
+    --arrow-bg: {{ section.settings.arrow_bg }};
+    --arrow-color: {{ section.settings.arrow_color }};
+    --section-width: {{ section.settings.section_width }}px;
+    --padding-top: {{ section.settings.padding_top }}px;
+    --padding-bottom: {{ section.settings.padding_bottom }}px;
+    --card-height: {{ section.settings.card_height }}px;
+    --card-gap: {{ section.settings.card_gap }}px;
+    --desktop-columns: {{ section.settings.desktop_columns }};
+    --tablet-columns: {{ section.settings.tablet_columns }};
+    --mobile-columns: {{ section.settings.mobile_columns }};
+  ">
+  <div class="custom-apart-container">
+    {% if section.settings.heading != blank %}
+      <h2 class="custom-apart-heading">
+        {{ section.settings.heading }}
+      </h2>
+    {% endif %}
+
+    <div class="custom-apart-slider-wrap">
+      {% if section.settings.show_arrows %}
+        <button class="custom-apart-arrow custom-apart-prev" aria-label="Previous">
+          <svg
+            viewBox="0 0 24 24"
+            width="22"
+            height="22">
+            <path
+              d="M15 18L9 12L15 6"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.4"
+              stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+        </button>
+      {% endif %}
+
+      <div class="custom-apart-slider" data-slider>
+        {% for block in section.blocks %}
+          <div class="custom-apart-card" {{ block.shopify_attributes }}>
+            <div class="custom-apart-icon">
+              {% if block.settings.icon_image != blank %}
+                <img
+                  src="{{ block.settings.icon_image | image_url: width: 120 }}"
+                  alt="{{ block.settings.title | escape }}"
+                  loading="lazy"
+                  width="60"
+                  height="60">
+              {% else %}
+                <span>{{ block.settings.icon_text }}</span>
+              {% endif %}
+            </div>
+
+            {% if block.settings.title != blank %}
+              <h3>{{ block.settings.title }}</h3>
+            {% endif %}
+
+            {% if block.settings.description != blank %}
+              <p>{{ block.settings.description }}</p>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+
+      {% if section.settings.show_arrows %}
+        <button class="custom-apart-arrow custom-apart-next" aria-label="Next">
+          <svg
+            viewBox="0 0 24 24"
+            width="22"
+            height="22">
+            <path
+              d="M9 6L15 12L9 18"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.4"
+              stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+        </button>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<style>
+  #custom-apart-{{ section.id }} {
+    background: var(--section-bg);
+    padding-top: var(--padding-top);
+    padding-bottom: var(--padding-bottom);
+    overflow: hidden;
+  }
+
+  #custom-apart-{{ section.id }}
+  .custom-apart-container {
+    max-width: var(--section-width);
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  #custom-apart-{{ section.id }}
+  .custom-apart-heading {
+    margin: 0 0 38px;
+    text-align: center;
+    color: var(--heading-color);
+    font-size: {{ section.settings.heading_size }}px;
+    line-height: 1.15;
+    font-weight: 700;
+    letter-spacing: 1px;
+    word-break: break-word;
+  }
+
+  #custom-apart-{{ section.id }}
+  .custom-apart-slider-wrap {
+    position: relative;
+  }
+
+  #custom-apart-{{ section.id }}
+  .custom-apart-slider {
+    display: flex;
+    gap: var(--card-gap);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    padding: 2px 0;
+    scroll-padding-left: 0;
+  }
+
+  #custom-apart-{{ section.id }}
+  .custom-apart-slider::-webkit-scrollbar {
+    display: none;
+  }
+
+  #custom-apart-{{ section.id }}
+  .custom-apart-card {
+    flex: 0 0 calc((100% - (var(--card-gap) * (var(--desktop-columns) - 1))) / var(--desktop-columns));
+    min-height: var(--card-height);
+    background: var(--card-bg);
+    color: var(--text-color);
+    box-sizing: border-box;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 42px 34px;
+    border-radius: {{ section.settings.card_radius }}px;
+    box-shadow: {% if section.settings.enable_shadow %}0 12px 35px rgba(0,0,0,0.08){% else %}none{% endif %};
+    min-width: 0;
+}
+
+#custom-apart-{{ section.id }}
+.custom-apart-icon {
+  width: {{ section.settings.icon_circle_size }}px;
+  height: {{ section.settings.icon_circle_size }}px;
+  border-radius: 50%;
+  background: var(--icon-bg);
+  color: var(--icon-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  font-size: {{ section.settings.icon_text_size }}px;
+  font-weight: 700;
+}
+
+#custom-apart-{{ section.id }}
+.custom-apart-icon img {
+  width: {{ section.settings.icon_size }}px;
+  height: {{ section.settings.icon_size }}px;
+  object-fit: contain;
+  display: block;
+}
+
+#custom-apart-{{ section.id }}
+.custom-apart-card h3 {
+  margin: 0 0 14px;
+  font-size: {{ section.settings.card_title_size }}px;
+  line-height: 1.35;
+  font-weight: 700;
+  color: var(--text-color);
+  overflow-wrap: anywhere;
+}
+
+#custom-apart-{{ section.id }}
+.custom-apart-card p {
+  margin: 0;
+  max-width: 280px;
+  font-size: {{ section.settings.card_text_size }}px;
+  line-height: 1.55;
+  color: var(--subtext-color);
+  overflow-wrap: anywhere;
+}
+
+#custom-apart-{{ section.id }}
+.custom-apart-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: {{ section.settings.arrow_size }}px;
+  height: {{ section.settings.arrow_size }}px;
+  border-radius: 50%;
+  border: none;
+  background: var(--arrow-bg);
+  color: var(--arrow-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 3;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+  transition: 0.25s ease;
+}
+
+#custom-apart-{{ section.id }} .custom-apart-arrow:hover:not(:disabled) {
+  transform: translateY(-50%) scale(1.06);
+}
+
+#custom-apart-{{ section.id }} .custom-apart-arrow:disabled {
+  opacity: .45;
+  cursor: default;
+}
+
+#custom-apart-{{ section.id }}
+.custom-apart-prev {
+  left: -52px;
+}
+
+#custom-apart-{{ section.id }}
+.custom-apart-next {
+  right: -52px;
+}
+
+@media screen and (max-width: 1200px) {
+  #custom-apart-{{ section.id }} .custom-apart-slider {
+    padding-left: 46px;
+    padding-right: 46px;
+    scroll-padding-left: 46px;
+  }
+
+  #custom-apart-{{ section.id }} .custom-apart-prev {
+    left: 8px;
+  }
+
+  #custom-apart-{{ section.id }}
+  .custom-apart-next {
+    right: 8px;
+  }
+}
+
+@media screen and (max-width: 989px) {
+  #custom-apart-{{ section.id }} {
+    padding-top: calc(var(--padding-top) * .72);
+    padding-bottom: calc(var(--padding-bottom) * .72);
+  }
+
+  #custom-apart-{{ section.id }} .custom-apart-container {
+    padding: 0 24px;
+  }
+
+  #custom-apart-{{ section.id }} .custom-apart-heading {
+    margin-bottom: 30px;
+    font-size: {{ section.settings.tablet_heading_size }}px;
+  }
+
+  #custom-apart-{{ section.id }} .custom-apart-card {
+    flex-basis: calc((100% - (var(--card-gap) * (var(--tablet-columns) - 1))) / var(--tablet-columns));
+    min-height: {{ section.settings.tablet_card_height }}px;
+    padding: 36px 26px;
+  }
+
+  #custom-apart-{{ section.id }} .custom-apart-card h3 {
+    font-size: {{ section.settings.tablet_card_title_size }}px;
+  }
+
+  #custom-apart-{{ section.id }} .custom-apart-card p {
+    font-size: {{ section.settings.tablet_card_text_size }}px;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  #custom-apart-{{ section.id }} {
+    padding-top: {{ section.settings.mobile_padding_top }}px;
+    padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
+  }
+
+  #custom-apart-{{ section.id }}
+  .custom-apart-container {
+    padding: 0 16px;
+  }
+
+  #custom-apart-{{ section.id }} .custom-apart-slider {
+    padding-left: 40px;
+    padding-right: 40px;
+    scroll-padding-left: 40px;
+  }
+
+  #custom-apart-{{ section.id }}
+  .custom-apart-heading {
+    margin-bottom: 24px;
+    font-size: {{ section.settings.mobile_heading_size }}px;
+  }
+
+  #custom-apart-{{ section.id }}
+  .custom-apart-card {
+    flex-basis: calc((100% - (var(--card-gap) * (var(--mobile-columns) - 1))) / var(--mobile-columns));
+    min-height: {{ section.settings.mobile_card_height }}px;
+    padding: 30px 20px;
+  }
+
+  #custom-apart-{{ section.id }}
+  .custom-apart-card h3 {
+    font-size: {{ section.settings.mobile_card_title_size }}px;
+  }
+
+  #custom-apart-{{ section.id }}
+  .custom-apart-card p {
+    font-size: {{ section.settings.mobile_card_text_size }}px;
+  }
+
+  #custom-apart-{{ section.id }}
+  .custom-apart-arrow {
+    width: 34px;
+    height: 34px;
+  }
+
+  #custom-apart-{{ section.id }}
+  .custom-apart-prev {
+    left: 0;
+  }
+
+  #custom-apart-{{ section.id }}
+  .custom-apart-next {
+    right: 0;
+  }
+}
+
+@media screen and (max-width: 479px) {
+  #custom-apart-{{ section.id }} .custom-apart-container {
+    padding: 0 12px;
+  }
+
+  #custom-apart-{{ section.id }} .custom-apart-slider {
+    gap: 14px;
+    padding-left: 38px;
+    padding-right: 38px;
+    scroll-padding-left: 38px;
+  }
+
+  #custom-apart-{{ section.id }} .custom-apart-card {
+    flex-basis: 100%;
+    min-height: {{ section.settings.mobile_card_height | minus: 30 | at_least: 220 }}px;
+    padding: 26px 18px;
+  }
+
+  #custom-apart-{{ section.id }} .custom-apart-icon {
+    width: {{ section.settings.icon_circle_size | times: 0.78 | round }}px;
+    height: {{ section.settings.icon_circle_size | times: 0.78 | round }}px;
+    margin-bottom: 16px;
+    font-size: {{ section.settings.icon_text_size | times: 0.82 | round }}px;
+  }
+
+  #custom-apart-{{ section.id }} .custom-apart-icon img {
+    width: {{ section.settings.icon_size | times: 0.82 | round }}px;
+    height: {{ section.settings.icon_size | times: 0.82 | round }}px;
+  }
+
+  #custom-apart-{{ section.id }} .custom-apart-arrow {
+    width: 32px;
+    height: 32px;
+  }
+}
+</style>
+
+<script>
+  (function () {
+    const section = document.querySelector('#custom-apart-{{ section.id }}');
+    if (!section) return;
+
+    const slider = section.querySelector('[data-slider]');
+    const prev = section.querySelector('.custom-apart-prev');
+    const next = section.querySelector('.custom-apart-next');
+
+    if (!slider) return;
+
+    function getScrollAmount() {
+      const card = slider.querySelector('.custom-apart-card');
+      if (!card) return 320;
+      const gap = parseInt(getComputedStyle(slider).gap) || 24;
+      return card.offsetWidth + gap;
+    }
+
+    function updateArrowState() {
+      const maxScrollLeft = Math.max(0, slider.scrollWidth - slider.clientWidth);
+      const atStart = slider.scrollLeft <= 2;
+      const atEnd = slider.scrollLeft >= maxScrollLeft - 2;
+
+      if (prev) prev.disabled = atStart;
+      if (next) next.disabled = atEnd || maxScrollLeft <= 0;
+    }
+
+    function scrollByCard(direction) {
+      slider.scrollBy({
+        left: getScrollAmount() * direction,
+        behavior: 'smooth'
+      });
+    }
+
+    if (prev) {
+      prev.addEventListener('click', function () {
+        scrollByCard(-1);
+      });
+    }
+
+    if (next) {
+      next.addEventListener('click', function () {
+        scrollByCard(1);
+      });
+    }
+
+    slider.addEventListener('scroll', updateArrowState);
+    window.addEventListener('resize', updateArrowState);
+    updateArrowState();
+
+    {% if section.settings.enable_autoplay %}
+      let autoplayTimer = setInterval(function () {
+        const maxScrollLeft = slider.scrollWidth - slider.clientWidth;
+
+        if (slider.scrollLeft >= maxScrollLeft - 10) {
+          slider.scrollTo({
+            left: 0,
+            behavior: 'smooth'
+          });
+        } else {
+          slider.scrollBy({
+            left: getScrollAmount(),
+            behavior: 'smooth'
+          });
+        }
+      }, {{ section.settings.autoplay_speed | times: 1000 }});
+
+      slider.addEventListener('mouseenter', function () {
+        clearInterval(autoplayTimer);
+      });
+    {% endif %}
+
+    document.addEventListener('shopify:section:load', function (event) {
+      if (event.detail.sectionId === {{ section.id | json }}) updateArrowState();
+    });
+  })();
+</script>
+
+{% schema %}
+  {
+    "name": "Custom Apart Slider",
+    "settings": [
+      {
+        "type": "text",
+        "id": "heading",
+        "label": "Section heading",
+        "default": "What Sets SUROSKIE Apart"
+      },
+      {
+        "type": "range",
+        "id": "section_width",
+        "label": "Section width",
+        "min": 900,
+        "max": 1600,
+        "step": 20,
+        "default": 1400
+      },
+      {
+        "type": "color",
+        "id": "section_bg",
+        "label": "Section background",
+        "default": "#EC3BA4"
+      },
+      {
+        "type": "color",
+        "id": "heading_color",
+        "label": "Heading color",
+        "default": "#FFFFFF"
+      }, {
+        "type": "color",
+        "id": "card_bg",
+        "label": "Card background",
+        "default": "#FFFFFF"
+      }, {
+        "type": "color",
+        "id": "text_color",
+        "label": "Card title color",
+        "default": "#111111"
+      }, {
+        "type": "color",
+        "id": "subtext_color",
+        "label": "Card text color",
+        "default": "#222222"
+      }, {
+        "type": "color",
+        "id": "icon_bg",
+        "label": "Icon circle background",
+        "default": "#FCEAF5"
+      }, {
+        "type": "color",
+        "id": "icon_color",
+        "label": "Fallback icon color",
+        "default": "#EC3BA4"
+      }, {
+        "type": "range",
+        "id": "heading_size",
+        "label": "Desktop heading size",
+        "min": 28,
+        "max": 64,
+        "step": 1,
+        "default": 52
+      }, {
+        "type": "select",
+        "id": "desktop_columns",
+        "label": "Desktop cards visible",
+        "default": "4",
+        "options": [
+          {
+            "value": "2",
+            "label": "2"
+          }, {
+            "value": "3",
+            "label": "3"
+          }, {
+            "value": "4",
+            "label": "4"
+          }, {
+            "value": "5",
+            "label": "5"
+          }
+        ]
+      }, {
+        "type": "select",
+        "id": "tablet_columns",
+        "label": "Tablet cards visible",
+        "default": "2",
+        "options": [
+          {
+            "value": "1",
+            "label": "1"
+          }, {
+            "value": "2",
+            "label": "2"
+          }, {
+            "value": "3",
+            "label": "3"
+          }
+        ]
+      }, {
+        "type": "select",
+        "id": "mobile_columns",
+        "label": "Mobile cards visible",
+        "default": "1",
+        "options": [
+          {
+            "value": "1",
+            "label": "1"
+          }, {
+            "value": "2",
+            "label": "2"
+          }
+        ]
+      }, {
+        "type": "range",
+        "id": "card_gap",
+        "label": "Card gap",
+        "min": 8,
+        "max": 40,
+        "step": 2,
+        "default": 24
+      }, {
+        "type": "range",
+        "id": "card_height",
+        "label": "Desktop card height",
+        "min": 220,
+        "max": 460,
+        "step": 10,
+        "default": 300
+      }, {
+        "type": "range",
+        "id": "tablet_card_height",
+        "label": "Tablet card height",
+        "min": 220,
+        "max": 420,
+        "step": 10,
+        "default": 280
+      }, {
+        "type": "range",
+        "id": "mobile_card_height",
+        "label": "Mobile card height",
+        "min": 220,
+        "max": 420,
+        "step": 10,
+        "default": 280
+      }, {
+        "type": "range",
+        "id": "card_radius",
+        "label": "Card border radius",
+        "min": 0,
+        "max": 40,
+        "step": 2,
+        "default": 0
+      }, {
+        "type": "checkbox",
+        "id": "enable_shadow",
+        "label": "Enable card shadow",
+        "default": false
+      }, {
+        "type": "range",
+        "id": "icon_circle_size",
+        "label": "Icon circle size",
+        "min": 50,
+        "max": 110,
+        "step": 5,
+        "default": 80
+      }, {
+        "type": "range",
+        "id": "icon_size",
+        "label": "Icon image size",
+        "min": 24,
+        "max": 70,
+        "step": 2,
+        "default": 38
+      }, {
+        "type": "range",
+        "id": "icon_text_size",
+        "label": "Fallback icon text size",
+        "min": 18,
+        "max": 42,
+        "step": 2,
+        "default": 28
+      }, {
+        "type": "range",
+        "id": "card_title_size",
+        "label": "Card title size",
+        "min": 14,
+        "max": 28,
+        "step": 1,
+        "default": 18
+      }, {
+        "type": "range",
+        "id": "card_text_size",
+        "label": "Card text size",
+        "min": 12,
+        "max": 22,
+        "step": 1,
+        "default": 16
+      }, {
+        "type": "range",
+        "id": "tablet_heading_size",
+        "label": "Tablet heading size",
+        "min": 24,
+        "max": 48,
+        "step": 1,
+        "default": 40
+      }, {
+        "type": "range",
+        "id": "mobile_heading_size",
+        "label": "Mobile heading size",
+        "min": 24,
+        "max": 42,
+        "step": 1,
+        "default": 30
+      }, {
+        "type": "range",
+        "id": "tablet_card_title_size",
+        "label": "Tablet card title size",
+        "min": 14,
+        "max": 26,
+        "step": 1,
+        "default": 18
+      }, {
+        "type": "range",
+        "id": "mobile_card_title_size",
+        "label": "Mobile card title size",
+        "min": 14,
+        "max": 24,
+        "step": 1,
+        "default": 17
+      }, {
+        "type": "range",
+        "id": "tablet_card_text_size",
+        "label": "Tablet card text size",
+        "min": 12,
+        "max": 20,
+        "step": 1,
+        "default": 15
+      }, {
+        "type": "range",
+        "id": "mobile_card_text_size",
+        "label": "Mobile card text size",
+        "min": 12,
+        "max": 20,
+        "step": 1,
+        "default": 15
+      }, {
+        "type": "checkbox",
+        "id": "show_arrows",
+        "label": "Show arrows",
+        "default": true
+      }, {
+        "type": "color",
+        "id": "arrow_bg",
+        "label": "Arrow background",
+        "default": "#FFFFFF"
+      }, {
+        "type": "color",
+        "id": "arrow_color",
+        "label": "Arrow icon color",
+        "default": "#111111"
+      }, {
+        "type": "range",
+        "id": "arrow_size",
+        "label": "Arrow size",
+        "min": 30,
+        "max": 60,
+        "step": 2,
+        "default": 36
+      }, {
+        "type": "checkbox",
+        "id": "enable_autoplay",
+        "label": "Enable autoplay",
+        "default": false
+      }, {
+        "type": "range",
+        "id": "autoplay_speed",
+        "label": "Autoplay speed in seconds",
+        "min": 2,
+        "max": 8,
+        "step": 1,
+        "default": 4
+      }, {
+        "type": "range",
+        "id": "padding_top",
+        "label": "Desktop padding top",
+        "min": 0,
+        "max": 140,
+        "step": 4,
+        "default": 72
+      }, {
+        "type": "range",
+        "id": "padding_bottom",
+        "label": "Desktop padding bottom",
+        "min": 0,
+        "max": 140,
+        "step": 4,
+        "default": 72
+      }, {
+        "type": "range",
+        "id": "mobile_padding_top",
+        "label": "Mobile padding top",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "default": 44
+      }, {
+        "type": "range",
+        "id": "mobile_padding_bottom",
+        "label": "Mobile padding bottom",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "default": 44
+      }
+    ],
+    "blocks": [
+      {
+        "type": "card",
+        "name": "Feature card",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "icon_image",
+            "label": "Icon image"
+          }, {
+            "type": "text",
+            "id": "icon_text",
+            "label": "Fallback icon text",
+            "default": "✦"
+          }, {
+            "type": "text",
+            "id": "title",
+            "label": "Card title",
+            "default": "Luxury, Without the Price Tag"
+          }, {
+            "type": "textarea",
+            "id": "description",
+            "label": "Card description",
+            "default": "Sensorial textures. Clean ingredients. Premium experience all without the luxury markup."
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Custom Apart Slider",
+        "blocks": [
+          {
+            "type": "card",
+            "settings": {
+              "icon_text": "◆",
+              "title": "Luxury, Without the Price Tag",
+              "description": "Sensorial textures. Clean ingredients. Premium experience all without the luxury markup."
+            }
+          },
+          {
+            "type": "card",
+            "settings": {
+              "icon_text": "✓",
+              "title": "Results, Not Promises",
+              "description": "We don’t ask you to wait weeks. Glow begins from the very first use and gets better with every ritual."
+            }
+          },
+          {
+            "type": "card",
+            "settings": {
+              "icon_text": "✦",
+              "title": "One Product. Multiple Powers.",
+              "description": "Our formulas are designed to simplify, not overwhelm multitasking care that truly works."
+            }
+          },
+          {
+            "type": "card",
+            "settings": {
+              "icon_text": "✽",
+              "title": "Co-Created with Our Community",
+              "description": "Every product begins in the hands of our customers. Tested, shaped, and perfected with you."
+            }
+          }, {
+            "type": "card",
+            "settings": {
+              "icon_text": "♡",
+              "title": "Made With Intention",
+              "description": "We listen, spot real needs, formulate with purpose, and launch only when it’s truly perfect."
+            }
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

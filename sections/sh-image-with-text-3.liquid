@@ -1,0 +1,657 @@
+{% capture sh_image_with_text_three_css %}
+  <style>
+    #sh-{{ section.id }}.sh-image-with-text-3-section {
+      padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px 0;
+      background-color: {{ section.settings.bg_color }};
+      {% if section.settings.section_bg_image != blank %}
+        background-image: url({{ section.settings.section_bg_image | image_url: width: 2400 }});
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+      {% endif %}
+      overflow: hidden;
+    } 
+    #sh-{{ section.id }} .sh-page-width {max-width: {{ section.settings.section_max_width }}px;width: 100%;padding: 0 20px;margin: 0 auto;} 
+    #sh-{{ section.id }} .sh-iwt-3-wrapper{display: flex;flex-wrap: wrap;background: {{ section.settings.content_bg_color }};position: relative;overflow: hidden; border-radius: {{ section.settings.image_radius }}px;}  
+    #sh-{{ section.id }} .sh-iwt-3-wrapper.sh-img-media-left {flex-direction: row-reverse;}
+    #sh-{{ section.id }} .sh-iwt-3-wrapper.sh-img-media-right {flex-direction: row;}
+    #sh-{{ section.id }} .sh-iwt-3-text {flex: 0 0 50%;padding: 30px 40px;display: flex;flex-direction: column;justify-content: center;align-items: center;} 
+    #sh-{{ section.id }} .sh-iwt-3-text.sh-title-align-left {align-items: flex-start;} 
+    #sh-{{ section.id }} .sh-iwt-3-text.sh-title-align-right {align-items: flex-end;} 
+    #sh-{{ section.id }} .sh-iwt-3-text-wrapper {margin-bottom: 15px;width: 100%;} 
+    #sh-{{ section.id }} .sh-iwt-3-title {font-size: {{ section.settings.title_font_size }}px;line-height: 1.3;color: {{ section.settings.title_color }};font-weight: 500;margin: 0 ; cursor:pointer;} 
+    #sh-{{ section.id }} .sh-iwt-3-description {max-height: 0;transition: max-height 0.3s ease-in-out;overflow: hidden;}
+    #sh-{{ section.id }} .sh-iwt-3-text-wrapper.sh-active .sh-iwt-3-description{max-height: 1000px;}
+    #sh-{{ section.id }} .sh-iwt-3-description p {font-size: {{ section.settings.content_font_size }}px;line-height: 1.4;color: {{ section.settings.content_color }};margin:12px 0 0 0;}
+    #sh-{{ section.id }} .sh-iwt-3-icons-row {display: flex;align-items: flex-start;gap: 12px;width: 100%;margin-top: 20px;flex-wrap: nowrap;overflow-x: auto;-ms-overflow-style: none;scrollbar-width: none;}
+    #sh-{{ section.id }} .sh-iwt-3-icons-row::-webkit-scrollbar {display: none;}
+    #sh-{{ section.id }} .sh-iwt-3-icons-row.sh-icons-align-left {justify-content: flex-start;}
+    #sh-{{ section.id }} .sh-iwt-3-icons-row.sh-icons-align-center {justify-content: center;}
+    #sh-{{ section.id }} .sh-iwt-3-icons-row.sh-icons-align-right {justify-content: flex-end;}
+    #sh-{{ section.id }} .sh-iwt-3-icon-item {flex: 0 0 auto;display: flex;flex-direction: column;align-items: center;justify-content: flex-start;gap: 8px;min-width: {{ section.settings.icon_image_size | plus: 12 }}px;text-align: center;}
+    #sh-{{ section.id }} .sh-iwt-3-icon-item img {display: block;width: {{ section.settings.icon_image_size }}px;height: {{ section.settings.icon_image_size }}px;object-fit: contain;}
+    #sh-{{ section.id }} .sh-iwt-3-icon-title {font-size: {{ section.settings.icon_title_font_size }}px;line-height: 1.3;color: {{ section.settings.content_color }};margin: 0;}
+    #sh-{{ section.id }} .sh-iwt-3-image {flex: 0 0 50%;position: relative;overflow: hidden;}
+    #sh-{{ section.id }} .sh-iwt-3-image img{position: absolute;top: 0;left: 0;right: 0;bottom: 0;width: 100%;height: 100%;object-fit: cover;object-position: center;}
+    #sh-{{ section.id }} .sh-iwt-3-image.sh-empty-img {background: grey;opacity: 0.3;}
+    #sh-{{ section.id }} .sh-iwt-3-image.sh-img-small {padding-bottom: 38%;}
+    #sh-{{ section.id }} .sh-iwt-3-image.sh-img-medium {padding-bottom: 46%;}
+    #sh-{{ section.id }} .sh-iwt-3-image.sh-img-large {padding-bottom: 55%;} 
+    #sh-{{ section.id }} .sh-iwt-3-image.sh-img-adapt {padding-bottom: unset !important;} 
+    #sh-{{ section.id }} .sh-iwt-3-image.sh-img-adapt img {position:relative;}
+    #sh-{{ section.id }} .sh-button {margin: 20px 0 0 0; font-size: 16px; line-height: 1.65;background: {{ section.settings.btn_bg_color }};color: {{ section.settings.btn_label_color }};padding: 6px 20px;min-width: 140px;display: inline-block;border:1px solid {{ section.settings.btn_border_color }};border-radius: {{ section.settings.btn_radius }}px;text-align: center; cursor:pointer;}
+    #sh-{{ section.id }} .sh-button:hover {background: {{ section.settings.btn_bg_hover_color }};color: {{ section.settings.btn_label_hover_color }};border:1px solid {{ section.settings.btn_border_hover_color }};box-shadow: 0 0 5px 0px {{ section.settings.btn_shadow_color }};} 
+    #sh-{{ section.id }} .sh-button.sh-button-outline {color: {{ section.settings.outline_btn_color }};border-color: {{ section.settings.outline_btn_color }};background: transparent;}
+    #sh-{{ section.id }} .sh-button.sh-button-outline:hover {box-shadow: 0 0 5px 0px {{ section.settings.btn_shadow_color }};}
+    #sh-{{ section.id }} .sh-iwt-3-scroll-block {display: flex;align-items: center;position: absolute;top: 50%;left: 48%;transform: rotate(90deg) translate(-50%, -48%);z-index: 1;background: {{ section.settings.text_bg_color }};padding: 10px 0;transform-origin: left;max-height: fit-content;flex-wrap: nowrap;width: 100vw;}
+    #sh-{{ section.id }} .sh-iwt-3-scroll-block.sh-hover-pause-scroll:hover .sh-iwt-3-scroll-item-wrapper {animation-play-state: paused !important;}
+    #sh-{{ section.id }} .sh-iwt-3-scroll-item-wrapper {white-space: nowrap;position: relative;animation-name: sh-iwt-3-marquee;animation-timing-function: linear;animation-iteration-count: infinite;animation-duration: {{ section.settings.text_scroll_time }}s;display: flex;align-items: center;} 
+    @keyframes sh-iwt-3-marquee {
+        0% { transform: translate3d(0%, 0, 0); }  
+        100% {transform: translate3d(-100%, 0, 0);}    
+    }
+    #sh-{{ section.id }} .sh-iwt-3-scroll-item {cursor: pointer;min-width: 260px;padding: 0 10px;display: flex;gap: 20px;align-items: center;justify-content: center; padding-right: 40px;}
+    #sh-{{ section.id }} .sh-iwt-3-scroll-item h3 {font-size: {{ section.settings.text_font_size }}px;line-height: 1.3;margin: 0;color: {{ section.settings.text_color }};}
+
+    @media only screen and (max-width: 767px){
+      #sh-{{ section.id }}.sh-image-with-text-3-section {padding:{{ section.settings.mobile_padding_top }}px 0 {{ section.settings.mobile_padding_bottom }}px 0;{% if section.settings.section_bg_image != blank %}background-attachment: scroll;{% endif %}} 
+      #sh-{{ section.id }} .sh-iwt-3-text{flex: 0 0 100%;padding:30px 20px;}
+      #sh-{{ section.id }} .sh-iwt-3-image{flex: 0 0 100%;}
+      #sh-{{ section.id }} .sh-iwt-3-wrapper .sh-iwt-3-image {padding-bottom: 100%;}  
+      #sh-{{ section.id }} .sh-iwt-3-title {font-size: 24px;}  
+      #sh-{{ section.id }} .sh-iwt-3-text-wrapper {margin-bottom: 10px;} 
+      #sh-{{ section.id }} .sh-iwt-3-description p{font-size: 14px;margin: 10px 0 0 0;}
+      #sh-{{ section.id }} .sh-iwt-3-icons-row {gap: 8px;}
+      #sh-{{ section.id }} .sh-button {font-size: 15px;margin: 15px 0 0 0;} 
+      #sh-{{ section.id }} .sh-iwt-3-scroll-block{transform: rotate(90deg);left: calc(100% - 20px);top: -10%; }
+      #sh-{{ section.id }} .sh-iwt-3-scroll-item h3 {font-size: 18px;}
+    }
+  </style>
+{% endcapture %}
+{{ sh_image_with_text_three_css | strip_newlines }}
+
+<div id="sh-{{ section.id }}" class="sh-image-with-text-3-section">
+  <div class="sh-page-width">
+    {% assign first_text_found = false %}
+    {% capture text_content %}
+      {% for block in section.blocks %}
+        {% if block.type == 'text' and block.settings.title != blank %}
+          {% assign is_first_text = false %}
+          {% unless first_text_found %}
+            {% assign is_first_text = true %}
+            {% assign first_text_found = true %}
+          {% endunless %}
+          <div class="sh-iwt-3-text-wrapper{% if is_first_text %} sh-active{% endif %}">
+            <h2 class="sh-iwt-3-title">{{ block.settings.title }}</h2>
+            {% if block.settings.content != blank %}<div class="sh-iwt-3-description">{{ block.settings.content }}</div>{% endif %}
+          </div>
+        {% endif %}
+      {% endfor %}
+    {% endcapture %}
+    {% capture icons_content %}
+      {% for block in section.blocks %}
+        {% if block.type == 'icon' and block.settings.icon_image != blank %}
+          {% assign icon_render_width = section.settings.icon_image_size | times: 2 %}
+          <div class="sh-iwt-3-icon-item" {{ block.shopify_attributes }}>
+            <img
+              src="{{ block.settings.icon_image | image_url: width: icon_render_width }}"
+              alt="{{ block.settings.icon_image.alt | default: block.settings.icon_title | default: 'Icon' | escape }}"
+              loading="lazy"
+              width="{{ section.settings.icon_image_size }}"
+              height="{{ section.settings.icon_image_size }}"
+            >
+            {% if block.settings.icon_title != blank %}
+              <p class="sh-iwt-3-icon-title">{{ block.settings.icon_title }}</p>
+            {% endif %}
+          </div>
+        {% endif %}
+      {% endfor %}
+    {% endcapture %}
+
+    {% assign scrolling_text_block = section.blocks | where: 'type', 'scroll_text' %}
+    {% if scrolling_text_block.size > 0 %}
+      {% capture marquee_text %}
+        {% for i in (1..5) %}
+          {% capture text_id %}title_{{ i }}{% endcapture %}
+          {% if scrolling_text_block[0].settings[text_id] != blank %}
+            <div class="sh-iwt-3-scroll-item">
+              <h3>{{ scrolling_text_block[0].settings[text_id] }}</h3>
+            </div>
+          {% endif %}
+        {% endfor %}
+      {% endcapture %}
+    {% endif %}
+
+    <div class="sh-iwt-3-wrapper sh-img-media-{{ section.settings.image_align }}">
+      <div class="sh-iwt-3-text sh-title-align-{{ section.settings.text_align }}"> 
+        {% if text_content != blank %}
+          {{ text_content }}
+          {% if section.settings.btn_label != blank and section.settings.btn_link != blank %}
+            <a href="{{ section.settings.btn_link }}" class="sh-button{% if section.settings.outline_btn %} sh-button-outline{% endif %}">{{ section.settings.btn_label }}</a>    
+          {% endif %}
+        {% endif %}
+        {% if icons_content != blank %}
+          <div class="sh-iwt-3-icons-row sh-icons-align-{{ section.settings.text_align }}">
+            {{ icons_content }}
+          </div>
+        {% endif %}
+      </div>
+      <div class="sh-iwt-3-image sh-img-{{ section.settings.image_height }}">
+        {% if section.settings.image != blank %}
+          <img class="sh-iwt-3-banner-image" src="{{ section.settings.image | image_url: width: section.settings.image.width }}" alt="{{ section.settings.image.alt }}" loading="lazy" width="" height="">         
+        {% else %}
+          <img src="data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg version='1.1' viewBox='0 0 500 500' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Crect x='2' y='2' width='496' height='496' fill='%23D8D8D8' stroke='%23D8D8D8' stroke-width='4'/%3E%3C/g%3E%3C/svg%3E" class="sh-iwt-3-banner-image" loading="lazy" width="" height="" alt="empty-image">
+        {% endif %}
+
+        {% if marquee_text != blank %}
+          <div class="sh-iwt-3-scroll-block sh-hover-pause-scroll sh-mobile-show">     
+            {% for i in (1..3) %}
+              <div class="sh-iwt-3-scroll-item-wrapper">{{ marquee_text }}</div>     
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+      {% if marquee_text != blank %}
+        <div class="sh-iwt-3-scroll-block sh-hover-pause-scroll sh-desk-show">     
+          {% for i in (1..2) %}
+            <div class="sh-iwt-3-scroll-item-wrapper">{{ marquee_text }}</div>     
+          {% endfor %}   
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<script>
+  if (document.querySelector("#sh-{{ section.id }}.sh-image-with-text-3-section")) {
+    const textWrappers = document.querySelectorAll("#sh-{{ section.id }} .sh-iwt-3-text-wrapper");
+
+    if (textWrappers.length > 0) {
+      const firstWrapper = textWrappers[0];
+      const firstDescription = firstWrapper.querySelector(".sh-iwt-3-description");
+
+      firstWrapper.classList.add("sh-active");
+      if (firstDescription) {
+        firstDescription.style.maxHeight = firstDescription.scrollHeight + "px";
+      }
+    }
+
+    textWrappers.forEach(text => {
+      text.addEventListener("click", function() {
+        const description = text.querySelector(".sh-iwt-3-description");
+
+        textWrappers.forEach(item => {
+          item.classList.remove("sh-active");
+          const itemDescription = item.querySelector(".sh-iwt-3-description");
+          if (itemDescription) {
+            itemDescription.style.maxHeight = 0;
+          }
+        });
+
+        text.classList.add("sh-active");
+        if (description) {
+          description.style.maxHeight = description.scrollHeight + "px";
+        }
+      });
+    });
+
+    window.addEventListener("resize", function() {
+      const activeDescription = document.querySelector("#sh-{{ section.id }} .sh-iwt-3-text-wrapper.sh-active .sh-iwt-3-description");
+      if (activeDescription) {
+        activeDescription.style.maxHeight = activeDescription.scrollHeight + "px";
+      }
+    });
+  }
+</script>
+
+{% schema %}
+  {
+    "name": "SH: Image with text 3",
+    "class": "sh-section-hub-main",
+    "tag": "section",
+    "disabled_on": {
+      "groups": ["footer", "header"]
+    },
+    "settings": [
+      {
+        "type": "header",
+        "content": "Image"
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image"
+      },
+      {
+        "type": "select",
+        "id": "image_height",
+        "options": [
+          { "value": "adapt", "label": "Auto" },
+          { "value": "small", "label": "Small" },
+          { "value": "medium", "label": "Medium" },
+          { "value": "large", "label": "Large" }
+        ],
+        "default": "medium",
+        "label": "Height"
+      },
+      {
+        "type": "select",
+        "id": "image_align",
+        "label": "Alignment",
+        "options": [
+          {
+            "value": "left",
+            "label": "Left"
+          },
+          {
+            "value": "right",
+            "label": "right"
+          }
+        ],
+        "default": "right"
+      },
+      {
+        "type": "range",
+        "id": "image_radius",
+        "min": 0,
+        "max": 20,
+        "step": 1,
+        "unit": "px",
+        "label": "Border radius",
+        "default": 0
+      },
+      {
+        "type": "header",
+        "content": "Text"
+      },
+      {
+        "type":"text_alignment",
+        "id":"text_align",
+        "label": "Alignment",
+        "default": "center"
+      },
+      {
+        "type": "paragraph",
+        "content": "Icons"
+      },
+      {
+        "type": "range",
+        "id": "icon_image_size",
+        "min": 20,
+        "max": 120,
+        "step": 1,
+        "unit": "px",
+        "label": "Icon image size",
+        "default": 56
+      },
+      {
+        "type": "range",
+        "id": "icon_title_font_size",
+        "min": 10,
+        "max": 30,
+        "step": 1,
+        "unit": "px",
+        "label": "Icon title font size",
+        "default": 14
+      },
+      {
+        "type": "paragraph",
+        "content": "Button"
+      },
+      {
+        "type": "text",
+        "id": "btn_label",
+        "label": "Label",
+        "default": "Shop Now"
+      },
+      {
+        "type":"url",
+        "id":"btn_link",
+        "label": "Link",
+        "default": "/"
+      },
+      {
+        "type": "checkbox",
+        "id": "outline_btn",
+        "label": "Use outline button",
+        "default": false
+      },
+      {
+        "type": "color",
+        "id": "outline_btn_color",
+        "label": "Outline color",
+        "default": "#121212"
+      },
+      {
+        "type": "range",
+        "id": "btn_radius",
+        "min": 0,
+        "max": 20,
+        "step": 1,
+        "unit": "px",
+        "label": "Border radius",
+        "default": 0
+      },
+      {
+        "type": "header",
+        "content": "Scrolling text"
+      },
+      {
+        "type": "range",
+        "id": "text_scroll_time",
+        "max": 50,
+        "min": 8,
+        "step": 1,
+        "unit": "sec",
+        "label": "Durtaion",
+        "default": 20
+      },
+      {
+        "type": "header",
+        "content": "Font size"
+      },
+      {
+        "type": "range",
+        "id": "title_font_size",
+        "min": 5,
+        "max": 40,
+        "step": 1,
+        "unit": "px",
+        "label": "Heading",
+        "default": 28
+      },
+      {
+        "type": "range",
+        "id": "content_font_size",
+        "min": 5,
+        "max": 24,
+        "step": 1,
+        "unit": "px",
+        "label": "Content",
+        "default": 16
+      },
+      {
+        "type": "paragraph",
+        "content": "Scrolling text"
+      },
+      {
+        "type": "range",
+        "id": "text_font_size",
+        "min": 10,
+        "max": 30,
+        "step": 1,
+        "unit": "px",
+        "label": "Text",
+        "default": 20
+      },
+      {
+        "type": "header",
+        "content": "Colors"
+      },
+      {
+        "type": "image_picker",
+        "id": "section_bg_image",
+        "label": "Section background image"
+      },
+      {
+        "type": "color",
+        "id": "bg_color",
+        "label": "Background color",
+        "default": "#ffffff"
+      },
+      {
+        "type": "color",
+        "id": "title_color",
+        "label": "Heading color",
+        "default": "#121212"
+      },
+      {
+        "type": "color",
+        "id": "content_color",
+        "label": "Content color",
+        "default": "#121212"
+      },
+      {
+        "type": "color",
+        "id": "content_bg_color",
+        "label": "Content background color",
+        "default": "#eeeeee"
+      },
+      {
+        "type": "paragraph",
+        "content": "Scrolling text"
+      },
+      {
+        "type": "color",
+        "id": "text_color",
+        "label": "Color",
+        "default": "#ffffff"
+      },
+      {
+        "type": "color",
+        "id": "text_bg_color",
+        "label": "Background color",
+        "default": "#121212"
+      },
+      {
+        "type": "paragraph",
+        "content": "Button"
+      },
+      {
+        "type": "color",
+        "id": "btn_bg_color",
+        "label": "Background color",
+        "default": "#121212"
+      },
+      {
+        "type": "color",
+        "id": "btn_label_color",
+        "label": "Text color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "id": "btn_border_color",
+        "label": "Border color",
+        "default": "#121212"
+      },
+      {
+        "type": "color",
+        "id": "btn_bg_hover_color",
+        "label": "Hover background color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "id": "btn_label_hover_color",
+        "label": "Hover text color",
+        "default": "#121212"
+      },
+      {
+        "type": "color",
+        "id": "btn_border_hover_color",
+        "label": "Hover border color",
+        "default": "#121212"
+      },
+      {
+        "type": "color",
+        "id": "btn_shadow_color",
+        "label": "Shadow color",
+        "default": "#606060"
+      },
+      {
+        "type": "header",
+        "content": "Section padding"
+      },
+      {
+        "type": "paragraph",
+        "content": "Desktop"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Padding top",
+        "default": 40
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Padding bottom",
+        "default": 40
+      },
+      {
+        "type": "paragraph",
+        "content": "Mobile"
+      },
+      {
+        "type": "range",
+        "id": "mobile_padding_top",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Padding top",
+        "default": 30
+      },
+      {
+        "type": "range",
+        "id": "mobile_padding_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Padding bottom",
+        "default": 30
+      },
+      {
+        "type": "header",
+        "content": "Section width"
+      },
+      {
+        "type": "text",
+        "id": "section_max_width",
+        "label": "Width (in px)",
+        "default": "1140",
+        "info": "Will apply when full width is disabled"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "text",
+        "name": "Text",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Heading",
+            "default": "Modern & Minimalist"
+          },
+          {
+            "type": "richtext",
+            "id": "content",
+            "label": "Content",
+            "default": "<p>Furniture designed for everyday comfort and connection. Soft textures, sturdy builds, and room for everyone. Make memories in style and comfort.</p>"
+          },
+        ]
+      },
+      {
+        "type": "icon",
+        "name": "Icon",
+        "limit": 6,
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "icon_image",
+            "label": "Icon image"
+          },
+          {
+            "type": "text",
+            "id": "icon_title",
+            "label": "Icon title"
+          }
+        ]
+      },
+      {
+        "type": "scroll_text",
+        "name": "Scroll text",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "paragraph",
+            "content": "Add at least 3 text for a proper preview."
+          },
+          {
+            "type": "text",
+            "id": "title_1",
+            "label": "Text 1",
+            "default": "Timeless Furniture Designs"
+          },
+          {
+            "type": "text",
+            "id": "title_2",
+            "label": "Text 2",
+            "default": "Timeless Furniture Designs"
+          },
+          {
+            "type": "text",
+            "id": "title_3",
+            "label": "Text 3",
+            "default": "Timeless Furniture Designs"
+          },
+          {
+            "type": "text",
+            "id": "title_4",
+            "label": "Text 4",
+            "default": "Timeless Furniture Designs"
+          },
+          {
+            "type": "text",
+            "id": "title_5",
+            "label": "Text 5",
+            "default": "Timeless Furniture Designs"
+          }
+        ]
+      }
+    ],
+    "presets": [ 
+      { 
+        "name": "SH: Image with text 3",
+        "blocks": [
+          {
+            "type": "text",
+            "settings": {
+              "title": "Modern Furniture",
+              "content": "<p>Streamlined silhouettes and clean finishes. Our modern furniture adds elegance to everyday living. Perfect for stylish, functional spaces.</p>"
+            }
+          },
+          {
+            "type": "text",
+            "settings": {
+              "title": "Luxury Furniture",
+              "content": "<p>Crafted from premium materials with timeless appeal. Luxury furniture that transforms your space into a statement. Designed to impress, built to last.</p>"
+            }
+          },
+          {
+            "type": "text",
+            "settings": {
+              "title": "Sustainable Furniture",
+              "content": "<p>Sustainably sourced wood and eco-conscious fabrics. Furniture that’s kind to the planet and beautiful in your home. Style with purpose.</p>"
+            }
+          },
+          {
+            "type": "scroll_text"
+          }
+        ]
+      } 
+    ]
+  }
+{% endschema %}

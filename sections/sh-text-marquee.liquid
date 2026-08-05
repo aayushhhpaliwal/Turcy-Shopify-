@@ -1,0 +1,296 @@
+{%- capture sp_text_marquee_css -%}
+<style>
+  #sp-{{ section.id }}.sp-marquee .sp-page-with {display: inline-flex;}
+  #sp-{{ section.id }}.sp-marquee {padding: {{section.settings.padding_top}}px 0 {{section.settings.padding_bottom}}px 0;background: {{section.settings.bg_color}};color: #000; overflow:hidden;display:flex;} 
+  #sp-{{ section.id }} .sp-marquee-item h3{font-size:{{ section.settings.font_size }}px;font-weight:500;letter-spacing: 0.5px;margin:0;color: {{ section.settings.text_color }};}
+  #sp-{{ section.id }} .sp-marquee-item strong {-webkit-text-fill-color: transparent;-webkit-text-stroke-color: currentColor;-webkit-text-stroke-width: 0.03em;}
+  #sp-{{ section.id }} .sp-marquee-block {display: inline-flex;align-items: center;}
+  #sp-{{ section.id }} .sp-marquee-wrapper {display: inline-block;white-space: nowrap;position: relative;transform: translate3d(0%, 0, 0);animation-name: marquee;animation-timing-function: linear;animation-iteration-count: infinite;display: inline-flex;align-items: center;}
+  #sp-{{ section.id }} .sp-marquee-wrapper .sp-marquee-item {display: inline-flex;white-space: nowrap;padding-right: {{section.settings.space_between_marquee}}px;gap: {{ section.settings.space_between }}px;align-items: center;justify-content: center;}
+  #sp-{{ section.id }} .sp-marquee-item img {max-height: {{ section.settings.image_size }}px;}
+  #sp-{{ section.id }} .sp-marquee-wrapper {animation-duration: {{ section.settings.speed }}; } 
+  
+  {% if section.settings.pause_on_hover %}
+    #sp-{{ section.id }} .sp-marquee-block:hover .sp-marquee-wrapper {animation-play-state: paused !important;}
+  {% endif %}
+
+  @media only screen and (min-width: 768px){
+    #sp-{{ section.id }} .sp-marquee-wrapper .sp-marquee-item {min-width: 250px;}
+  }
+  
+  @media only screen and (max-width: 767px){
+    #sp-{{ section.id }}.sp-marquee {padding: {{section.settings.mob_padding_top}}px 0 {{section.settings.mob_padding_bottom}}px 0;}
+  }
+  
+  @keyframes marquee {
+    0% { transform: translate3d(0%, 0, 0); }
+    100% {transform: translate3d(-100%, 0, 0);} 
+  }
+  
+</style>
+{%- endcapture -%}
+{{- sp_text_marquee_css | strip_newlines -}}
+
+{% if section.blocks.size > 0 %}
+  {% capture sp_marquee_data %}
+    {% for block in section.blocks %}
+      {% if block.settings.title != blank %}
+        <div class="sp-marquee-item">
+          {% if section.settings.image_position == 'left' and block.settings.image != blank %}
+            <img src="{{ block.settings.image | image_url: width: section.settings.image.width }}" width="" height="" loading="lazy" alt="{{ block.settings.image.alt }}">
+          {% endif %}
+         
+          <h3>{{ block.settings.title }}</h3>
+          {% if section.settings.image_position == 'right' and block.settings.image != blank %}
+            <img src="{{ block.settings.image | image_url: width: section.settings.image.width }}" width="" height="" loading="lazy" alt="{{ block.settings.image.alt }}">
+          {% endif %}
+        </div> 
+      {% endif %}
+    {% endfor %}
+  {% endcapture %}
+
+  {% if sp_marquee_data != blank %}
+    <div id="sp-{{ section.id }}" class="sp-marquee">
+      <div class="sp-page-with">
+        <div class="sp-marquee-block">  
+          <div class="sp-marquee-wrapper">{{ sp_marquee_data }}</div>
+          <div class="sp-marquee-wrapper">{{ sp_marquee_data }}</div>
+          <div class="sp-marquee-wrapper">{{ sp_marquee_data }}</div>
+          <div class="sp-marquee-wrapper">{{ sp_marquee_data }}</div>
+        </div> 
+      </div>
+    </div>
+  {% endif %}
+{% endif %}
+
+{% schema %}
+  {
+    "name": "SH: Text marquee",
+    "tag":"section",
+    "class": "sh-section-hub-main",
+    "disabled_on": {
+      "groups": ["footer","header"]
+    },
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Recommend adding more than 3 marquee text"
+      },
+      {
+        "type":"select",
+        "id":"speed",
+        "label": "Speed",
+        "options": [
+          {
+            "value": "2s",
+            "label": "Fastest"
+          },
+          {
+            "value": "5s",
+            "label": "Faster"
+          },
+          {
+            "value": "10s",
+            "label": "Fast"
+          },
+          {
+            "value": "15s",
+            "label": "Medium"
+          },
+          {
+            "value": "20s",
+            "label": "Slow"
+          },
+          {
+            "value": "30s",
+            "label": "Slower"
+          },
+          {
+            "value": "50s",
+            "label": "Slowest"
+          },
+          {
+            "value": "250s",
+            "label": "Crawl"
+          }
+        ],
+        "default": "20s",
+      },
+      {
+        "type": "checkbox",
+        "id":"pause_on_hover",
+        "label": "Pause on hover",
+        "default": true
+      },
+      {
+        "type":"header",
+        "content": "Icon"
+      },
+      {
+        "type": "select",
+        "id":"image_position",
+        "label": "Position",
+        "options": [
+          { "label": "Left", "value": "left" },
+          { "label": "Right", "value": "right" }
+        ],
+        "default":"left"
+      },
+      {
+        "type": "number",
+        "id": "image_size",
+        "label": "Size (in px)",
+        "default": 24
+      },
+      {
+        "type": "range",
+        "id": "space_between",
+        "label": "Space between icon and text",
+        "min":5,
+        "max": 30,
+        "default":15,
+        "step": 1
+      },
+      {
+        "type": "range",
+        "id": "space_between_marquee",
+        "label": "Space between two marquee text",
+        "min":24,
+        "max": 200,
+        "default":60,
+        "step": 2
+      },
+      {
+        "type": "header",
+        "content":"Font size"
+      },
+      {
+        "type": "range",
+        "id": "font_size",
+        "min": 6,
+        "max": 80,
+        "step": 1,
+        "unit": "px",
+        "label": "Text",
+        "default": 40
+      },
+      {
+        "type": "header",
+        "content": "Colors"
+      },
+      {
+        "type": "color",
+        "id": "bg_color",
+        "label": "Background color",
+        "default": "#ffffff"
+      },
+      {
+        "type": "color",
+        "id": "text_color",
+        "label": "Text color",
+        "default": "#121212"
+      },
+      {
+        "type": "header",
+        "content": "Section padding"
+      },
+      {
+        "type": "paragraph",
+        "content": "Desktop"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Padding top",
+        "default": 40
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Padding bottom",
+        "default": 40
+      },
+      {
+        "type": "paragraph",
+        "content": "Mobile"
+      },
+      {
+        "type": "range",
+        "id": "mob_padding_top",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Padding top",
+        "default": 40
+      },
+      {
+        "type": "range",
+        "id": "mob_padding_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Padding bottom",
+        "default": 40
+      },
+      {
+        "type": "header",
+        "content": "Section width"
+      },
+      {
+        "type": "text",
+        "id": "section_max_width",
+        "label": "Width (in px)",
+        "default": "1140"
+      }
+    ],
+    "blocks": [
+      {
+        "type":"marquee",
+        "name":"Marquee",
+        "settings": [
+          {
+            "type":"image_picker",
+            "id": "image",
+            "label": "Image"
+          },
+          {
+            "type":"inline_richtext",
+            "id":"title",
+            "label": "Text",
+            "default":"This is sample text to go along with the icon",
+            "info": "Set the text to bold for the outline text style"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "SH: Text marquee",
+        "blocks": [
+          {
+            "type":"marquee"
+          },
+          {
+            "type":"marquee"
+          },
+          {
+            "type":"marquee"
+          },
+          {
+            "type":"marquee"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

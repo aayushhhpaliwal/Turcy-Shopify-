@@ -1,0 +1,173 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "name": "t:sections.footer.name",
+  "type": "footer",
+  "sections": {
+    "ap_whatsapp_CBkrCX": {
+      "type": "ap-whatsapp",
+      "name": "KS - WhatsApp Chat",
+      "settings": {
+        "whatsapp_number": "+91 8929884147",
+        "primary_color": "#25d366",
+        "secondary_color": "#095e54",
+        "bg_color": "#ece5dd",
+        "text_color": "#121212",
+        "btn_position": "right",
+        "btn_text": "Chat with us",
+        "show_btn_text": false,
+        "btn_z_index": "2",
+        "show_dialog": true,
+        "dialog_name": "Bio Mystery",
+        "dialog_subtitle": "Typically replies within minutes.",
+        "dialog_msg": "<p>Hi there 👋<br/>How can I help you?</p>",
+        "dialog_input_label": "Type a message..."
+      }
+    },
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "image_8MAbk6": {
+          "type": "image",
+          "disabled": true,
+          "settings": {
+            "image": "shopify://shop_images/Bio_Mystery_Logo_65c96790-c0c3-4eb8-9d2d-b977aaa2b1ad.png",
+            "image_width": 170,
+            "alignment": "center"
+          }
+        },
+        "link_list_fCemTX": {
+          "type": "link_list",
+          "settings": {
+            "heading": "CATEGORY",
+            "menu": "main-menu"
+          }
+        },
+        "link_list_nRGCxa": {
+          "type": "link_list",
+          "settings": {
+            "heading": "POLICY",
+            "menu": "policy"
+          }
+        },
+        "link_list_HdATWb": {
+          "type": "link_list",
+          "settings": {
+            "heading": "INFO",
+            "menu": "info"
+          }
+        },
+        "brand_information_hXE3ca": {
+          "type": "brand_information",
+          "settings": {
+            "show_social": true
+          }
+        },
+        "brand_information_33Qp64": {
+          "type": "brand_information",
+          "disabled": true,
+          "settings": {
+            "show_social": true
+          }
+        }
+      },
+      "block_order": [
+        "image_8MAbk6",
+        "link_list_fCemTX",
+        "link_list_nRGCxa",
+        "link_list_HdATWb",
+        "brand_information_hXE3ca",
+        "brand_information_33Qp64"
+      ],
+      "custom_css": [
+        ".footer__content-bottom {padding-top: 0rem;}",
+        ".rte {display: none;}"
+      ],
+      "settings": {
+        "color_scheme": "scheme-2",
+        "newsletter_enable": true,
+        "newsletter_heading": "Sign up to get 10% off on your first order",
+        "enable_follow_on_shop": false,
+        "show_social": false,
+        "enable_country_selector": false,
+        "enable_language_selector": false,
+        "payment_enable": false,
+        "show_policy": false,
+        "margin_top": 0,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "mobile_sticky_navigation": {
+      "type": "mobile-sticky-navigation",
+      "blocks": {
+        "nav_item_home": {
+          "type": "nav_item",
+          "settings": {
+            "label": "Home",
+            "icon": "home",
+            "link": "https://www.biomystery.in/",
+            "highlight_child_paths": true
+          }
+        },
+        "nav_item_categories": {
+          "type": "nav_item",
+          "settings": {
+            "label": "Categories",
+            "icon": "categories",
+            "link": "shopify://collections",
+            "highlight_child_paths": true
+          }
+        },
+        "nav_item_offers": {
+          "type": "nav_item",
+          "settings": {
+            "label": "Offers",
+            "icon": "offers",
+            "link": "shopify://collections/minimal-edition",
+            "highlight_child_paths": true
+          }
+        },
+        "nav_item_profile": {
+          "type": "nav_item",
+          "settings": {
+            "label": "Profile",
+            "icon": "account",
+            "link": "https://shopify.com/authentication/73416704139/login?client_id=19b8ba76-75e3-4436-b9c7-2be9330f4e98&locale=en-IN&redirect_uri=%2Fauthentication%2F73416704139%2Foauth%2Fauthorize%3Fbuyer_flags%3DeyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1YXhnY3YtYXMubXlzaG9waWZ5LmNvbSIsImZsYWdzIjpbXSwiZXhwIjoxNzc4MzE0MTg0LCJuYmYiOjE3Nzc3MDkzODR9.SwV192TyBkoPnEWr2PmTPyGDTXm650zDCXy1FflC3FQ%26client_id%3D19b8ba76-75e3-4436-b9c7-2be9330f4e98%26locale%3Den-IN%26nonce%3D705cfcbc-04b0-4004-94f1-095fb0029008%26redirect_uri%3Dhttps%253A%252F%252Fshopify.com%252F73416704139%252Faccount%252Fcallback%26region_country%3DIN%26response_type%3Dcode%26scope%3Dopenid%2Bemail%2Bcustomer-account-api%253Afull%26state%3DhWNBgsKNeBu5G7CvqIIwdzMI&region_country=IN",
+            "highlight_child_paths": true
+          }
+        }
+      },
+      "block_order": [
+        "nav_item_home",
+        "nav_item_categories",
+        "nav_item_offers",
+        "nav_item_profile"
+      ],
+      "settings": {
+        "accessibility_label": "Mobile navigation",
+        "show_separators": true,
+        "background_color": "#ffffff",
+        "text_color": "#242424",
+        "active_color": "#14a3ff",
+        "divider_color": "#d9d9d9",
+        "icon_size": 22,
+        "label_size": 11,
+        "bar_height": 66,
+        "shadow_opacity": 18
+      }
+    }
+  },
+  "order": [
+    "ap_whatsapp_CBkrCX",
+    "footer",
+    "mobile_sticky_navigation"
+  ]
+}

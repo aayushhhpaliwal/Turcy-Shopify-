@@ -1,0 +1,377 @@
+{% comment %}
+  Contact form info — Dawn Native (Premium Layout)
+  Left: Shopify native contact form
+  Right: Info cards (Email, WhatsApp, Timings, Location) + CTA
+{% endcomment %}
+
+<section class="cfi section-{{ section.id }} color-{{ section.settings.color_scheme }} gradient">
+  <div class="page-width section-{{ section.id }}-padding">
+
+    {% if section.settings.heading != blank or section.settings.subheading != blank %}
+      <header class="cfi__header cfi__header--{{ section.settings.align }}">
+        {% if section.settings.heading != blank %}
+          <h2 class="title {{ section.settings.heading_size }}">{{ section.settings.heading | escape }}</h2>
+        {% endif %}
+        {% if section.settings.subheading != blank %}
+          <div class="cfi__sub rte">{{ section.settings.subheading }}</div>
+        {% endif %}
+      </header>
+    {% endif %}
+
+    <div class="cfi__grid">
+
+      <!-- LEFT: FORM CARD -->
+      <div class="cfi__card cfi__card--form">
+        <div class="cfi__card-head">
+          <h3 class="cfi__card-title">{{ section.settings.form_title | escape }}</h3>
+          {% if section.settings.form_desc != blank %}
+            <p class="cfi__card-desc">{{ section.settings.form_desc | escape }}</p>
+          {% endif %}
+        </div>
+
+        {% form 'contact', id: 'ContactForm' %}
+          {% if form.posted_successfully? %}
+            <div class="form-status form-status--success" role="status">
+              {{ 'templates.contact.form.post_success' | t }}
+            </div>
+          {% endif %}
+
+          {% if form.errors %}
+            <div class="form-status form-status--error">
+              {{ form.errors | default_errors }}
+            </div>
+          {% endif %}
+
+          <div class="cfi__fields">
+            <div class="field">
+              <input class="field__input" type="text" name="contact[name]" required>
+              <label class="field__label">Full Name</label>
+            </div>
+
+            <div class="field">
+              <input class="field__input" type="email" name="contact[email]" required>
+              <label class="field__label">Email</label>
+            </div>
+
+            <div class="field">
+              <input class="field__input" type="tel" name="contact[phone]">
+              <label class="field__label">Phone</label>
+            </div>
+
+            <div class="field">
+              <textarea class="field__input" rows="5" name="contact[body]" required></textarea>
+              <label class="field__label">Message</label>
+            </div>
+          </div>
+
+          <button type="submit" class="button button--primary button--full-width">
+            {{ section.settings.button_text | escape }}
+          </button>
+
+          {% if section.settings.form_note != blank %}
+            <p class="cfi__note caption-with-letter-spacing">{{ section.settings.form_note | escape }}</p>
+          {% endif %}
+        {% endform %}
+      </div>
+
+      <!-- RIGHT: INFO CARD -->
+      <aside class="cfi__card cfi__card--info">
+        <div class="cfi__card-head">
+          <h3 class="cfi__card-title">{{ section.settings.info_title | escape }}</h3>
+          <p class="cfi__card-desc">{{ section.settings.info_desc | escape }}</p>
+        </div>
+
+        <div class="cfi__info-grid">
+
+          <!-- Email -->
+          <div class="cfi__info-item">
+            <div class="cfi__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M4 7.5l8 5.2 8-5.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M5.5 6h13A1.5 1.5 0 0 1 20 7.5v9A1.5 1.5 0 0 1 18.5 18h-13A1.5 1.5 0 0 1 4 16.5v-9A1.5 1.5 0 0 1 5.5 6Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="cfi__info-text">
+              <div class="cfi__info-label">Email</div>
+              <a class="cfi__info-value" href="mailto:{{ section.settings.store_email }}">{{ section.settings.store_email }}</a>
+            </div>
+          </div>
+
+          <!-- WhatsApp -->
+          <div class="cfi__info-item">
+            <div class="cfi__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M20 11.8a7.8 7.8 0 0 1-11.5 6.8L4 20l1.6-4.1A7.8 7.8 0 1 1 20 11.8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M9.2 10.2c.4 1.4 2.3 3.4 3.8 3.8.3.1.6 0 .8-.2l.9-.9c.2-.2.4-.3.7-.2l1.2.5c.4.2.5.6.3 1-.4.8-1.3 1.4-2.2 1.4-3.5 0-7.2-3.8-7.2-7.2 0-.9.6-1.8 1.4-2.2.4-.2.8-.1 1 .3l.5 1.2c.1.3 0 .5-.2.7l-.9.9c-.2.2-.2.5-.1.7Z" fill="currentColor" opacity=".2"/>
+              </svg>
+            </div>
+            <div class="cfi__info-text">
+              <div class="cfi__info-label">WhatsApp</div>
+              <a class="cfi__info-value" target="_blank" href="https://wa.me/{{ section.settings.whatsapp | remove: ' ' | remove: '+' }}">
+                {{ section.settings.whatsapp }}
+              </a>
+            </div>
+          </div>
+
+          <!-- Timings -->
+          {% comment %} <div class="cfi__info-item">
+            <div class="cfi__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M12 21a9 9 0 1 0-9-9 9 9 0 0 0 9 9Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M12 7v5l3 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="cfi__info-text">
+              <div class="cfi__info-label">Timings</div>
+              <div class="cfi__info-value">{{ section.settings.timing }}</div>
+            </div>
+          </div> {% endcomment %}
+
+          <!-- Location -->
+          <div class="cfi__info-item">
+            <div class="cfi__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M12 22s7-5.2 7-12a7 7 0 1 0-14 0c0 6.8 7 12 7 12Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M12 12.2a2.2 2.2 0 1 0-2.2-2.2 2.2 2.2 0 0 0 2.2 2.2Z" fill="currentColor" opacity=".2"/>
+              </svg>
+            </div>
+            <div class="cfi__info-text">
+              <div class="cfi__info-label">Location</div>
+              <div class="cfi__info-value">{{ section.settings.address }}</div>
+            </div>
+          </div>
+
+        </div>
+
+        {% if section.settings.enable_whatsapp_cta %}
+          <a class="button button--secondary button--full-width cfi__wa"
+             target="_blank"
+             href="https://wa.me/{{ section.settings.whatsapp | remove: ' ' | remove: '+' }}?text={{ section.settings.whatsapp_prefill | url_encode }}">
+            {{ section.settings.whatsapp_cta_text | escape }}
+          </a>
+        {% endif %}
+      </aside>
+
+    </div>
+  </div>
+
+  <style>
+    .section-{{ section.id }}-padding{
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+
+    /* Header */
+    .cfi__header{
+      max-width: 920px;
+      margin: 0 auto 34px;
+    }
+    .cfi__header--left{ text-align:left; }
+    .cfi__header--center{ text-align:center; }
+    .cfi__header--right{ text-align:right; }
+    .cfi__sub{
+      margin-top: 10px;
+      color: rgba(var(--color-foreground), .75);
+    }
+    .cfi__sub.rte p{ margin: 0; }
+
+    /* Grid */
+    .cfi__grid{
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 44px;
+      align-items: start;
+    }
+
+    /* Cards */
+    .cfi__card{
+      background: rgba(var(--color-background), 0.96);
+      border: 1px solid rgba(var(--color-foreground), .09);
+      border-radius: 22px;
+      padding: 30px;
+      box-shadow: 0 18px 46px rgba(0,0,0,.06);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Subtle top highlight */
+    .cfi__card::before{
+      content:"";
+      position:absolute;
+      inset: 0;
+      background: radial-gradient(800px 220px at 20% 0%, rgba(var(--color-foreground), .06), transparent 60%);
+      pointer-events:none;
+    }
+
+    .cfi__card > *{ position: relative; z-index: 1; }
+
+    .cfi__card-head{
+      margin-bottom: 18px;
+    }
+
+    .cfi__card-title{
+      margin: 0 0 6px;
+      font-size: 20px;
+      letter-spacing: -.01em;
+    }
+    .cfi__card-desc{
+      margin: 0;
+      color: rgba(var(--color-foreground), .72);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    /* Form spacing */
+    .cfi__fields{
+      display: grid;
+      gap: 18px;
+      margin-top: 10px;
+      margin-bottom: 18px;
+    }
+    .cfi__note{
+      margin: 14px 0 0;
+      opacity: .8;
+    }
+
+    /* Info items */
+    .cfi__info-grid{
+      display: grid;
+      gap: 14px;
+      margin-top: 8px;
+    }
+
+    .cfi__info-item{
+      display: grid;
+      grid-template-columns: 44px 1fr;
+      gap: 12px;
+      align-items: center;
+      padding: 14px;
+      border-radius: 16px;
+      background: rgba(var(--color-foreground), .03);
+      border: 1px solid rgba(var(--color-foreground), .07);
+    }
+
+    .cfi__icon{
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      background: rgba(var(--color-foreground), .06);
+      color: rgb(var(--color-foreground));
+    }
+
+    .cfi__icon svg{
+      width: 20px;
+      height: 20px;
+      display: block;
+    }
+
+    .cfi__info-label{
+      font-size: 12px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      opacity: .7;
+      margin-bottom: 2px;
+    }
+
+    .cfi__info-value{
+      font-size: 15px;
+      line-height: 1.5;
+      color: rgba(var(--color-foreground), .9);
+    }
+
+    a.cfi__info-value{
+      text-decoration: underline;
+      text-underline-offset: .22em;
+    }
+
+    .cfi__wa{
+      margin-top: 18px;
+    }
+
+    /* Mobile */
+    @media (max-width: 989px){
+      .cfi__grid{
+        grid-template-columns: 1fr;
+        gap: 28px;
+      }
+      .cfi__card{
+        padding: 24px;
+      }
+      .cfi__header{
+        margin-bottom: 22px;
+      }
+    }
+  </style>
+</section>
+
+{% schema %}
+{
+  "name": "Contact form info",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Contact Us" },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Heading size",
+      "default": "h1",
+      "options": [
+        { "value": "h2", "label": "Small" },
+        { "value": "h1", "label": "Medium" },
+        { "value": "h0", "label": "Large" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "align",
+      "label": "Header alignment",
+      "default": "center",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ]
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "<p>For customer support, order assistance, or product queries — reach us via the form or the channels below.</p>"
+    },
+
+    { "type": "text", "id": "form_title", "label": "Form title", "default": "Send us a message" },
+    { "type": "text", "id": "form_desc", "label": "Form description", "default": "We usually reply within 24 hours on business days." },
+    { "type": "text", "id": "button_text", "label": "Button text", "default": "Submit" },
+    { "type": "text", "id": "form_note", "label": "Small note under button", "default": "By submitting, you agree to be contacted via email/phone for support." },
+
+    { "type": "text", "id": "info_title", "label": "Info title", "default": "Reach us directly" },
+    { "type": "text", "id": "info_desc", "label": "Info description", "default": "Use any of the following channels for quick support." },
+
+    { "type": "text", "id": "store_email", "label": "Email", "default": "support@joyfrog.in" },
+    { "type": "text", "id": "whatsapp", "label": "WhatsApp (with country code)", "default": "+91 6382357537" },
+    { "type": "textarea", "id": "timing", "label": "Timings", "default": "Monday to Saturday, 10:00 AM – 6:00 PM" },
+    { "type": "textarea", "id": "address", "label": "Location", "default": "Vanagaram, Chennai, India – 600095" },
+
+    { "type": "checkbox", "id": "enable_whatsapp_cta", "label": "Show WhatsApp CTA button", "default": true },
+    { "type": "text", "id": "whatsapp_cta_text", "label": "WhatsApp CTA text", "default": "Chat on WhatsApp" },
+    { "type": "text", "id": "whatsapp_prefill", "label": "WhatsApp prefill text", "default": "Hi Joyfrog Support, I need help with my order." },
+
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "background-1"
+    },
+
+    { "type": "range", "id": "padding_top", "label": "Padding top", "min": 20, "max": 120, "step": 4, "default": 60 },
+    { "type": "range", "id": "padding_bottom", "label": "Padding bottom", "min": 20, "max": 120, "step": 4, "default": 60 }
+  ],
+  "presets": [
+    { "name": "Contact form info" }
+  ]
+}
+{% endschema %}
+}

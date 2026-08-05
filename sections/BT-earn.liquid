@@ -1,0 +1,922 @@
+<section id="bt-hiw-{{ section.id }}" class="bt-hiw-section">
+  <div class="bt-hiw-container">
+    {% if section.settings.heading != blank %}
+      <h2 class="bt-hiw-heading">{{ section.settings.heading }}</h2>
+    {% endif %}
+
+    <div class="bt-hiw-grid">
+      {% for block in section.blocks %}
+        <div class="bt-hiw-box" {{ block.shopify_attributes }}>
+          {% if block.settings.title != blank %}
+            <h3>{{ block.settings.title }}</h3>
+          {% endif %}
+
+          {% if block.settings.text != blank %}
+            <div class="bt-hiw-text">
+              {{ block.settings.text }}
+            </div>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+
+{% if section.settings.button_label != blank %}
+  <div class="bt-hiw-button-wrap">
+    <button type="button" class="bt-hiw-button" data-bt-hiw-open>
+      {{ section.settings.button_label }}
+    </button>
+  </div>
+{% endif %}
+  </div>
+
+
+
+  {% assign bt_form_id = 'BtHiwJoinForm-' | append: section.id %}
+
+<div class="bt-hiw-modal" data-bt-hiw-modal hidden>
+  <div class="bt-hiw-modal__overlay" data-bt-hiw-close></div>
+
+  <div class="bt-hiw-modal__box">
+    <button type="button" class="bt-hiw-modal__close" data-bt-hiw-close aria-label="Close form">
+      ×
+    </button>
+
+    <div class="bt-hiw-modal__header">
+      <h3>{{ section.settings.form_heading | default: 'Join Now' }}</h3>
+      {% if section.settings.form_text != blank %}
+        <p>{{ section.settings.form_text }}</p>
+      {% endif %}
+    </div>
+
+    {% form 'contact', id: bt_form_id, class: 'bt-hiw-form' %}
+      {% if form.posted_successfully? %}
+        <div class="bt-hiw-form-message bt-hiw-form-message--success">
+          Thank you. Your form has been submitted successfully.
+        </div>
+      {% endif %}
+
+      {% if form.errors %}
+        <div class="bt-hiw-form-message bt-hiw-form-message--error">
+          Please check the required fields and try again.
+        </div>
+      {% endif %}
+
+      <input type="hidden" name="contact[Form Type]" value="Affiliate Join Form">
+
+      <div class="bt-hiw-form__grid">
+        <div class="bt-hiw-form__field">
+          <label for="BtName-{{ section.id }}">Name</label>
+          <input
+            id="BtName-{{ section.id }}"
+            type="text"
+            name="contact[name]"
+            placeholder="Enter your name"
+            required
+          >
+        </div>
+
+        <div class="bt-hiw-form__field">
+          <label for="BtEmail-{{ section.id }}">Email</label>
+          <input
+            id="BtEmail-{{ section.id }}"
+            type="email"
+            name="contact[email]"
+            placeholder="Enter your email"
+            required
+          >
+        </div>
+
+        <div class="bt-hiw-form__field">
+          <label for="BtPhone-{{ section.id }}">Mobile No.</label>
+          <input
+            id="BtPhone-{{ section.id }}"
+            type="tel"
+            name="contact[phone]"
+            placeholder="Enter your mobile number"
+            required
+          >
+        </div>
+
+        <div class="bt-hiw-form__field">
+          <label for="BtCountry-{{ section.id }}">Country</label>
+          <input
+            id="BtCountry-{{ section.id }}"
+            type="text"
+            name="contact[Country]"
+            placeholder="Enter your country"
+            required
+          >
+        </div>
+
+        <div class="bt-hiw-form__field bt-hiw-form__field--full">
+          <label for="BtCity-{{ section.id }}">City</label>
+          <input
+            id="BtCity-{{ section.id }}"
+            type="text"
+            name="contact[City]"
+            placeholder="Enter your city"
+            required
+          >
+        </div>
+      </div>
+
+      <button type="submit" class="bt-hiw-form__submit">
+        Submit
+      </button>
+    {% endform %}
+  </div>
+</div>
+
+
+
+  <style>
+    #bt-hiw-{{ section.id }} {
+      background: {{ section.settings.bg_color }};
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+      border-bottom: 1px solid {{ section.settings.bottom_border_color }};
+    }
+
+    #bt-hiw-{{ section.id }} .bt-hiw-container {
+      max-width: {{ section.settings.max_width }}px;
+      margin: 0 auto;
+      padding: 0 20px;
+      text-align: center;
+    }
+
+    #bt-hiw-{{ section.id }} .bt-hiw-heading {
+      margin: 0 0 {{ section.settings.heading_bottom_space }}px;
+      color: {{ section.settings.heading_color }};
+      font-size: {{ section.settings.heading_size }}px;
+      font-weight: {{ section.settings.heading_weight }};
+      line-height: 1.2;
+      font-family: {{ section.settings.heading_font.family }}, {{ section.settings.heading_font.fallback_families }};
+    }
+
+    #bt-hiw-{{ section.id }} .bt-hiw-grid {
+      display: grid;
+      grid-template-columns: repeat({{ section.settings.desktop_columns }}, 1fr);
+      border: 1px solid {{ section.settings.border_color }};
+      border-radius: {{ section.settings.box_radius }}px;
+      overflow: hidden;
+      background: {{ section.settings.box_bg }};
+    }
+
+    #bt-hiw-{{ section.id }} .bt-hiw-box {
+      min-height: {{ section.settings.box_height }}px;
+      padding: {{ section.settings.box_padding_top }}px 28px {{ section.settings.box_padding_bottom }}px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      text-align: center;
+      border-right: 1px solid {{ section.settings.border_color }};
+    }
+
+    #bt-hiw-{{ section.id }} .bt-hiw-box:last-child {
+      border-right: 0;
+    }
+
+    #bt-hiw-{{ section.id }} .bt-hiw-box h3 {
+      margin: 0 0 10px;
+      color: {{ section.settings.title_color }};
+      font-size: {{ section.settings.title_size }}px;
+      font-weight: {{ section.settings.title_weight }};
+      line-height: 1.15;
+      font-family: {{ section.settings.title_font.family }}, {{ section.settings.title_font.fallback_families }};
+    }
+
+    #bt-hiw-{{ section.id }} .bt-hiw-text {
+      color: {{ section.settings.text_color }};
+      font-size: {{ section.settings.text_size }}px;
+      font-weight: {{ section.settings.text_weight }};
+      line-height: 1.35;
+      max-width: 360px;
+      margin: 0 auto;
+      font-family: {{ section.settings.text_font.family }}, {{ section.settings.text_font.fallback_families }};
+    }
+
+    #bt-hiw-{{ section.id }} .bt-hiw-text p {
+      margin: 0;
+    }
+
+    #bt-hiw-{{ section.id }} .bt-hiw-button-wrap {
+      margin-top: {{ section.settings.button_top_space }}px;
+      text-align: center;
+    }
+
+    #bt-hiw-{{ section.id }} .bt-hiw-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: {{ section.settings.button_width }}px;
+      min-height: {{ section.settings.button_height }}px;
+      padding: 8px 18px;
+      background: {{ section.settings.button_bg }};
+      color: {{ section.settings.button_text_color }};
+      border: 1px solid {{ section.settings.button_border_color }};
+      border-radius: {{ section.settings.button_radius }}px;
+      text-decoration: none;
+      font-size: {{ section.settings.button_text_size }}px;
+      font-weight: 600;
+      line-height: 1;
+      transition: all 0.25s ease;
+    }
+
+    #bt-hiw-{{ section.id }} .bt-hiw-button:hover {
+      background: {{ section.settings.button_hover_bg }};
+      color: {{ section.settings.button_hover_text_color }};
+      transform: translateY(-1px);
+    }
+
+    @media screen and (max-width: 989px) {
+      #bt-hiw-{{ section.id }} .bt-hiw-grid {
+        grid-template-columns: repeat(1, 1fr);
+      }
+
+      #bt-hiw-{{ section.id }} .bt-hiw-box {
+        border-right: 0;
+        border-bottom: 1px solid {{ section.settings.border_color }};
+      }
+
+      #bt-hiw-{{ section.id }} .bt-hiw-box:last-child {
+        border-bottom: 0;
+      }
+    }
+
+    @media screen and (max-width: 749px) {
+      #bt-hiw-{{ section.id }} {
+        padding-top: {{ section.settings.mobile_padding_top }}px;
+        padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
+      }
+
+      #bt-hiw-{{ section.id }} .bt-hiw-heading {
+        font-size: {{ section.settings.mobile_heading_size }}px;
+        margin-bottom: 18px;
+      }
+
+      #bt-hiw-{{ section.id }} .bt-hiw-box {
+        min-height: auto;
+        padding: 22px 18px;
+      }
+
+      #bt-hiw-{{ section.id }} .bt-hiw-box h3 {
+        font-size: {{ section.settings.mobile_title_size }}px;
+      }
+
+      #bt-hiw-{{ section.id }} .bt-hiw-text {
+        font-size: {{ section.settings.mobile_text_size }}px;
+      }
+
+      #bt-hiw-{{ section.id }} .bt-hiw-button-wrap {
+        margin-top: 22px;
+      }
+    }
+
+    #bt-hiw-{{ section.id }} .bt-hiw-button {
+  cursor: pointer;
+  border: 1px solid {{ section.settings.button_border_color }};
+  font-family: inherit;
+}
+
+#bt-hiw-{{ section.id }} .bt-hiw-modal[hidden] {
+  display: none !important;
+}
+
+#bt-hiw-{{ section.id }} .bt-hiw-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+#bt-hiw-{{ section.id }} .bt-hiw-modal__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+}
+
+#bt-hiw-{{ section.id }} .bt-hiw-modal__box {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 560px;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 32px;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.25);
+}
+
+#bt-hiw-{{ section.id }} .bt-hiw-modal__close {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  width: 34px;
+  height: 34px;
+  border: 0;
+  background: transparent;
+  color: #000000;
+  font-size: 30px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+#bt-hiw-{{ section.id }} .bt-hiw-modal__header {
+  text-align: center;
+  margin-bottom: 22px;
+}
+
+#bt-hiw-{{ section.id }} .bt-hiw-modal__header h3 {
+  margin: 0 0 8px;
+  font-size: 28px;
+  line-height: 1.2;
+  color: #1c2633;
+}
+
+#bt-hiw-{{ section.id }} .bt-hiw-modal__header p {
+  margin: 0;
+  font-size: 15px;
+  color: #555555;
+}
+
+#bt-hiw-{{ section.id }} .bt-hiw-form__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+#bt-hiw-{{ section.id }} .bt-hiw-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  text-align: left;
+}
+
+#bt-hiw-{{ section.id }} .bt-hiw-form__field--full {
+  grid-column: 1 / -1;
+}
+
+#bt-hiw-{{ section.id }} .bt-hiw-form__field label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1c2633;
+}
+
+#bt-hiw-{{ section.id }} .bt-hiw-form__field input {
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 13px;
+  border: 1px solid #d4d4d4;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #000000;
+  font-size: 15px;
+  outline: none;
+}
+
+#bt-hiw-{{ section.id }} .bt-hiw-form__field input:focus {
+  border-color: {{ section.settings.button_bg }};
+  box-shadow: 0 0 0 2px rgba(170, 179, 76, 0.18);
+}
+
+#bt-hiw-{{ section.id }} .bt-hiw-form__submit {
+  width: 100%;
+  min-height: 44px;
+  margin-top: 20px;
+  border: 1px solid {{ section.settings.button_border_color }};
+  border-radius: {{ section.settings.button_radius }}px;
+  background: {{ section.settings.button_bg }};
+  color: {{ section.settings.button_text_color }};
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+#bt-hiw-{{ section.id }} .bt-hiw-form__submit:hover {
+  background: {{ section.settings.button_hover_bg }};
+  color: {{ section.settings.button_hover_text_color }};
+}
+
+#bt-hiw-{{ section.id }} .bt-hiw-form-message {
+  padding: 12px 14px;
+  margin-bottom: 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  text-align: center;
+}
+
+#bt-hiw-{{ section.id }} .bt-hiw-form-message--success {
+  background: #eaf8ec;
+  color: #1b7a34;
+  border: 1px solid #bfe6c7;
+}
+
+#bt-hiw-{{ section.id }} .bt-hiw-form-message--error {
+  background: #fff0f0;
+  color: #b00020;
+  border: 1px solid #ffc6c6;
+}
+
+body.bt-hiw-modal-open {
+  overflow: hidden;
+}
+
+@media screen and (max-width: 749px) {
+  #bt-hiw-{{ section.id }} .bt-hiw-modal__box {
+    padding: 28px 18px 22px;
+  }
+
+  #bt-hiw-{{ section.id }} .bt-hiw-modal__header h3 {
+    font-size: 24px;
+  }
+
+  #bt-hiw-{{ section.id }} .bt-hiw-form__grid {
+    grid-template-columns: 1fr;
+    gap: 13px;
+  }
+
+  #bt-hiw-{{ section.id }} .bt-hiw-form__field--full {
+    grid-column: auto;
+  }
+}
+  </style>
+
+
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const section = document.querySelector('#bt-hiw-{{ section.id }}');
+    if (!section) return;
+
+    const openBtn = section.querySelector('[data-bt-hiw-open]');
+    const modal = section.querySelector('[data-bt-hiw-modal]');
+    const closeBtns = section.querySelectorAll('[data-bt-hiw-close]');
+    const hasMessage = section.querySelector('.bt-hiw-form-message');
+
+    function openModal() {
+      if (!modal) return;
+      modal.removeAttribute('hidden');
+      document.body.classList.add('bt-hiw-modal-open');
+    }
+
+    function closeModal() {
+      if (!modal) return;
+      modal.setAttribute('hidden', '');
+      document.body.classList.remove('bt-hiw-modal-open');
+    }
+
+    if (openBtn) {
+      openBtn.addEventListener('click', openModal);
+    }
+
+    closeBtns.forEach(function (btn) {
+      btn.addEventListener('click', closeModal);
+    });
+
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape') {
+        closeModal();
+      }
+    });
+
+    if (hasMessage) {
+      openModal();
+    }
+  });
+</script>
+
+
+
+</section>
+
+{% schema %}
+{
+  "name": "BT Earn Work",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "How Does It Work?"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Max width",
+      "min": 900,
+      "max": 1600,
+      "step": 20,
+      "unit": "px",
+      "default": 1300
+    },
+    {
+      "type": "range",
+      "id": "desktop_columns",
+      "label": "Desktop columns",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Section background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "box_bg",
+      "label": "Box background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Box border color",
+      "default": "#d4d4d4"
+    },
+    {
+      "type": "color",
+      "id": "bottom_border_color",
+      "label": "Bottom border color",
+      "default": "#e5e5e5"
+    },
+    {
+      "type": "range",
+      "id": "box_radius",
+      "label": "Box radius",
+      "min": 0,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 5
+    },
+    {
+      "type": "range",
+      "id": "box_height",
+      "label": "Box minimum height",
+      "min": 90,
+      "max": 240,
+      "step": 5,
+      "unit": "px",
+      "default": 135
+    },
+    {
+      "type": "range",
+      "id": "box_padding_top",
+      "label": "Box padding top",
+      "min": 10,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "box_padding_bottom",
+      "label": "Box padding bottom",
+      "min": 10,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Heading font",
+      "default": "serif"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#1c2633"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Heading size desktop",
+      "min": 18,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "mobile_heading_size",
+      "label": "Heading size mobile",
+      "min": 18,
+      "max": 42,
+      "step": 1,
+      "unit": "px",
+      "default": 26
+    },
+    {
+      "type": "select",
+      "id": "heading_weight",
+      "label": "Heading weight",
+      "default": "400",
+      "options": [
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi Bold" },
+        { "value": "700", "label": "Bold" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "heading_bottom_space",
+      "label": "Heading bottom space",
+      "min": 8,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "font_picker",
+      "id": "title_font",
+      "label": "Box title font",
+      "default": "serif"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Box title color",
+      "default": "#1c2633"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Box title size desktop",
+      "min": 16,
+      "max": 46,
+      "step": 1,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "mobile_title_size",
+      "label": "Box title size mobile",
+      "min": 16,
+      "max": 36,
+      "step": 1,
+      "unit": "px",
+      "default": 26
+    },
+    {
+      "type": "select",
+      "id": "title_weight",
+      "label": "Title weight",
+      "default": "400",
+      "options": [
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi Bold" },
+        { "value": "700", "label": "Bold" }
+      ]
+    },
+    {
+      "type": "font_picker",
+      "id": "text_font",
+      "label": "Text font",
+      "default": "serif"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "label": "Text size desktop",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "mobile_text_size",
+      "label": "Text size mobile",
+      "min": 12,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "select",
+      "id": "text_weight",
+      "label": "Text weight",
+      "default": "600",
+      "options": [
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi Bold" },
+        { "value": "700", "label": "Bold" }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Join Now"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+  "type": "text",
+  "id": "form_heading",
+  "label": "Form heading",
+  "default": "Join Now"
+},
+{
+  "type": "text",
+  "id": "form_text",
+  "label": "Form short text",
+  "default": "Fill in your details and our team will contact you."
+},
+    {
+      "type": "range",
+      "id": "button_top_space",
+      "label": "Button top space",
+      "min": 10,
+      "max": 70,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "button_width",
+      "label": "Button width",
+      "min": 80,
+      "max": 220,
+      "step": 5,
+      "unit": "px",
+      "default": 90
+    },
+    {
+      "type": "range",
+      "id": "button_height",
+      "label": "Button height",
+      "min": 30,
+      "max": 70,
+      "step": 2,
+      "unit": "px",
+      "default": 38
+    },
+    {
+      "type": "range",
+      "id": "button_text_size",
+      "label": "Button text size",
+      "min": 12,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "button_radius",
+      "label": "Button radius",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 6
+    },
+    {
+      "type": "color",
+      "id": "button_bg",
+      "label": "Button background",
+      "default": "#aab34c"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_bg",
+      "label": "Button hover background",
+      "default": "#8f9838"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_text_color",
+      "label": "Button hover text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_border_color",
+      "label": "Button border color",
+      "default": "#aab34c"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top desktop",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom desktop",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "label": "Padding top mobile",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_bottom",
+      "label": "Padding bottom mobile",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 28
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step box",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Step title",
+          "default": "Join"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Step text",
+          "default": "<p>It's free and easy to join. Get up and running today.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "BT Earn Work",
+      "blocks": [
+        {
+          "type": "step",
+          "settings": {
+            "title": "Join",
+            "text": "<p>It's free and easy to join. Get up and running today.</p>"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "title": "Promote",
+            "text": "<p>Choose from our range of products to advertise to your customers & monetize with us.</p>"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "title": "Earn",
+            "text": "<p>Get up to 10% in commissions from all qualifying purchases, not just the products you advertised.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,1488 @@
+{% liquid
+  assign section_dom_id = 'BeforeAfterResults-' | append: section.id
+%}
+
+<section
+  id="{{ section_dom_id }}"
+  class="bar-section"
+  style="
+    --bar-bg: {{ section.settings.background_color }};
+    --bar-card-bg: {{ section.settings.card_background }};
+    --bar-text: {{ section.settings.text_color }};
+    --bar-muted: {{ section.settings.muted_text_color }};
+    --bar-accent: {{ section.settings.accent_color }};
+    --bar-accent-text: {{ section.settings.accent_text_color }};
+    --bar-border: {{ section.settings.border_color }};
+    --bar-radius: {{ section.settings.card_radius }}px;
+    --bar-max-width: {{ section.settings.max_width }}px;
+    --bar-desktop-visible: {{ section.settings.desktop_columns }};
+    --bar-tablet-visible: {{ section.settings.tablet_cards_per_view }};
+    --bar-mobile-width: {{ section.settings.mobile_card_width }}%;
+    --bar-slider-gap: {{ section.settings.slider_gap }}px;
+  "
+>
+  <div class="bar-section__inner">
+    <header class="bar-section__header">
+      {% if section.settings.heading != blank %}
+        <h2 class="bar-section__heading">{{ section.settings.heading }}</h2>
+      {% endif %}
+
+      {% if section.settings.subheading != blank %}
+        <p class="bar-section__subheading">{{ section.settings.subheading }}</p>
+      {% endif %}
+    </header>
+
+    {% if section.settings.show_filters and section.blocks.size > 0 %}
+      <div class="bar-section__filters-wrap">
+        <div class="bar-section__filters" role="group" aria-label="Filter customer results">
+          <button
+            class="bar-section__filter is-active"
+            type="button"
+            data-bar-filter="all"
+            aria-pressed="true"
+          >
+            {{ section.settings.all_label }}
+          </button>
+
+          <button
+            class="bar-section__filter"
+            type="button"
+            data-bar-filter="anti-aging"
+            aria-pressed="false"
+          >
+            {{ section.settings.anti_aging_label }}
+          </button>
+
+          <button
+            class="bar-section__filter"
+            type="button"
+            data-bar-filter="acne"
+            aria-pressed="false"
+          >
+            {{ section.settings.acne_label }}
+          </button>
+
+          <button
+            class="bar-section__filter"
+            type="button"
+            data-bar-filter="pigmentation"
+            aria-pressed="false"
+          >
+            {{ section.settings.pigmentation_label }}
+          </button>
+        </div>
+
+        {% if section.settings.show_result_count %}
+          <p class="bar-section__result-count" aria-live="polite">
+            <span data-bar-result-count>{{ section.blocks.size }}</span>
+            {{ section.settings.results_label }}
+          </p>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    {% if section.blocks.size > 0 %}
+      <div class="bar-section__slider" data-bar-slider>
+        <div
+          class="bar-section__grid"
+          data-bar-grid
+          role="region"
+          aria-label="{{ section.settings.slider_aria_label | escape }}"
+          tabindex="0"
+        >
+        {% for block in section.blocks %}
+          {% liquid
+            assign selected_product = block.settings.product
+            assign card_link = block.settings.button_link
+
+            if selected_product != blank
+              assign card_link = selected_product.url
+              assign selected_product_image = selected_product.images.first
+
+              if selected_product_image == blank and selected_product.featured_image != blank
+                assign selected_product_image = selected_product.featured_image
+              endif
+            endif
+          %}
+
+          <article
+            class="bar-card"
+            data-bar-card
+            data-category="{{ block.settings.category }}"
+            {{ block.shopify_attributes }}
+          >
+            <div
+              class="bar-card__comparison"
+              data-before-after
+              style="--bar-position: {{ block.settings.initial_slider_position }}%;"
+            >
+              <div class="bar-card__comparison-image bar-card__comparison-image--after">
+                {% if block.settings.after_image != blank %}
+                  {{
+                    block.settings.after_image
+                    | image_url: width: 1200
+                    | image_tag:
+                      loading: 'lazy',
+                      widths: '360, 540, 720, 900, 1200',
+                      sizes: '(min-width: 990px) 32vw, 88vw',
+                      alt: block.settings.after_alt
+                  }}
+                {% else %}
+                  {{ 'image' | placeholder_svg_tag: 'bar-card__placeholder' }}
+                {% endif %}
+              </div>
+
+              <div class="bar-card__comparison-image bar-card__comparison-image--before">
+                {% if block.settings.before_image != blank %}
+                  {{
+                    block.settings.before_image
+                    | image_url: width: 1200
+                    | image_tag:
+                      loading: 'lazy',
+                      widths: '360, 540, 720, 900, 1200',
+                      sizes: '(min-width: 990px) 32vw, 88vw',
+                      alt: block.settings.before_alt
+                  }}
+                {% else %}
+                  {{ 'image' | placeholder_svg_tag: 'bar-card__placeholder' }}
+                {% endif %}
+              </div>
+
+              <span class="bar-card__label bar-card__label--before">{{ section.settings.before_label }}</span>
+              <span class="bar-card__label bar-card__label--after">{{ section.settings.after_label }}</span>
+
+              <div class="bar-card__comparison-line" aria-hidden="true">
+                <span class="bar-card__comparison-handle">
+                  <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
+                    <path d="M12 9 5 16l7 7M20 9l7 7-7 7" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+              </div>
+
+              <input
+                class="bar-card__comparison-range"
+                type="range"
+                min="0"
+                max="100"
+                step="1"
+                value="{{ block.settings.initial_slider_position }}"
+                aria-label="Move slider to compare before and after images"
+                data-before-after-range
+              >
+            </div>
+
+            <div class="bar-card__content">
+              {% if block.settings.customer_name != blank %}
+                <h3 class="bar-card__title">
+                  {{ block.settings.customer_name }}{{ section.settings.journey_suffix }}
+                </h3>
+              {% endif %}
+
+              <div class="bar-card__divider" aria-hidden="true"></div>
+
+              {% if block.settings.skin_goal != blank %}
+                <div class="bar-card__meta">
+                  <span>{{ section.settings.skin_goal_label }}</span>
+                  <strong>{{ block.settings.skin_goal }}</strong>
+                </div>
+                <div class="bar-card__divider" aria-hidden="true"></div>
+              {% endif %}
+
+              {% if block.settings.duration != blank %}
+                <div class="bar-card__meta">
+                  <span>{{ section.settings.duration_label }}</span>
+                  <strong>{{ block.settings.duration }}</strong>
+                </div>
+                <div class="bar-card__divider" aria-hidden="true"></div>
+              {% endif %}
+
+              {% if selected_product != blank and block.settings.show_product_image %}
+                <div class="bar-card__product">
+                  <a
+                    class="bar-card__product-image-link"
+                    href="{{ selected_product.url }}"
+                    aria-label="{{ selected_product.title | escape }}"
+                  >
+                    {% if selected_product_image != blank %}
+                      {{
+                        selected_product_image
+                        | image_url: width: 500
+                        | image_tag:
+                          class: 'bar-card__product-image',
+                          loading: 'lazy',
+                          widths: '120, 180, 240, 360, 500',
+                          sizes: '120px',
+                          alt: selected_product_image.alt | default: selected_product.title
+                      }}
+                    {% else %}
+                      {{ 'product-1' | placeholder_svg_tag: 'bar-card__product-image bar-card__product-placeholder' }}
+                    {% endif %}
+                  </a>
+                </div>
+              {% endif %}
+
+              {% if block.settings.show_button and card_link != blank %}
+                <a
+                  class="bar-card__button"
+                  href="{{ card_link }}"
+                  {% if block.settings.open_in_new_tab %}
+                    target="_blank" rel="noopener"
+                  {% endif %}
+                >
+                  {{ block.settings.button_label }}
+                </a>
+              {% endif %}
+            </div>
+          </article>
+        {% endfor %}
+        </div>
+
+        {% if section.settings.show_navigation %}
+          <div class="bar-section__navigation" data-bar-navigation>
+            <button
+              class="bar-section__nav-button"
+              type="button"
+              data-bar-prev
+              aria-label="{{ section.settings.previous_label | escape }}"
+            >
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="m15 5-7 7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+
+            <div class="bar-section__counter" aria-live="polite">
+              <span data-bar-current>1</span>
+              <span aria-hidden="true"> / </span>
+              <span data-bar-total>{{ section.blocks.size }}</span>
+            </div>
+
+            <button
+              class="bar-section__nav-button"
+              type="button"
+              data-bar-next
+              aria-label="{{ section.settings.next_label | escape }}"
+            >
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="m9 5 7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+        {% endif %}
+      </div>
+
+      {% if section.settings.show_mobile_hint %}
+        <p class="bar-section__mobile-hint small-hide">
+          {{ section.settings.mobile_hint }}
+        </p>
+      {% endif %}
+    {% else %}
+      <div class="bar-section__empty">
+        Add customer-result blocks from the theme editor.
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+<style>
+  #{{ section_dom_id }} {
+    width: 100%;
+    overflow: hidden;
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    background: var(--bar-bg);
+    color: var(--bar-text);
+  }
+
+  #{{ section_dom_id }} *,
+  #{{ section_dom_id }} *::before,
+  #{{ section_dom_id }} *::after {
+    box-sizing: border-box;
+  }
+
+  #{{ section_dom_id }} .bar-section__inner {
+    width: min(calc(100% - 32px), var(--bar-max-width));
+    margin: 0 auto;
+  }
+
+  #{{ section_dom_id }} .bar-section__header {
+    max-width: 980px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  #{{ section_dom_id }} .bar-section__heading {
+    margin: 0;
+    color: var(--bar-text);
+    font-family: var(--font-heading-family);
+    font-size: clamp(30px, 4vw, 32px);
+    font-style: var(--font-heading-style);
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: -0.025em;
+  }
+
+  #{{ section_dom_id }} .bar-section__subheading {
+    margin: 12px 0 0;
+    color: var(--bar-muted);
+    font-family: var(--font-body-family);
+    font-size: clamp(17px, 1.8vw, 24px);
+    font-weight: 500;
+    line-height: 1.35;
+  }
+
+  #{{ section_dom_id }} .bar-section__filters-wrap {
+    margin-top: 30px;
+  }
+
+  #{{ section_dom_id }} .bar-section__filters {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 4px 2px 8px;
+    scrollbar-width: none;
+  }
+
+  #{{ section_dom_id }} .bar-section__filters::-webkit-scrollbar {
+    display: none;
+  }
+
+  #{{ section_dom_id }} .bar-section__filter {
+    flex: 0 0 auto;
+    min-height: 42px;
+    padding: 8px 20px;
+    border: 1px solid var(--bar-border);
+    border-radius: 999px;
+    background: var(--bar-card-bg);
+    color: var(--bar-text);
+    font: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease,
+      border-color 0.2s ease,
+      transform 0.2s ease;
+  }
+
+  #{{ section_dom_id }} .bar-section__filter:hover {
+    transform: translateY(-1px);
+    border-color: var(--bar-accent);
+  }
+
+  #{{ section_dom_id }} .bar-section__filter.is-active {
+    border-color: var(--bar-accent);
+    background: var(--bar-accent);
+    color: var(--bar-accent-text);
+  }
+
+  #{{ section_dom_id }} .bar-section__result-count {
+    margin: 9px 0 0;
+    color: var(--bar-muted);
+    text-align: center;
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  #{{ section_dom_id }} .bar-section__slider {
+    position: relative;
+    margin-top: 34px;
+  }
+
+  #{{ section_dom_id }} .bar-section__grid {
+    display: flex;
+    gap: var(--bar-slider-gap);
+    width: 100%;
+    margin: 0;
+    padding: 4px 2px 18px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 2px;
+    scrollbar-width: none;
+    overscroll-behavior-inline: contain;
+  }
+
+  #{{ section_dom_id }} .bar-section__grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  #{{ section_dom_id }} .bar-card {
+    flex: 0 0 calc(
+      (100% - (var(--bar-desktop-visible) - 1) * var(--bar-slider-gap))
+      / var(--bar-desktop-visible)
+    );
+    min-width: 0;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    overflow: hidden;
+    border: 1px solid var(--bar-border);
+    border-radius: var(--bar-radius);
+    background: var(--bar-card-bg);
+    box-shadow: {{ section.settings.card_shadow }};
+    transition:
+      transform 0.25s ease,
+      box-shadow 0.25s ease;
+  }
+
+  #{{ section_dom_id }} .bar-card:hover {
+    transform: translateY(-3px);
+    box-shadow: {{ section.settings.card_hover_shadow }};
+  }
+
+  #{{ section_dom_id }} .bar-card[hidden] {
+    display: none !important;
+  }
+
+  #{{ section_dom_id }} .bar-card__comparison {
+    position: relative;
+    aspect-ratio: {{ section.settings.image_ratio }};
+    overflow: hidden;
+    isolation: isolate;
+    background: #ececec;
+    cursor: ew-resize;
+    touch-action: pan-y;
+    user-select: none;
+  }
+
+  #{{ section_dom_id }} .bar-card__comparison-image {
+    position: absolute;
+    inset: 0;
+  }
+
+  #{{ section_dom_id }} .bar-card__comparison-image--before {
+    z-index: 2;
+    width: var(--bar-position);
+    overflow: hidden;
+  }
+
+  #{{ section_dom_id }} .bar-card__comparison-image--before img,
+  #{{ section_dom_id }} .bar-card__comparison-image--before .bar-card__placeholder {
+    width: calc(100% * 100 / max(var(--bar-position), 1));
+    max-width: none;
+  }
+
+  #{{ section_dom_id }} .bar-card__comparison-image img,
+  #{{ section_dom_id }} .bar-card__placeholder {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: {{ section.settings.image_fit }};
+    object-position: center;
+    pointer-events: none;
+  }
+
+  #{{ section_dom_id }} .bar-card__placeholder {
+    background: #ededed;
+    color: #c2c2c2;
+  }
+
+  #{{ section_dom_id }} .bar-card__label {
+    position: absolute;
+    z-index: 5;
+    bottom: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 28px;
+    margin: 0;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.92);
+    color: #181818;
+    font-size: 10px;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    backdrop-filter: blur(5px);
+    pointer-events: none;
+  }
+
+  #{{ section_dom_id }} .bar-card__label--before { left: 12px; }
+  #{{ section_dom_id }} .bar-card__label--after { right: 12px; }
+
+  #{{ section_dom_id }} .bar-card__comparison-line {
+    position: absolute;
+    z-index: 4;
+    top: 0;
+    bottom: 0;
+    left: var(--bar-position);
+    width: 2px;
+    background: #ffffff;
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.12);
+    transform: translateX(-50%);
+    pointer-events: none;
+  }
+
+  #{{ section_dom_id }} .bar-card__comparison-handle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    background: var(--bar-accent);
+    color: var(--bar-accent-text);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.22);
+    transform: translate(-50%, -50%);
+  }
+
+  #{{ section_dom_id }} .bar-card__comparison-handle svg {
+    width: 26px;
+    height: 26px;
+  }
+
+  #{{ section_dom_id }} .bar-card__comparison-range {
+    position: absolute;
+    z-index: 6;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: ew-resize;
+  }
+
+  #{{ section_dom_id }} .bar-card__content {
+    padding: 22px;
+  }
+
+  #{{ section_dom_id }} .bar-card__title {
+    margin: 0;
+    color: var(--bar-text);
+    font-family: var(--font-heading-family);
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 1.25;
+  }
+
+  #{{ section_dom_id }} .bar-card__divider {
+    display: block;
+    height: 1px;
+    margin: 15px 0;
+    background: var(--bar-border);
+  }
+
+  #{{ section_dom_id }} .bar-card__meta {
+    display: grid;
+    grid-template-columns: minmax(90px, 0.72fr) minmax(0, 1.28fr);
+    gap: 12px;
+    align-items: start;
+  }
+
+  #{{ section_dom_id }} .bar-card__meta span {
+    color: var(--bar-muted);
+    font-size: 13px;
+    line-height: 1.45;
+  }
+
+  #{{ section_dom_id }} .bar-card__meta strong {
+    color: var(--bar-text);
+    font-size: 14px;
+    font-weight: 650;
+    line-height: 1.45;
+  }
+
+  #{{ section_dom_id }} .bar-card__product {
+    display: flex;
+    justify-content: center;
+    margin: 0 0 14px;
+  }
+
+  #{{ section_dom_id }} .bar-card__product-image-link {
+    display: block;
+    width: {{ section.settings.product_image_width }}px;
+    max-width: 45%;
+    text-decoration: none;
+  }
+
+  #{{ section_dom_id }} .bar-card__product-image,
+  #{{ section_dom_id }} .bar-card__product-placeholder {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    object-fit: contain;
+    background: transparent;
+  }
+
+  #{{ section_dom_id }} .bar-card__button {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: 2px;
+    padding: 10px 18px;
+    border: 1px solid var(--bar-accent);
+    border-radius: 999px;
+    background: var(--bar-accent);
+    color: var(--bar-accent-text);
+    font-size: 13px;
+    font-weight: 750;
+    line-height: 1;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition:
+      opacity 0.2s ease,
+      transform 0.2s ease;
+  }
+
+  #{{ section_dom_id }} .bar-card__button:hover {
+    opacity: 0.88;
+    transform: translateY(-1px);
+  }
+
+  #{{ section_dom_id }} .bar-section__navigation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin-top: 4px;
+  }
+
+  #{{ section_dom_id }} .bar-section__nav-button {
+    width: 44px;
+    height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    padding: 0;
+    border: 1px solid var(--bar-border);
+    border-radius: 50%;
+    background: var(--bar-card-bg);
+    color: var(--bar-text);
+    cursor: pointer;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease,
+      border-color 0.2s ease,
+      opacity 0.2s ease,
+      transform 0.2s ease;
+  }
+
+  #{{ section_dom_id }} .bar-section__nav-button:hover:not(:disabled) {
+    border-color: var(--bar-accent);
+    background: var(--bar-accent);
+    color: var(--bar-accent-text);
+    transform: translateY(-1px);
+  }
+
+  #{{ section_dom_id }} .bar-section__nav-button:disabled {
+    cursor: default;
+    opacity: 0.35;
+  }
+
+  #{{ section_dom_id }} .bar-section__nav-button svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  #{{ section_dom_id }} .bar-section__counter {
+    min-width: 54px;
+    color: var(--bar-muted);
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  #{{ section_dom_id }} .bar-section__empty {
+    margin-top: 30px;
+    padding: 30px;
+    border: 1px dashed var(--bar-border);
+    border-radius: var(--bar-radius);
+    color: var(--bar-muted);
+    text-align: center;
+  }
+
+  #{{ section_dom_id }} .bar-section__mobile-hint {
+    display: none;
+  }
+
+  @media screen and (min-width: 750px) and (max-width: 989px) {
+    #{{ section_dom_id }} .bar-card {
+      flex-basis: calc(
+        (100% - (var(--bar-tablet-visible) - 1) * var(--bar-slider-gap))
+        / var(--bar-tablet-visible)
+      );
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    #{{ section_dom_id }} {
+      padding-top: {{ section.settings.mobile_padding_top }}px;
+      padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
+    }
+
+    #{{ section_dom_id }} .bar-section__inner {
+      width: min(calc(100% - 24px), var(--bar-max-width));
+    }
+
+    #{{ section_dom_id }} .bar-section__heading {
+      font-size: clamp(28px, 7.2vw, 40px);
+    }
+
+    #{{ section_dom_id }} .bar-section__subheading {
+      margin-top: 9px;
+      font-size: 16px;
+    }
+
+    #{{ section_dom_id }} .bar-section__filters-wrap {
+      margin-top: 22px;
+    }
+
+    #{{ section_dom_id }} .bar-section__filters {
+      justify-content: flex-start;
+      margin-right: -12px;
+      padding-right: 12px;
+    }
+
+    #{{ section_dom_id }} .bar-section__filter {
+      min-height: 38px;
+      padding: 7px 15px;
+      font-size: 13px;
+    }
+
+    #{{ section_dom_id }} .bar-section__slider {
+      margin-top: 26px;
+      margin-right: -12px;
+    }
+
+    #{{ section_dom_id }} .bar-section__grid {
+      gap: 14px;
+      padding: 4px 12px 12px 0;
+      scroll-padding-inline: 0 12px;
+    }
+
+    #{{ section_dom_id }} .bar-card {
+      flex-basis: var(--bar-mobile-width);
+    }
+
+    #{{ section_dom_id }} .bar-section__navigation {
+      margin-right: 12px;
+    }
+
+    #{{ section_dom_id }} .bar-section__nav-button {
+      width: 40px;
+      height: 40px;
+    }
+
+    #{{ section_dom_id }} .bar-card__content {
+      padding: 18px;
+    }
+
+    #{{ section_dom_id }} .bar-card__title {
+      font-size: 19px;
+    }
+
+    #{{ section_dom_id }} .bar-card__product-image-link {
+      width: {{ section.settings.mobile_product_image_width }}px;
+      max-width: 42%;
+    }
+
+    #{{ section_dom_id }} .bar-card__meta {
+      grid-template-columns: minmax(82px, 0.7fr) minmax(0, 1.3fr);
+      gap: 8px;
+    }
+
+    #{{ section_dom_id }} .bar-card__label {
+      bottom: 8px;
+      min-height: 24px;
+      padding: 5px 8px;
+      font-size: 9px;
+    }
+
+    #{{ section_dom_id }} .bar-card__label--before { left: 8px; }
+    #{{ section_dom_id }} .bar-card__label--after { right: 8px; }
+
+    #{{ section_dom_id }} .bar-card__comparison-handle {
+      width: 38px;
+      height: 38px;
+    }
+
+    #{{ section_dom_id }} .bar-card__comparison-handle svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    #{{ section_dom_id }} .bar-section__mobile-hint {
+      display: block;
+      margin: 8px 0 0;
+      color: var(--bar-muted);
+      font-size: 12px;
+      text-align: center;
+    }
+  }
+</style>
+
+<script>
+  (() => {
+    const root = document.getElementById('{{ section_dom_id }}');
+    if (!root || root.dataset.barReady === 'true') return;
+
+    root.dataset.barReady = 'true';
+
+    const filterButtons = [...root.querySelectorAll('[data-bar-filter]')];
+    const cards = [...root.querySelectorAll('[data-bar-card]')];
+    const countElement = root.querySelector('[data-bar-result-count]');
+    const track = root.querySelector('[data-bar-grid]');
+    const previousButton = root.querySelector('[data-bar-prev]');
+    const nextButton = root.querySelector('[data-bar-next]');
+    const currentElement = root.querySelector('[data-bar-current]');
+    const totalElement = root.querySelector('[data-bar-total]');
+
+    const visibleCards = () => cards.filter((card) => !card.hidden);
+
+    const getClosestVisibleIndex = () => {
+      const activeCards = visibleCards();
+      if (!track || activeCards.length === 0) return 0;
+
+      const trackLeft = track.getBoundingClientRect().left;
+      let closestIndex = 0;
+      let closestDistance = Number.POSITIVE_INFINITY;
+
+      activeCards.forEach((card, index) => {
+        const distance = Math.abs(card.getBoundingClientRect().left - trackLeft);
+        if (distance < closestDistance) {
+          closestDistance = distance;
+          closestIndex = index;
+        }
+      });
+
+      return closestIndex;
+    };
+
+    const updateSliderState = () => {
+      const activeCards = visibleCards();
+      const total = activeCards.length;
+      const currentIndex = total > 0 ? getClosestVisibleIndex() : 0;
+      const maxScrollLeft = track
+        ? Math.max(0, track.scrollWidth - track.clientWidth - 2)
+        : 0;
+
+      if (currentElement) currentElement.textContent = total ? currentIndex + 1 : 0;
+      if (totalElement) totalElement.textContent = total;
+
+      if (previousButton) {
+        previousButton.disabled = !track || track.scrollLeft <= 2 || total <= 1;
+      }
+
+      if (nextButton) {
+        nextButton.disabled =
+          !track ||
+          track.scrollLeft >= maxScrollLeft ||
+          total <= 1;
+      }
+    };
+
+    const scrollToCard = (index) => {
+      const activeCards = visibleCards();
+      if (!track || activeCards.length === 0) return;
+
+      const safeIndex = Math.max(0, Math.min(index, activeCards.length - 1));
+      track.scrollTo({
+        left: activeCards[safeIndex].offsetLeft - track.offsetLeft,
+        behavior: 'smooth'
+      });
+    };
+
+    const applyFilter = (filter) => {
+      let visibleCount = 0;
+
+      cards.forEach((card) => {
+        const isVisible = filter === 'all' || card.dataset.category === filter;
+        card.hidden = !isVisible;
+        if (isVisible) visibleCount += 1;
+      });
+
+      filterButtons.forEach((button) => {
+        const active = button.dataset.barFilter === filter;
+        button.classList.toggle('is-active', active);
+        button.setAttribute('aria-pressed', active ? 'true' : 'false');
+      });
+
+      if (countElement) countElement.textContent = visibleCount;
+
+      if (track) {
+        track.scrollTo({ left: 0, behavior: 'auto' });
+      }
+
+      requestAnimationFrame(updateSliderState);
+    };
+
+    filterButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        applyFilter(button.dataset.barFilter);
+      });
+    });
+
+    previousButton?.addEventListener('click', () => {
+      scrollToCard(getClosestVisibleIndex() - 1);
+    });
+
+    nextButton?.addEventListener('click', () => {
+      scrollToCard(getClosestVisibleIndex() + 1);
+    });
+
+    track?.addEventListener('scroll', () => {
+      window.requestAnimationFrame(updateSliderState);
+    }, { passive: true });
+
+    track?.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        scrollToCard(getClosestVisibleIndex() - 1);
+      }
+
+      if (event.key === 'ArrowRight') {
+        event.preventDefault();
+        scrollToCard(getClosestVisibleIndex() + 1);
+      }
+    });
+
+    window.addEventListener('resize', updateSliderState);
+
+    root.querySelectorAll('[data-before-after]').forEach((comparison) => {
+      const range = comparison.querySelector('[data-before-after-range]');
+      if (!range) return;
+
+      const updatePosition = () => {
+        comparison.style.setProperty('--bar-position', `${range.value}%`);
+      };
+
+      range.addEventListener('input', updatePosition);
+      range.addEventListener('change', updatePosition);
+      updatePosition();
+    });
+
+    requestAnimationFrame(updateSliderState);
+
+    document.addEventListener('shopify:block:select', (event) => {
+      if (!root.contains(event.target)) return;
+
+      const selectedCard = event.target.closest('[data-bar-card]');
+      if (!selectedCard) return;
+
+      const activeFilter = root.querySelector('[data-bar-filter].is-active')?.dataset.barFilter;
+      if (activeFilter !== 'all' && activeFilter !== selectedCard.dataset.category) {
+        applyFilter('all');
+      }
+
+      selectedCard.scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest',
+        inline: 'center'
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Before & after results",
+  "tag": "section",
+  "class": "section",
+  "max_blocks": 18,
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Don't Take Our Word For It, Take Theirs!"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "#Real People Real Results"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_filters",
+      "label": "Show category filters",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_result_count",
+      "label": "Show result count",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "all_label",
+      "label": "All filter label",
+      "default": "All"
+    },
+    {
+      "type": "text",
+      "id": "anti_aging_label",
+      "label": "Anti-aging filter label",
+      "default": "Anti-Aging"
+    },
+    {
+      "type": "text",
+      "id": "acne_label",
+      "label": "Acne filter label",
+      "default": "Acne"
+    },
+    {
+      "type": "text",
+      "id": "pigmentation_label",
+      "label": "Pigmentation filter label",
+      "default": "Pigmentation"
+    },
+    {
+      "type": "text",
+      "id": "results_label",
+      "label": "Results label",
+      "default": "Results"
+    },
+    {
+      "type": "text",
+      "id": "before_label",
+      "label": "Before label",
+      "default": "Before"
+    },
+    {
+      "type": "text",
+      "id": "after_label",
+      "label": "After label",
+      "default": "After"
+    },
+    {
+      "type": "text",
+      "id": "journey_suffix",
+      "label": "Journey suffix",
+      "default": "'s Journey"
+    },
+    {
+      "type": "text",
+      "id": "skin_goal_label",
+      "label": "Skin goal label",
+      "default": "Skin Goal"
+    },
+    {
+      "type": "text",
+      "id": "duration_label",
+      "label": "Duration label",
+      "default": "Duration"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Maximum width",
+      "min": 1000,
+      "max": 1600,
+      "step": 20,
+      "unit": "px",
+      "default": 1320
+    },
+    {
+      "type": "range",
+      "id": "desktop_columns",
+      "label": "Desktop cards per view",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "tablet_cards_per_view",
+      "label": "Tablet cards per view",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "slider_gap",
+      "label": "Space between cards",
+      "min": 8,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "checkbox",
+      "id": "show_navigation",
+      "label": "Show slider arrows and counter",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "slider_aria_label",
+      "label": "Slider accessibility label",
+      "default": "Customer before and after results"
+    },
+    {
+      "type": "text",
+      "id": "previous_label",
+      "label": "Previous button label",
+      "default": "Previous result"
+    },
+    {
+      "type": "text",
+      "id": "next_label",
+      "label": "Next button label",
+      "default": "Next result"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Image ratio",
+      "options": [
+        { "value": "1 / 1", "label": "Square" },
+        { "value": "4 / 5", "label": "Portrait" },
+        { "value": "3 / 4", "label": "Tall portrait" }
+      ],
+      "default": "4 / 5"
+    },
+    {
+      "type": "select",
+      "id": "image_fit",
+      "label": "Image fit",
+      "options": [
+        { "value": "cover", "label": "Cover" },
+        { "value": "contain", "label": "Contain" }
+      ],
+      "default": "cover"
+    },
+    {
+      "type": "range",
+      "id": "mobile_card_width",
+      "label": "Mobile card width",
+      "min": 76,
+      "max": 96,
+      "step": 1,
+      "unit": "%",
+      "default": 88
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Card radius",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "product_image_width",
+      "label": "Desktop product image width",
+      "min": 60,
+      "max": 180,
+      "step": 5,
+      "unit": "px",
+      "default": 110
+    },
+    {
+      "type": "range",
+      "id": "mobile_product_image_width",
+      "label": "Mobile product image width",
+      "min": 50,
+      "max": 140,
+      "step": 5,
+      "unit": "px",
+      "default": 90
+    },
+    {
+      "type": "checkbox",
+      "id": "show_mobile_hint",
+      "label": "Show mobile swipe hint",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "mobile_hint",
+      "label": "Mobile swipe hint",
+      "default": "Swipe to see more results"
+    },
+    {
+      "type": "header",
+      "content": "Colors and shadows"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Section background",
+      "default": "#f7f4ef"
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Card background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#171717"
+    },
+    {
+      "type": "color",
+      "id": "muted_text_color",
+      "label": "Muted text color",
+      "default": "#6b6b6b"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent color",
+      "default": "#171717"
+    },
+    {
+      "type": "color",
+      "id": "accent_text_color",
+      "label": "Accent text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border color",
+      "default": "#dedbd6"
+    },
+    {
+      "type": "text",
+      "id": "card_shadow",
+      "label": "Card shadow CSS",
+      "default": "0 8px 26px rgba(0, 0, 0, 0.06)"
+    },
+    {
+      "type": "text",
+      "id": "card_hover_shadow",
+      "label": "Card hover shadow CSS",
+      "default": "0 14px 34px rgba(0, 0, 0, 0.10)"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Desktop top padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Desktop bottom padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "label": "Mobile top padding",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_bottom",
+      "label": "Mobile bottom padding",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "result",
+      "name": "Customer result",
+      "settings": [
+        {
+          "type": "select",
+          "id": "category",
+          "label": "Filter category",
+          "options": [
+            { "value": "anti-aging", "label": "Anti-Aging" },
+            { "value": "acne", "label": "Acne" },
+            { "value": "pigmentation", "label": "Pigmentation" }
+          ],
+          "default": "acne"
+        },
+        {
+          "type": "image_picker",
+          "id": "before_image",
+          "label": "Before image"
+        },
+        {
+          "type": "text",
+          "id": "before_alt",
+          "label": "Before image alt text",
+          "default": "Before using the product"
+        },
+        {
+          "type": "image_picker",
+          "id": "after_image",
+          "label": "After image"
+        },
+        {
+          "type": "text",
+          "id": "after_alt",
+          "label": "After image alt text",
+          "default": "After using the product"
+        },
+        {
+          "type": "range",
+          "id": "initial_slider_position",
+          "label": "Initial comparison position",
+          "min": 20,
+          "max": 80,
+          "step": 1,
+          "unit": "%",
+          "default": 50
+        },
+        {
+          "type": "text",
+          "id": "customer_name",
+          "label": "Customer name",
+          "default": "Customer"
+        },
+        {
+          "type": "text",
+          "id": "skin_goal",
+          "label": "Skin goal",
+          "default": "Improve skin texture"
+        },
+        {
+          "type": "text",
+          "id": "duration",
+          "label": "Duration",
+          "default": "3 Months"
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Shop product"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_product_image",
+          "label": "Show selected product first image",
+          "default": true
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Custom button link",
+          "info": "Used when no product is selected."
+        },
+        {
+          "type": "checkbox",
+          "id": "show_button",
+          "label": "Show Shop Now button",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button label",
+          "default": "Shop Now"
+        },
+        {
+          "type": "checkbox",
+          "id": "open_in_new_tab",
+          "label": "Open link in new tab",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Before & after results",
+      "blocks": [
+        {
+          "type": "result",
+          "settings": {
+            "category": "anti-aging",
+            "customer_name": "Customer 1",
+            "skin_goal": "Smoother and firmer skin",
+            "duration": "2 Months"
+          }
+        },
+        {
+          "type": "result",
+          "settings": {
+            "category": "acne",
+            "customer_name": "Customer 2",
+            "skin_goal": "Fade acne marks",
+            "duration": "4 Months"
+          }
+        },
+        {
+          "type": "result",
+          "settings": {
+            "category": "pigmentation",
+            "customer_name": "Customer 3",
+            "skin_goal": "Reduce pigmentation",
+            "duration": "6 Months"
+          }
+        },
+        {
+          "type": "result",
+          "settings": {
+            "category": "acne",
+            "customer_name": "Customer 4",
+            "skin_goal": "Improve skin texture",
+            "duration": "3 Months"
+          }
+        },
+        {
+          "type": "result",
+          "settings": {
+            "category": "pigmentation",
+            "customer_name": "Customer 5",
+            "skin_goal": "More even-looking skin",
+            "duration": "5 Months"
+          }
+        },
+        {
+          "type": "result",
+          "settings": {
+            "category": "anti-aging",
+            "customer_name": "Customer 6",
+            "skin_goal": "Support smoother-looking skin",
+            "duration": "3 Months"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,526 @@
+{% capture sh_product_list_css %}
+  <style>
+    #sh-{{ section.id }}.sh-product-list-section {padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;background: {{ section.settings.background_color }};-webkit-tap-highlight-color: transparent;}
+    #sh-{{ section.id }} .sh-page-width {max-width: {{ section.settings.section_max_width }}px;width: 100%;padding: 0 20px;margin: 0 auto;}
+    #sh-{{ section.id }} .sh-pro-list-title {margin: 0 auto 40px;text-align: {{ section.settings.text_alignment }};}
+    #sh-{{ section.id }} .sh-pro-list-heading {font-size: {{ section.settings.title_font_size }}px;line-height: 1.3;margin: 0;font-weight: 500;color: {{ section.settings.title_color }};} 
+    #sh-{{ section.id }} .sh-pro-list-desc p {margin: 20px 0 0 0;font-size: {{ section.settings.content_font_size }}px;line-height: 1.4;color: {{ section.settings.content_color }};}
+    #sh-{{ section.id }} .sh-pro-list-wrapper {display: flex;flex-wrap: wrap;gap: 50px;}
+    #sh-{{ section.id }} .sh-pl-pro-list {width: 30%;}
+    #sh-{{ section.id }} .sh-pl-pro-list-item {padding-bottom: 12px;margin-bottom: 12px;}
+    #sh-{{ section.id }} .sh-pl-pro-list-item:not(:last-child) {border-bottom: 1px solid #d7d7d7;}
+    #sh-{{ section.id }} .sh-pl-pro-list-item-card {display: flex;align-items: center;gap: 15px;position: relative;cursor: pointer;}
+    #sh-{{ section.id }} .sh-pl-pro-list-item-card:after {content: "";display: block;width: 8px;height: 8px;margin-left: 4px;border: 1px solid {{ section.settings.text_color }};border-radius: 50%;transition: all .3s ease;}
+    #sh-{{ section.id }} .sh-pl-pro-list-item-card-media {flex: 0 0 80px;height: 80px;position: relative;border-radius: 0px;overflow: hidden;}
+    #sh-{{ section.id }} .sh-pl-pro-list-item-card-media img {width: 100%;height: 100%;object-fit: cover;}
+    #sh-{{ section.id }} .sh-pl-pro-list-item-card p {flex: 1;margin: 0;font-size: {{ section.settings.tab_title_font_size }}px;line-height: 1.4;color: {{ section.settings.tab_title_color }};} 
+    #sh-{{ section.id }} .sh-pl-pro-list-item.sh-pl-pro-active .sh-pl-pro-list-item-card p {color: {{ section.settings.active_tab_color }};}
+    #sh-{{ section.id }} .sh-pl-pro-list-item.sh-pl-pro-active .sh-pl-pro-list-item-card:after {background: {{ section.settings.active_tab_color }};border: 1px;}
+    #sh-{{ section.id }} .sh-pl-pro-list-item.sh-pl-pro-active {border-color: {{ section.settings.active_tab_color }};}
+    #sh-{{ section.id }} .sh-pl-pro-content {width: calc(70% - 50px);}
+    #sh-{{ section.id }} .sh-pl-pro-content-item {display: none;position: sticky;top: 20px;}
+    #sh-{{ section.id }} .sh-pl-pro-content-item.sh-pl-pro-content-active {display: flex;flex-wrap: wrap;gap: 20px;opacity: 1;visibility: visible;}
+    #sh-{{ section.id }} .sh-pl-pro-content-item-media {flex: 1 0 calc(65% - 20px);}
+    #sh-{{ section.id }} .sh-pl-pro-content-item-media.sh-pl-pro-img-small .sh-pl-pro-content-item-media-img {padding-bottom: 80%;}
+    #sh-{{ section.id }} .sh-pl-pro-content-item-media.sh-pl-pro-img-medium .sh-pl-pro-content-item-media-img {padding-bottom: 90%;}
+    #sh-{{ section.id }} .sh-pl-pro-content-item-media.sh-pl-pro-img-large .sh-pl-pro-content-item-media-img {padding-bottom: 100%;}
+    #sh-{{ section.id }} .sh-pl-pro-content-item-media-img {position: relative;width: 100%;}
+    #sh-{{ section.id }} .sh-pl-pro-content-item-media-img img {position: absolute;top: 0;left: 0;width: 100%;height: 100%;object-fit: cover;}
+    #sh-{{ section.id }} .sh-pl-pro-content-item-info {flex: 1 0 35%;}
+    #sh-{{ section.id }} .sh-pl-pro-content-item-info-heading {font-size: {{ section.settings.tab_heading_font_size }}px;font-weight: 600;line-height: 1.3;color: {{ section.settings.tab_heading_color }};margin: 0 0 0 0;}
+    #sh-{{ section.id }} .sh-pl-pro-content-item-info-des p {margin: 30px 0 0 0;font-size: {{ section.settings.tab_content_font_size }}px;line-height: 1.4;color: {{ section.settings.tab_content_color }};text-overflow: ellipsis;overflow: hidden;display: -webkit-box;-webkit-line-clamp: 4;-webkit-box-orient: vertical;}
+    #sh-{{ section.id }} .sh-button {font-size: {{ section.settings.tab_content_font_size }}px;line-height: 1.65;color: {{ section.settings.link_label_color }};cursor: pointer;text-decoration: underline;text-underline-offset: 4px;margin: 20px 0 0 0;display: inline-block;transition: color 0.3s ease;}
+    #sh-{{ section.id }} .sh-button:hover {color: {{ section.settings.label_hover_color }};}
+     
+    @media only screen and (max-width: 767px) {
+      #sh-{{ section.id }}.sh-product-list-section {padding: {{ section.settings.mobile_padding_top }}px 0 {{ section.settings.mobile_padding_bottom }}px 0;}
+      #sh-{{ section.id }} .sh-pro-list-title {margin: 0 auto 25px;}
+      #sh-{{ section.id }} .sh-pro-list-heading {font-size: 26px;}
+      #sh-{{ section.id }} .sh-pro-list-desc p {font-size: 14px;margin: 10px 0 0 0;}
+      #sh-{{ section.id }} .sh-pl-pro-list {width: 100%;}
+      #sh-{{ section.id }} .sh-pl-pro-accordion-content {display: none;padding: 15px 0;}
+      #sh-{{ section.id }} .sh-pl-pro-accordion-content.sh-pl-pro-content-active {display: block;}
+      #sh-{{ section.id }} .sh-pl-pro-accordion-content .sh-pl-pro-content-item-media .sh-pl-pro-content-item-media-img {padding-bottom: 100%;}
+      #sh-{{ section.id }} .sh-pl-pro-accordion-content .sh-pl-pro-content-item-info-heading {font-size: 24px;margin: 10px 0 0 0;}
+      #sh-{{ section.id }} .sh-pl-pro-accordion-content .sh-pl-pro-content-item-info-des p{ margin: 10px 0 0 0;font-size: 14px;}
+      #sh-{{ section.id }} .sh-pl-pro-accordion-content .sh-button {font-size: 15px;margin: 10px 0 0 0;}
+    }
+  </style>
+{% endcapture %}
+{{ sh_product_list_css | strip_newlines }}
+
+<div id="sh-{{ section.id }}" class="sh-product-list-section">
+  <div class="sh-page-width">
+    {% if section.settings.title != blank and section.settings.content != blank %}
+      <div class="sh-pro-list-title sh-title-align-{{ section.settings.text_alignment }}">
+        {% if section.settings.title != blank %}<h2 class="sh-pro-list-heading">{{ section.settings.title }}</h2>{% endif %}
+        {% if section.settings.content != blank %}<div class="sh-pro-list-desc sh-section-desc">{{ section.settings.content }}</div>{% endif %}
+      </div>
+    {% endif %}
+
+    {% if section.blocks.size > 0 %}
+      <div class="sh-pro-list-wrapper">
+        <div class="sh-pl-pro-list">
+          {% assign index = 0 %}
+          {% for block in section.blocks %}
+            {% assign sh_product = block.settings.product %}
+            {% if block.settings.tab_title != blank %}
+              <div class="sh-pl-pro-list-item {% if index == 0 %}sh-pl-pro-active{% endif %}" data-tab="tab-{{ block.id }}">
+                <div class="sh-pl-pro-list-item-card">
+                  <div class="sh-pl-pro-list-item-card-media">
+                    {% if block.settings.thumbnail_image != blank %} 
+                      <img src="{{ block.settings.thumbnail_image | image_url }}" alt="{{ block.settings.thumbnail_image.alt }}" loading="lazy" width="" height="" >
+                    {% else %}
+                      <img src="data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg version='1.1' viewBox='0 0 500 500' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Crect x='2' y='2' width='496' height='496' fill='%23D8D8D8' stroke='%23D8D8D8' stroke-width='4'/%3E%3C/g%3E%3C/svg%3E" class="sh-empty-image" loading="lazy" width="" height="" alt="Empty image" >
+                    {% endif %}
+                  </div>
+                  <p>{{ block.settings.tab_title }}</p>
+                </div>
+                
+                <div class="sh-pl-pro-accordion-content sh-mobile-show {% if index == 0 %}sh-pl-pro-content-active{% endif %}" data-content="tab-{{ block.id }}">
+                  <div class="sh-pl-pro-content-item-media sh-pl-pro-img-{{ section.settings.image_height }}">
+                    <div class="sh-pl-pro-content-item-media-img">
+                      {% if block.settings.image != blank %}
+                        <img src="{{ block.settings.image | image_url }}" alt="{{ block.settings.image.alt }}" loading="lazy" width="" height="">
+                      {% elsif sh_product.featured_image != blank %}
+                        <img src="{{ sh_product.featured_image | image_url }}" alt="{{ sh_product.title }}" loading="lazy" width="" height="">
+                      {% else %}
+                        <img src="data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg version='1.1' viewBox='0 0 500 500' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Crect x='2' y='2' width='496' height='496' fill='%23D8D8D8' stroke='%23D8D8D8' stroke-width='4'/%3E%3C/g%3E%3C/svg%3E" class="sh-empty-image" loading="lazy" width="" height="" alt="Placeholder image">
+                      {% endif %}
+                    </div>
+                  </div>
+                  
+                  <div class="sh-pl-pro-content-item-info">
+                    {% if sh_product != blank %}
+                      <h2 class="sh-pl-pro-content-item-info-heading">{{ sh_product.title }}</h2>
+                      {% assign content = block.settings.content | default: sh_product.description %}
+                      {% if content != blank %}<div class="sh-pl-pro-content-item-info-des">{{ content }}</div>{% endif %}
+                      {% if block.settings.link_label != blank %}<a href="{{ sh_product.url }}" class="sh-button">{{ block.settings.link_label }}</a>{% endif %}
+                    {% else %}
+                      <h2 class="sh-pl-pro-content-item-info-heading">{{ block.settings.tab_title }}</h2>
+                      {% if block.settings.content != blank %}<div class="sh-pl-pro-content-item-info-des">{{ block.settings.content }}</div>{% endif %}
+                      {% if block.settings.link_label != blank %}<a href="javascript: void(0)" class="sh-button">{{ block.settings.link_label }}</a>{% endif %}
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+              {% assign index = index | plus: 1 %}
+            {% endif %}
+          {% endfor %}
+        </div>
+  
+        <!-- Desktop Content Area -->
+        <div class="sh-pl-pro-content sh-desk-show">
+          {% assign desk_index = 0 %}
+          {% for block in section.blocks %}
+            {% assign sh_product = block.settings.product %}
+            {% if block.settings.tab_title != blank %}
+              <div class="sh-pl-pro-content-item {% if desk_index == 0 %}sh-pl-pro-content-active{% endif %}" data-content="tab-{{ block.id }}" >
+                <div class="sh-pl-pro-content-item-media sh-pl-pro-img-{{ section.settings.image_height }}">
+                  <div class="sh-pl-pro-content-item-media-img">
+                    {% if block.settings.image != blank %}
+                      <img src="{{ block.settings.image | image_url }}" alt="{{ block.settings.heading | escape }}" loading="lazy" width="" height="">
+                    {% elsif sh_product.featured_image != blank %}
+                      <img src="{{ sh_product.featured_image | image_url }}" alt="{{ sh_product.title }}" loading="lazy" width="" height="">
+                    {% else %}
+                      <img src="data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg version='1.1' viewBox='0 0 500 500' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Crect x='2' y='2' width='496' height='496' fill='%23D8D8D8' stroke='%23D8D8D8' stroke-width='4'/%3E%3C/g%3E%3C/svg%3E" class="sh-empty-image" loading="lazy" width="" height="" alt="Placeholder image">
+                    {% endif %}
+                  </div>
+                </div>
+              
+                <div class="sh-pl-pro-content-item-info">
+                  {% if sh_product != blank %}
+                    <h2 class="sh-pl-pro-content-item-info-heading">{{ sh_product.title }}</h2>
+                    {% assign content = block.settings.content | default: sh_product.description %}
+                    {% if content != blank %}<div class="sh-pl-pro-content-item-info-des">{{ content }}</div>{% endif %}
+                    {% if block.settings.link_label != blank %}<a href="{{ sh_product.url }}" class="sh-button">{{ block.settings.link_label }}</a>{% endif %}
+                  {% else %}
+                    <h2 class="sh-pl-pro-content-item-info-heading">{{ block.settings.tab_title }}</h2>
+                    <div class="sh-pl-pro-content-item-info-des">{{ block.settings.content }}</div>
+                    <a href="javascript: void(0)" class="sh-button">{{ block.settings.link_label }}</a>
+                  {% endif %}
+                </div>
+              </div>
+              {% assign desk_index = desk_index | plus: 1 %}
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+<script>
+  if (document.querySelector("#sh-{{ section.id }}").querySelectorAll(".sh-pl-pro-list-item").length > 0) {
+    let mainSec = document.querySelector("#sh-{{ section.id }}");
+    let tabs = mainSec.querySelector(".sh-pl-pro-list").querySelectorAll(".sh-pl-pro-list-item");
+    let contents = mainSec.querySelector(".sh-pl-pro-content").querySelectorAll(".sh-pl-pro-content-item");
+    let accContents = mainSec.querySelector(".sh-pl-pro-list").querySelectorAll(".sh-pl-pro-accordion-content");
+
+    function isMobile() {
+      return window.innerWidth <= 767;
+    }
+
+    function handleTabClick(tab) {
+      let dataTab = tab.dataset.tab;
+      if (isMobile()) {
+        if (tab.classList.contains("sh-pl-pro-active")) {
+          tab.classList.remove("sh-pl-pro-active");
+          mainSec.querySelector(".sh-pl-pro-accordion-content[data-content='" + dataTab + "']").classList.remove("sh-pl-pro-content-active");
+        } else {
+          tabs.forEach(singleTab => singleTab.classList.remove("sh-pl-pro-active"));
+          accContents.forEach(accordion => accordion.classList.remove("sh-pl-pro-content-active"));
+          tab.classList.add("sh-pl-pro-active");
+          mainSec.querySelector(".sh-pl-pro-accordion-content[data-content='" + dataTab + "']").classList.add("sh-pl-pro-content-active");
+  
+          if (tab.closest(".sh-pl-pro-list-item").previousElementSibling) {
+            setTimeout(() => {
+              tab.closest(".sh-pl-pro-list-item").previousElementSibling.scrollIntoView({ behavior: "smooth", block: "start" });
+            }, 100);
+          }
+        }
+      } else {
+        tabs.forEach(singleTab => singleTab.classList.remove("sh-pl-pro-active"));
+        tab.classList.add("sh-pl-pro-active");
+        contents.forEach(singleContent => singleContent.classList.remove("sh-pl-pro-content-active"));
+        mainSec.querySelector(".sh-pl-pro-content-item[data-content='" + dataTab + "']").classList.add("sh-pl-pro-content-active");
+      }
+    }
+
+    tabs.forEach(tab => {
+      tab.addEventListener("click", function () {
+        handleTabClick(tab);
+      });
+    });
+  }
+</script>
+
+{% schema %}
+  {
+    "name": "SH: Product list",
+    "class": "sh-section-hub-main",
+    "tag": "section",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Explore Essential Home Furniture"
+      },
+      {
+        "type": "richtext",
+        "id": "content",
+        "label": "Content",
+        "default": "<p>Our furniture seamlessly blends enduring thoughtful design, and everyday functionality in your home.</p>"
+      },
+      {
+        "type": "text_alignment",
+        "id": "text_alignment",
+        "label": "Text alignment",
+        "default": "center"
+      },
+      {
+        "type": "select",
+        "id": "image_height",
+        "label": "Image Height",
+        "options": [
+          {"value": "small", "label": "Small"},
+          {"value": "medium", "label": "Medium"},
+          {"value": "large", "label": "Large"}
+        ],
+        "default": "large"
+      },
+      {
+        "type": "header",
+        "content": "Font size"
+      },
+      {
+        "type": "range",
+        "id": "title_font_size",
+        "min": 10,
+        "max": 40,
+        "step": 1,
+        "unit": "px",
+        "label": "Heading",
+        "default": 30
+      }, 
+      {
+        "type": "range",
+        "id": "content_font_size",
+        "min": 10,
+        "max": 30,
+        "step": 1,
+        "unit": "px",
+        "label": "Content",
+        "default": 16
+      },
+      {
+        "type": "paragraph",
+        "content": "Tab"
+      },
+      {
+        "type": "range",
+        "id": "tab_title_font_size",
+        "min": 10,
+        "max": 24,
+        "step": 1,
+        "unit": "px",
+        "label": "Title",
+        "default": 16
+      },
+      {
+        "type": "paragraph",
+        "content": "Tab content"
+      },
+      {
+        "type": "range",
+        "id": "tab_heading_font_size",
+        "min": 10,
+        "max": 40,
+        "step": 1,
+        "unit": "px",
+        "label": "Heading",
+        "default": 30
+      },
+      {
+        "type": "range",
+        "id": "tab_content_font_size",
+        "min": 10,
+        "max": 30,
+        "step": 1,
+        "unit": "px",
+        "label": "Content",
+        "default": 16
+      },
+      {
+        "type": "header",
+        "content": "Colors"
+      },
+      {
+        "type": "color",
+        "id": "background_color",
+        "label": "Background color",
+        "default": "#ffffff"
+      },
+      {
+        "type": "color",
+        "id": "title_color",
+        "label": "Heading color",
+        "default": "#121212"
+      },
+      {
+        "type": "color",
+        "id": "content_color",
+        "label": "Content color",
+        "default": "#121212"
+      },
+      {
+        "type": "paragraph",
+        "content": "Tab"
+      },
+      {
+        "type": "color",
+        "id": "tab_title_color",
+        "label": "Title color",
+        "default": "#121212b5"
+      },
+      {
+        "type": "color",
+        "id": "active_tab_color",
+        "label": "Active tab title color",
+        "default": "#121212"
+      },
+      {
+        "type": "paragraph",
+        "content": "Tab content"
+      },
+      {
+        "type": "color",
+        "id": "tab_heading_color",
+        "label": "Heading color",
+        "default": "#121212"
+      },
+      {
+        "type": "color",
+        "id": "tab_content_color",
+        "label": "Content color",
+        "default": "#121212"
+      },
+      {
+        "type": "color",
+        "id": "link_label_color",
+        "label": "Link label color",
+        "default": "#121212"
+      },
+      {
+        "type": "color",
+        "id": "label_hover_color",
+        "label": "label hover color",
+        "default": "#7b7b7b"
+      },
+      {
+        "type": "header",
+        "content": "Section padding"
+      },
+      {
+        "type": "paragraph",
+        "content": "Desktop"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Padding top",
+        "default": 40
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Padding bottom",
+        "default": 40
+      },
+      {
+        "type": "paragraph",
+        "content": "Mobile"
+      },
+      {
+        "type": "range",
+        "id": "mobile_padding_top",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Padding top",
+        "default": 30
+      },
+      {
+        "type": "range",
+        "id": "mobile_padding_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Padding bottom",
+        "default": 30
+      },
+      {
+        "type": "header",
+        "content": "Section width"
+      },
+      {
+        "type": "text",
+        "id": "section_max_width",
+        "label": "Width (in px)",
+        "default": "1440"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "tab",
+        "name": "Product",
+        "settings": [
+          {
+            "type": "header",
+            "content": "Tab"
+          },
+          {
+            "type": "text",
+            "id": "tab_title",
+            "label": "Title",
+            "default": "Smart Office Solutions"
+          },
+          {
+            "type": "image_picker",
+            "id": "thumbnail_image",
+            "label": "Image"
+          },
+          {
+            "type": "header",
+            "content": "Tab content"
+          },
+          {
+            "type": "product",
+            "id": "product",
+            "label": "Select product"
+          },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image",
+            "info": "If no image is added, it will show the product image"
+          },
+          {
+            "type": "richtext",
+            "id": "content",
+            "label": "Content",
+            "default": "<p>Furnish your workspace with ergonomic desks, chairs, and storage designed for productivity and comfort.</p>",
+            "info": "If this field is left blank, the product description will be shown"
+          },
+          {
+            "type": "text",
+            "id": "link_label",
+            "label": "Link label",
+            "default": "Shop now"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "SH: Product list",
+        "blocks": [
+          {
+            "type": "tab",
+            "settings": {
+              "tab_title": "Stylish Home Furniture",
+              "content": "<p>Discover modern designs that blend comfort and elegance for every room in your home.</p>",
+              "link_label": "Shop now"
+            }
+          },
+          {
+            "type": "tab",
+            "settings": {
+              "tab_title": "Comfort Meets Style",
+              "content": "<p>Furnish your space with pieces that offer both visual appeal and lasting comfort.</p>",
+              "link_label": "Shop now"
+            }
+          },
+          {
+            "type": "tab",
+            "settings": {
+              "tab_title": "Functional Living Solutions",
+              "content": "<p>Smart, space-saving furniture ideal for urban living and compact homes.</p>",
+              "link_label": "Shop now" 
+            } 
+          },
+          {
+            "type": "tab",
+            "settings": {
+              "tab_title": "Design Your Space",
+              "content": "<p>Choose from a wide range of furniture to reflect your personality and fit your lifestyle.</p>",
+              "link_label": "Shop now" 
+            } 
+          },
+          {
+            "type": "tab",
+            "settings": {
+              "tab_title": "Crafted With Care",
+              "content": "<p>Quality craftsmanship and durable materials come together in every piece we offer.</p>",
+              "link_label": "Shop now" 
+            } 
+          }
+        ]   
+      }
+    ],
+    "disabled_on": {
+      "groups": ["footer", "header"]
+    }
+  }
+{% endschema %}

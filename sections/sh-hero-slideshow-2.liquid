@@ -1,0 +1,393 @@
+{%- capture sh_hero_slideshow_2 -%}
+  <style>
+    #sh-{{ section.id }} .sh-hero-slideshow-2-section {position: relative;height: 100vh;overflow: hidden;}
+    #sh-{{ section.id }} .sh-hero-slideshow-2-left,
+    #sh-{{ section.id }} .sh-hero-slideshow-2-right {width: 50%;height: 100%;display: flex;align-items: center;justify-content: center;transition: transform 1s ease-in-out;}
+    #sh-{{ section.id }} .sh-hero-slideshow-2-left {transform: translateY(100%);}
+    #sh-{{ section.id }} .sh-hero-slideshow-2-right {transform: translateY(-100%);}
+
+    {% if request.visual_preview_mode %}
+      #sh-{{ section.id }} .swiper:not(.swiper-initialized) .sh-hero-slideshow-2-left{transform: translateY(0%);}
+      #sh-{{ section.id }} .swiper:not(.swiper-initialized) .sh-hero-slideshow-2-right{transform: translateY(0%);}
+      #sh-{{ section.id }} .swiper:not(.swiper-initialized) .swiper-slide{opacity:1;}
+    {% endif %}
+    
+    #sh-{{ section.id }} .sh-hero-slideshow-2-left.active {transform: translateY(0);}
+    #sh-{{ section.id }} .sh-hero-slideshow-2-right.active {transform: translateY(0);}
+    #sh-{{ section.id }} .sh-hero-slideshow-2-video , #sh-{{ section.id }} .sh-hero-slideshow-2-img {width: 100%;height: 100%;object-fit: cover;} 
+    #sh-{{ section.id }} .sh-hero-slideshow-2-center-image {position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%) scale(1);transition: opacity 1s ease-in-out, transform 0.5s ease, filter 0.5s ease-in-out;animation: moveUpDown 3s infinite ease-in-out;z-index: 10;}
+    #sh-{{ section.id }} .sh-hero-slideshow-2-center-image img {object-fit: contain;width: 100%;height: auto;max-height: 650px;filter: drop-shadow(0 5px 20px rgba(0, 0, 0, 0.2));border-radius: 10px;transition: transform 0.5s ease, filter 0.5s ease-in-out;}
+    #sh-{{ section.id }} .sh-hero-slideshow-2-center-image.fade-out img {opacity: 0;transform: scale(0.95);filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3));}
+    #sh-{{ section.id }} .sh-hero-slideshow-2-center-image.fade-out {opacity: 0;}
+    #sh-{{ section.id }} .sh-hero-slideshow-2-right .sh-hero-slideshow-2-content {font-size: 18px;line-height: 1.6;padding: 20px;max-width: 65%;width: 100%;margin: 0 auto;} 
+    #sh-{{ section.id }} .sh-hero-slideshow-2-right .sh-hero-slideshow-2-title {font-size: {{ section.settings.title_font_size }}px;font-weight: 500;margin: 0;line-height: 1.2;}
+    #sh-{{ section.id }} .sh-hero-slideshow-2-right .sh-hero-slideshow-2-text {font-size: {{ section.settings.content_font_size }}px;margin:  25px 0 0 0;line-height: 1.4;}
+    #sh-{{ section.id }} .sh-hero-slideshow-2-right .sh-button {font-size: 16px;line-height: 1.65;padding: 6px 20px;min-width: 140px;display: inline-block;transition: 0.3s ease;border-radius: {{ section.settings.border_radius }}px;text-align: center;cursor: pointer;margin:  25px 0 0 0;}
+    #sh-{{ section.id }} .sh-hero-slideshow-2-slider.swiper {width: 100%;height: 100%;}
+    #sh-{{ section.id }} .sh-hero-slideshow-2-slider .swiper-slide {display: flex;flex-wrap: wrap;position: relative;height: 100%;opacity: 0;transition: opacity 1s ease-in-out;}
+    #sh-{{ section.id }} .sh-hero-slideshow-2-slider .swiper-slide-active {opacity: 1;}
+    #sh-{{ section.id }} .sh-hero-slideshow-2-slider .swiper-slide-active .sh-hero-slideshow-2-left {transform: translateY(0);}
+    #sh-{{ section.id }} .sh-hero-slideshow-2-slider .swiper-slide-active .sh-hero-slideshow-2-right {transform: translateY(0);}
+    #sh-{{ section.id }} .swiper-button-next.sp-slider-arrow-next,
+    #sh-{{ section.id }} .swiper-button-prev.sp-slider-arrow-prev {transform: rotate(90deg);width: {{ section.settings.arrow_size | plus: 26 }}px;height: {{ section.settings.arrow_size | plus: 26 }}px;background: {{section.settings.arrow_bg_color}};border-radius: 50px;border: 1px solid {{section.settings.arrow_border_color}};top: calc(100% - 100px);}
+    #sh-{{ section.id }} .swiper-button-next.sp-slider-arrow-next{right:20px;}
+    #sh-{{ section.id }} .swiper-button-prev.sp-slider-arrow-prev{right:80px; left:unset;}  
+    #sh-{{ section.id }} .swiper-button-next.sp-slider-arrow-next svg ,
+    #sh-{{ section.id }} .swiper-button-prev.sp-slider-arrow-prev svg {fill: {{section.settings.arrow_color}};width: {{ section.settings.arrow_size }}px;height: {{ section.settings.arrow_size }}px;}
+    @keyframes moveUpDown {
+      0% {transform: translate(-50%, -50%) translateY(-10px);}
+      50% {transform: translate(-50%, -50%) translateY(10px);}
+      100% {transform: translate(-50%, -50%) translateY(-10px);}
+    }
+    @media only screen and (max-width: 991px){
+      #sh-{{ section.id }} .sh-hero-slideshow-2-left,
+      #sh-{{ section.id }} .sh-hero-slideshow-2-right{width:100%;height: 50%; transform: unset; }
+      #sh-{{ section.id }} .sh-hero-slideshow-2-right{padding-top:70px;align-items: flex-start;} 
+      #sh-{{ section.id }} .sh-hero-slideshow-2-video {height: 50vh;}
+      #sh-{{ section.id }} .sh-hero-slideshow-2-center-image img{width: auto; max-height: 240px;}
+      #sh-{{ section.id }} .sh-hero-slideshow-2-center-image {left: 0;right: 0;top: 25%; margin: auto;transform: unset;display: flex;align-items: center;justify-content: center; } 
+      @keyframes moveUpDown {
+        0% {transform: translate(0%, 0%) translateY(-10px);}
+        50% {transform: translate(0%, 0%) translateY(10px);} 
+        100% {transform: translate(0%, 0%) translateY(-10px);}
+      }
+      #sh-{{ section.id }} .sh-hero-slideshow-2-right .sh-hero-slideshow-2-content{max-width: 100%;}
+    }
+    @media only screen and (max-width: 767px){
+      #sh-{{ section.id }} .sh-hero-slideshow-2-right .sh-hero-slideshow-2-title {font-size: 34px;}
+      #sh-{{ section.id }} .sh-hero-slideshow-2-right .sh-hero-slideshow-2-text {font-size: 15px;margin:10px 0 0 0;}
+      #sh-{{ section.id }} .sh-hero-slideshow-2-right .sh-button {font-size: 15px; margin: 15px 0 0 0;}
+      #sh-{{ section.id }} .swiper-button-next.sp-slider-arrow-next, #sh-{{ section.id }} .swiper-button-prev.sp-slider-arrow-prev{top: 55%;}
+      #sh-{{ section.id }} .swiper-button-prev.sp-slider-arrow-prev{right:60px;} 
+    }
+  </style>
+{%- endcapture -%}
+{{- sh_hero_slideshow_2 | strip_newlines -}}
+
+{% if section.blocks.size > 0%}
+  <div id="sh-{{ section.id }}">
+    <div class="sh-hero-slideshow-2-section">
+      <div class="swiper sh-hero-slideshow-2-slider">
+        <div class="swiper-wrapper">
+          {% for block in section.blocks %}
+            <div id="sh-{{ block.id }}" class="swiper-slide">
+              <div class="sh-hero-slideshow-2-left">
+                {% if block.settings.main_image != blank %}
+                  <img src="{{ block.settings.main_image | image_url }}" class="sh-hero-slideshow-2-img" height="" width="" loading="lazy" >
+                {% elsif block.settings.video != blank %}
+                  {{ block.settings.video | video_tag: image_size: 'master', autoplay: true, loop: true, controls: false, muted: true, playsinline: true, preload: 'auto', class: 'sh-hero-slideshow-2-video' }}
+                {% else %}
+                  <img src="data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg version='1.1' viewBox='0 0 500 500' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Crect x='2' y='2' width='496' height='496' fill='%23D8D8D8' stroke='%23D8D8D8' stroke-width='4'/%3E%3C/g%3E%3C/svg%3E" width="" height="" class="sh-hero-slideshow-2-video" loading="lazy" alt="Hero slideshow" >
+                {% endif %}
+              </div>
+              {% if block.settings.title != blank or block.settings.content != blank %}
+                <div class="sh-hero-slideshow-2-right" style="background: {{ block.settings.bg_color }};">
+                  <div class="sh-hero-slideshow-2-content sp-title-align-{{ section.settings.content_text_align }}">
+                    {% if block.settings.title != blank %}<h1 class="sh-hero-slideshow-2-title">{{ block.settings.title }}</h1>{% endif %}
+                    {% if block.settings.content != blank %}
+                      <p class="sh-hero-slideshow-2-text">{{ block.settings.content | replace: '<p>', '' | replace: '</p>', '' }}</p>
+                    {% endif %}
+                    {% if block.settings.link != blank and block.settings.btn_txt != blank %}
+                      <a href="{{ block.settings.link }}" class="sh-button{% if section.settings.btn_outline %} sh-button-outline{% endif %}">{{- block.settings.btn_txt -}}</a>
+                    {% endif %}
+                  </div>
+                </div>
+              {% endif %}
+              {% if block.settings.center_image != blank %}
+                <div class="sh-hero-slideshow-2-center-image">
+                  <img src="{{ block.settings.center_image | image_url }}" height="" width="" alt="Center Image" class="sh-hero-slideshow-2-transparent-image" loading="lazy">
+                </div>
+              {% endif %}
+            </div>
+            <style>
+              #sh-{{ section.id }} #sh-{{ block.id }} .sh-hero-slideshow-2-right .sh-hero-slideshow-2-title {color: {{ block.settings.title_color }};}
+              #sh-{{ section.id }} #sh-{{ block.id }} .sh-hero-slideshow-2-right .sh-hero-slideshow-2-text {color: {{ block.settings.content_color }};}
+              #sh-{{ section.id }} #sh-{{ block.id }} .sh-hero-slideshow-2-right .sh-button {
+                border: 1px solid {{block.settings.btn_border_color}};
+                background: {{block.settings.btn_bg_color}};
+                color: {{block.settings.btn_text_color}};
+              }
+              #sh-{{ section.id }} #sh-{{ block.id }} .sh-hero-slideshow-2-right .sh-button:hover{
+                background: {{block.settings.btn_hover_bg_color}};
+                color: {{block.settings.btn_hover_text_color}};
+                border: 1px solid {{block.settings.btn_hover_border_color}};
+                box-shadow: 0 0 5px 0px {{block.settings.outline_btn_shadow_color}};
+              }
+              #sh-{{ section.id }} #sh-{{ block.id }} .sh-hero-slideshow-2-right .sh-button.sh-button-outline {
+                color: {{block.settings.outline_btn_text_color}};
+                border-color: {{block.settings.outline_btn_text_color}};
+                background: transparent;
+              }
+            </style>
+          {% endfor %}
+        </div>
+        <div class="swiper-button-next sp-slider-arrow-next">{% render 'sh-arrows', arrow: 'next' %}</div>
+        <div class="swiper-button-prev sp-slider-arrow-prev">{% render 'sh-arrows', arrow: 'prev' %}</div>
+      </div>
+    </div>
+  </div>
+{% endif %}
+
+<script>
+  function heroSlideShow2() {
+    new Swiper('#sh-{{ section.id }} .sh-hero-slideshow-2-slider', {
+      slidesPerView: 1,
+      loop: false,
+      effect: 'fade',
+      initialSlide: 0,
+      speed: 1000,
+      navigation: {
+        nextEl: "#sh-{{ section.id }} .swiper-button-next",
+        prevEl: "#sh-{{ section.id }} .swiper-button-prev",
+      }
+    });
+  }
+  heroSlideShow2();
+</script>
+
+{% schema %}
+{
+  "name": "SH: Hero slideshow 2",
+  "tag": "section",
+  "class": "sh-section-hub-main",
+  "settings": [
+    {
+      "type":"text_alignment",
+      "id":"content_text_align",
+      "label": "Text alignment",
+      "default": "left"
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "checkbox",
+      "id":"btn_outline",
+      "label": "Use outline button",
+      "default": false
+    },
+    {
+      "type":"range",
+      "id":"border_radius",
+      "label": "Button border radius",
+      "min": 0,
+      "max": 20,
+      "default": 0,
+      "step": 1,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Font size"
+    },
+    {
+      "type": "paragraph",
+      "content": "Slide"
+    },
+    {
+      "type": "range",
+      "id": "title_font_size",
+      "min": 5,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "label": "Heading",
+      "default": 70
+    },
+    {
+      "type": "range",
+      "id": "content_font_size",
+      "min": 5,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Content",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Color"
+    },
+    {
+      "type": "paragraph",
+      "content": "Arrow"
+    },
+    {
+      "type": "color",
+      "id": "arrow_color",
+      "label":"Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "arrow_bg_color",
+      "label":"Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "arrow_border_color",
+      "label":"Border color",
+      "default": "#000000"
+    },
+    {
+      "type": "number",
+      "id":"arrow_size",
+      "label": "Size (Desktop)",
+      "default": 16
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "main_image",
+          "label": "Image"
+        },
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video",
+          "info": "If the image is blank, the video will appear."
+        },
+        {
+          "type": "image_picker",
+          "id": "center_image",
+          "label": "Center image",
+          "info": "We recommend size 700*1500px"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "heading",
+          "default": "Heading"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content",
+          "default": "<p>Fames gravida nisl malesuada ridiculus a dapibus.Aliquam enim nunc, volutpat eget ipsum id, varius sodales mi. Fames gravida nisl malesuada ridiculus a dapibus.Aliquam enim nunc, volutpat eget ipsum id, varius sodales mi.</p>"
+        },
+        {
+          "type": "text",
+          "id": "btn_txt",
+          "label": "Button label",
+          "default": "Explore Now"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Button link",
+          "default": "/"
+        },
+        {
+          "type": "color",
+          "id": "outline_btn_text_color",
+          "label": "Outline color",
+          "default": "#000000"
+        },
+        {
+          "type": "header",
+          "content": "Colors"
+        },
+        {
+          "type": "color",
+          "id": "bg_color",
+          "label": "Background color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "title_color",
+          "label": "Heading color",
+          "default": "#000000"
+        },
+        {
+          "type": "color",
+          "id": "content_color",
+          "label": "Content color",
+          "default": "#121212"
+        },
+        {
+          "type": "paragraph",
+          "content": "Button"
+        },
+        {
+          "type": "color",
+          "id": "btn_bg_color",
+          "label": "Background color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "btn_text_color",
+          "label": "Text color",
+          "default": "#000000"
+        },
+        {
+          "type": "color",
+          "id": "btn_border_color",
+          "label": "Border color",
+          "default": "#000000"
+        },
+        {
+          "type": "color",
+          "id": "btn_hover_bg_color",
+          "label": "Hover background color",
+          "default": "#000000"
+        },
+        {
+          "type": "color",
+          "id": "btn_hover_text_color",
+          "label": "Hover text color",
+          "default": "#fff"
+        },
+        {
+          "type": "color",
+          "id": "btn_hover_border_color",
+          "label": "Hover border color",
+          "default": "#000000"
+        },
+        {
+          "type": "color",
+          "id": "outline_btn_shadow_color",
+          "label": "Shadow color",
+          "default": "#000000"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SH: Hero slideshow 2",
+      "blocks": [
+        { 
+          "type": "slide",
+          "settings": {
+            "title": "Heading 1",
+            "btn_txt": "Shop Now"
+          }
+        },
+        { 
+          "type": "slide",
+          "settings": {
+            "title": "Heading 2",
+            "btn_txt": "Explore Now"
+          }
+        },
+        { 
+          "type": "slide",
+          "settings": {
+            "title": "Heading 3",
+            "btn_txt": "Buy Now"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

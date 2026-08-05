@@ -1,0 +1,490 @@
+{% comment %}
+  Renders a megamenu for the header.
+
+  Usage:
+  {% render 'header-mega-menu' %}
+{% endcomment %}
+
+<nav class="header__inline-menu">
+  <ul class="list-menu list-menu--inline" role="list">
+    {%- for link in section.settings.menu.links -%}
+      <li>
+        {%- if link.links != blank -%}
+          <header-menu>
+            <details id="Details-HeaderMenu-{{ forloop.index }}" class="mega-menu">
+              <summary id="HeaderMenu-{{ link.handle }}" class="header__menu-item list-menu__item link focus-inset">
+                <span
+                  {%- if link.child_active -%}
+                  class="header__active-menu-item"
+                  {%- endif -%}>
+                  {{- link.title | escape -}}
+                </span>
+                {{- 'icon-caret.svg' | inline_asset_content -}}
+              </summary>
+              <div
+                id="MegaMenu-Content-{{ forloop.index }}"
+                class="mega-menu__content color-{{ section.settings.menu_color_scheme }} gradient motion-reduce global-settings-popup"
+                tabindex="-1">
+                <mega-menu-tabs class="mega-menu__tab-layout page-width">
+                  <div
+                    class="mega-menu__tab-list"
+                    role="tablist"
+                    aria-label="{{ link.title | escape }}"
+                    aria-orientation="vertical"
+                    data-mega-menu-tablist>
+                    {%- for childlink in link.links -%}
+                      {%- liquid
+                        assign tab_is_active = false
+                        if childlink.child_active or childlink.current or forloop.first
+                          assign tab_is_active = true
+                        endif
+
+                        assign tab_id = 'MegaMenu-Tab-' | append: section.id | append: '-' | append: link.handle | append: '-' | append: childlink.handle | append: '-' | append: forloop.index
+                        assign panel_id = 'MegaMenu-Panel-' | append: section.id | append: '-' | append: link.handle | append: '-' | append: childlink.handle | append: '-' | append: forloop.index
+                      -%}
+                      <button
+                        type="button"
+                        id="{{ tab_id }}"
+                        class="mega-menu__tab link{% if tab_is_active %} is-active{% endif %}"
+                        role="tab"
+                        aria-selected="{% if tab_is_active %}true{% else %}false{% endif %}"
+                        aria-controls="{{ panel_id }}"
+                        tabindex="{% if tab_is_active %}0{% else %}-1{% endif %}"
+                        data-mega-menu-tab>
+                        {{ childlink.title | escape }}
+                      </button>
+                    {%- endfor -%}
+                  </div>
+
+                  <div class="mega-menu__panels">
+                    {%- for childlink in link.links -%}
+                      {%- liquid
+                        assign panel_is_active = false
+                        if childlink.child_active or childlink.current or forloop.first
+                          assign panel_is_active = true
+                        endif
+
+                        assign tab_id = 'MegaMenu-Tab-' | append: section.id | append: '-' | append: link.handle | append: '-' | append: childlink.handle | append: '-' | append: forloop.index
+                        assign panel_id = 'MegaMenu-Panel-' | append: section.id | append: '-' | append: link.handle | append: '-' | append: childlink.handle | append: '-' | append: forloop.index
+                      -%}
+
+                      <div
+                        id="{{ panel_id }}"
+                        class="mega-menu__panel{% if panel_is_active %} is-active{% endif %}"
+                        role="tabpanel"
+                        aria-labelledby="{{ tab_id }}"
+                        data-mega-menu-panel
+                        {% unless panel_is_active %}
+                        hidden
+                        {% endunless %}>
+                        {%- if childlink.links != blank -%}
+                          <div class="mega-menu__panel-items mega-menu__panel-items--cards">
+                            {%- for grandchildlink in childlink.links -%}
+                              {%- liquid
+                                assign item_image = blank
+
+                                if grandchildlink.object
+                                  if section.settings.mega_menu_images_toggle == 'collection_product'
+                                    case grandchildlink.type
+                                      when 'product_link'
+                                        assign item_image = grandchildlink.object.featured_image
+                                      when 'collection_link'
+                                        if grandchildlink.object.image != blank
+                                          assign item_image = grandchildlink.object.image
+                                        elsif grandchildlink.object.products.first != blank and grandchildlink.object.products.first.featured_image != blank
+                                          assign item_image = grandchildlink.object.products.first.featured_image
+                                        endif
+                                      when 'article_link'
+                                        assign item_image = grandchildlink.object.image
+                                    endcase
+                                  endif
+
+                                  if item_image == blank and section.settings.mega_menu_images_toggle == 'metafield' and grandchildlink.object.metafields.custom.image != blank
+                                    assign item_image = grandchildlink.object.metafields.custom.image
+                                  endif
+                                endif
+                              -%}
+
+                              <a
+                                id="HeaderMenu-{{ link.handle }}-{{ childlink.handle }}-{{ grandchildlink.handle }}"
+                                href="{{ grandchildlink.url }}"
+                                class="mega-menu__feature-card{% if item_image == blank %} mega-menu__feature-card--text-only{% endif %}{% if grandchildlink.current %} mega-menu__link--active{% endif %}"
+                                {% if grandchildlink.current %}
+                                aria-current="page"
+                                {% endif %}>
+                                {%- if item_image != blank -%}
+                                  {{
+                                    item_image | image_url: width: 720 | image_tag: class: 'mega-menu__feature-image', widths: '240, 360, 520, 720', loading: 'lazy', alt: grandchildlink.title
+                                  }}
+                                {%- endif -%}
+                                <span class="mega-menu__feature-title">
+                                  {{ grandchildlink.title | escape }}
+                                </span>
+                              </a>
+                            {%- endfor -%}
+                          </div>
+                        {%- else -%}
+                          {%- liquid
+                            assign fallback_image = blank
+
+                            if childlink.object
+                              if section.settings.mega_menu_images_toggle == 'collection_product'
+                                case childlink.type
+                                  when 'product_link'
+                                    assign fallback_image = childlink.object.featured_image
+                                  when 'collection_link'
+                                    if childlink.object.image != blank
+                                      assign fallback_image = childlink.object.image
+                                    elsif childlink.object.products.first != blank and childlink.object.products.first.featured_image != blank
+                                      assign fallback_image = childlink.object.products.first.featured_image
+                                    endif
+                                  when 'article_link'
+                                    assign fallback_image = childlink.object.image
+                                endcase
+                              endif
+
+                              if fallback_image == blank and section.settings.mega_menu_images_toggle == 'metafield' and childlink.object.metafields.custom.image != blank
+                                assign fallback_image = childlink.object.metafields.custom.image
+                              endif
+                            endif
+                          -%}
+                          <div class="mega-menu__panel-items mega-menu__panel-items--cards">
+                            <a
+                              id="HeaderMenu-{{ link.handle }}-{{ childlink.handle }}"
+                              href="{{ childlink.url }}"
+                              class="mega-menu__feature-card{% if fallback_image == blank %} mega-menu__feature-card--text-only{% endif %}{% if childlink.current %} mega-menu__link--active{% endif %}"
+                              {% if childlink.current %}
+                              aria-current="page"
+                              {% endif %}>
+                              {%- if fallback_image != blank -%}
+                                {{
+                                  fallback_image | image_url: width: 720 | image_tag: class: 'mega-menu__feature-image', widths: '240, 360, 520, 720', loading: 'lazy', alt: childlink.title
+                                }}
+                              {%- endif -%}
+                              <span class="mega-menu__feature-title">
+                                {{ childlink.title | escape }}
+                              </span>
+                            </a>
+                          </div>
+                        {%- endif -%}
+                      </div>
+                    {%- endfor -%}
+                  </div>
+                </mega-menu-tabs>
+              </div>
+            </details>
+          </header-menu>
+        {%- else -%}
+          <a
+            id="HeaderMenu-{{ link.handle }}"
+            href="{{ link.url }}"
+            class="header__menu-item list-menu__item link link--text focus-inset"
+            {% if link.current %}
+            aria-current="page"
+            {% endif %}>
+            <span
+              {%- if link.current -%}
+              class="header__active-menu-item"
+              {%- endif -%}>
+              {{- link.title | escape -}}
+            </span>
+          </a>
+        {%- endif -%}
+      </li>
+    {%- endfor -%}
+  </ul>
+</nav>
+
+<style>
+  .mega-menu__tab-layout {
+    display: grid;
+    gap: 4rem;
+    grid-template-columns: minmax(20rem, 28rem) minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .mega-menu__tab-list {
+    border-right: 0.1rem solid rgba(var(--color-foreground), 0.08);
+    display: grid;
+    gap: 0.2rem;
+    padding-right: 2.4rem;
+  }
+
+  .mega-menu__tab {
+    appearance: none;
+    background: transparent;
+    border: 0;
+    color: rgba(var(--color-foreground), 0.64);
+    cursor: pointer;
+    display: flex;
+    font: inherit;
+    justify-content: flex-start;
+    letter-spacing: 0.08em;
+    min-height: 4rem;
+    padding: 0.7rem 0;
+    text-align: left;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color var(--duration-default) ease;
+    width: 100%;
+  }
+
+  .mega-menu__tab:hover,
+  .mega-menu__tab:focus-visible,
+  .mega-menu__tab.is-active,
+  .mega-menu__tab[aria-selected='true'] {
+    color: rgb(var(--color-foreground));
+    text-decoration: none;
+  }
+
+  .mega-menu__panels {
+    min-width: 0;
+  }
+
+  .mega-menu__panel {
+    min-height: 24rem;
+  }
+
+  .mega-menu__panel-items--cards {
+    display: grid;
+    gap: 2.4rem;
+    grid-template-columns: repeat(auto-fit, minmax(17rem, 17rem));
+    justify-content: start;
+  }
+
+  .mega-menu__feature-card {
+    color: rgb(var(--color-foreground));
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    min-width: 0;
+    text-decoration: none;
+  }
+
+  .mega-menu__feature-card--text-only {
+    background: rgba(var(--color-foreground), 0.03);
+    border-radius: 1.6rem;
+    min-height: 18rem;
+    justify-content: flex-end;
+    padding: 1.8rem;
+  }
+
+  .mega-menu__feature-card:hover .mega-menu__feature-title,
+  .mega-menu__feature-card:focus-visible .mega-menu__feature-title {
+    text-decoration: underline;
+    text-underline-offset: 0.2rem;
+  }
+
+  .mega-menu__feature-image {
+    aspect-ratio: 1;
+    background: rgba(var(--color-foreground), 0.04);
+    border-radius: 0.8rem;
+    display: block;
+    height: auto;
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .mega-menu__feature-title {
+    color: rgb(var(--color-foreground));
+    display: inline-block;
+    font-size: 1.5rem;
+    line-height: 1.4;
+  }
+
+  .mega-menu__feature-title--hidden {
+    display: none;
+  }
+
+  .mega-menu__panel-items--text {
+    display: grid;
+    gap: 1rem 3rem;
+    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  }
+
+  .mega-menu__text-link {
+    color: rgba(var(--color-foreground), 0.72);
+    display: inline-flex;
+    line-height: 1.5;
+    padding: 0.2rem 0;
+    text-decoration: none;
+    width: fit-content;
+  }
+
+  .mega-menu__text-link:hover,
+  .mega-menu__text-link:focus-visible,
+  .mega-menu__text-link.mega-menu__link--active {
+    color: rgb(var(--color-foreground));
+    text-decoration: underline;
+    text-underline-offset: 0.2rem;
+  }
+
+  .mega-menu__text-link--solo {
+    background: rgba(var(--color-foreground), 0.03);
+    border-radius: 1.6rem;
+    min-height: 12rem;
+    padding: 1.8rem;
+    width: 100%;
+  }
+
+  {% if section.settings.megamenu_backdrop_toggle %}
+    #menu-backdrop {
+      background: rgba(0, 0, 0, 0.35);
+      display: none;
+      inset: 0;
+      position: fixed;
+      z-index: 3;
+    }
+  {% endif %}
+
+  @media screen and (max-width: 1199px) {
+    .mega-menu__tab-layout {
+      gap: 3rem;
+      grid-template-columns: minmax(18rem, 24rem) minmax(0, 1fr);
+    }
+
+    .mega-menu__panel-items--cards {
+      grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+    }
+  }
+</style>
+
+<script>
+  if (!customElements.get('mega-menu-tabs')) {
+    class MegaMenuTabs extends HTMLElement {
+      connectedCallback() {
+        if (this.initialized) return;
+        this.initialized = true;
+
+        this.tabs = Array.from(this.querySelectorAll('[data-mega-menu-tab]'));
+        this.panels = Array.from(this.querySelectorAll('[data-mega-menu-panel]'));
+
+        if (!this.tabs.length || !this.panels.length) return;
+
+        const selectedTab = this.tabs.find((tab) => tab.getAttribute('aria-selected') === 'true') || this.tabs[0];
+        this.activateTab(selectedTab, { moveFocus: false });
+
+        this.tabs.forEach((tab) => {
+          tab.addEventListener('mouseenter', () => this.activateTab(tab, { moveFocus: false }));
+          tab.addEventListener('focus', () => this.activateTab(tab, { moveFocus: false }));
+          tab.addEventListener('click', () => this.activateTab(tab, { moveFocus: false }));
+          tab.addEventListener('keydown', (event) => this.onKeydown(event));
+        });
+      }
+
+      onKeydown(event) {
+        const currentIndex = this.tabs.indexOf(event.currentTarget);
+        if (currentIndex === -1) return;
+
+        let nextIndex = null;
+
+        switch (event.key) {
+          case 'ArrowDown':
+          case 'ArrowRight':
+            nextIndex = (currentIndex + 1) % this.tabs.length;
+            break;
+          case 'ArrowUp':
+          case 'ArrowLeft':
+            nextIndex = (currentIndex - 1 + this.tabs.length) % this.tabs.length;
+            break;
+          case 'Home':
+            nextIndex = 0;
+            break;
+          case 'End':
+            nextIndex = this.tabs.length - 1;
+            break;
+        }
+
+        if (nextIndex === null) return;
+
+        event.preventDefault();
+        this.activateTab(this.tabs[nextIndex], { moveFocus: true });
+      }
+
+      activateTab(tab, { moveFocus = false } = {}) {
+        const panelId = tab.getAttribute('aria-controls');
+
+        this.tabs.forEach((item) => {
+          const isActive = item === tab;
+          item.classList.toggle('is-active', isActive);
+          item.setAttribute('aria-selected', isActive ? 'true' : 'false');
+          item.tabIndex = isActive ? 0 : -1;
+        });
+
+        this.panels.forEach((panel) => {
+          const isActive = panel.id === panelId;
+          panel.classList.toggle('is-active', isActive);
+          panel.hidden = !isActive;
+        });
+
+        if (moveFocus) tab.focus();
+      }
+    }
+
+    customElements.define('mega-menu-tabs', MegaMenuTabs);
+  }
+
+  document.querySelectorAll('.mega-menu').forEach((megaMenu) => {
+    if (megaMenu.hasAttribute('data-hover-close-bound')) return;
+    megaMenu.setAttribute('data-hover-close-bound', 'true');
+
+    let closeTimer = null;
+
+    const clearCloseTimer = () => {
+      if (!closeTimer) return;
+      window.clearTimeout(closeTimer);
+      closeTimer = null;
+    };
+
+    const closeMegaMenu = () => {
+      if (window.matchMedia('(max-width: 989px)').matches) return;
+      if (!megaMenu.hasAttribute('open')) return;
+
+      megaMenu.removeAttribute('open');
+      megaMenu.querySelector('summary')?.setAttribute('aria-expanded', 'false');
+    };
+
+    megaMenu.addEventListener('mouseenter', clearCloseTimer);
+    megaMenu.addEventListener('mouseleave', () => {
+      clearCloseTimer();
+      closeTimer = window.setTimeout(closeMegaMenu, 120);
+    });
+  });
+
+  {% if section.settings.megamenu_backdrop_toggle %}
+    if (!document.documentElement.hasAttribute('data-mega-menu-backdrop-bound')) {
+      document.documentElement.setAttribute('data-mega-menu-backdrop-bound', 'true');
+
+      const syncMegaMenuBackdrop = () => {
+        const menuBackdrop = document.getElementById('menu-backdrop');
+        if (!menuBackdrop) return;
+
+        const hasOpenMenu = Array.from(document.querySelectorAll('.mega-menu')).some((menu) =>
+          menu.hasAttribute('open')
+        );
+
+        menuBackdrop.style.display = hasOpenMenu ? 'block' : 'none';
+      };
+
+      document.addEventListener(
+        'toggle',
+        (event) => {
+          if (!event.target.classList || !event.target.classList.contains('mega-menu')) return;
+          syncMegaMenuBackdrop();
+        },
+        true
+      );
+
+      document.addEventListener('click', (event) => {
+        if (event.target.id !== 'menu-backdrop') return;
+
+        document.querySelectorAll('.mega-menu[open]').forEach((megaMenu) => {
+          megaMenu.removeAttribute('open');
+          megaMenu.querySelector('summary')?.setAttribute('aria-expanded', 'false');
+        });
+
+        syncMegaMenuBackdrop();
+      });
+    }
+  {% endif %}
+</script>

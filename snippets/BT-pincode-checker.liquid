@@ -1,0 +1,114 @@
+<div class="zip-shipping-checker">
+  <label for="zip-checker">Enter Pin Code:</label>
+  <div class="zip-checker-inputs">
+    <input
+      type="text"
+      id="zip-checker"
+      maxlength="10"
+      placeholder="e.g., 10001"
+      aria-label="ZIP Code"
+    >
+    <button id="check-shipping" type="button">Check</button>
+  </div>
+  <p id="shipping-result" class="shipping-result-message"></p>
+</div>
+
+<style>
+  .zip-shipping-checker {
+    /* max-width: 100%; */
+    max-width: 65rem;
+    margin: 2rem 0;
+    /* font-family: Arial, sans-serif; */
+  }
+
+  .zip-shipping-checker label {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #333;
+  }
+
+  .zip-checker-inputs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 1rem;
+  }
+
+  #zip-checker {
+    padding: 10px;
+    flex: 1;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+  }
+
+  #check-shipping {
+    padding: 10px 16px;
+    background-color: #000;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  #check-shipping:hover {
+    background-color: #1558c0;
+  }
+
+  .shipping-result-message {
+    margin-top: 0.5rem;
+    font-size: 14px;
+  }
+</style>
+
+<script>
+  async function loadCSVData() {
+    try {
+      const response = await fetch('{{ "shipping_times.csv" | asset_url }}');
+      const text = await response.text();
+
+      const lines = text.trim().split('\n');
+      const headers = lines[0].split(',');
+
+      const zipData = {};
+      for (let i = 1; i < lines.length; i++) {
+        const row = lines[i].split(',');
+        zipData[row[0].trim()] = row[1].trim();
+      }
+
+      return zipData;
+    } catch (error) {
+      console.error("Failed to load shipping data:", error);
+      return {};
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    let shippingDataPromise;
+    const zipInput = document.getElementById('zip-checker');
+    const result = document.getElementById('shipping-result');
+    const checkButton = document.getElementById('check-shipping');
+
+    checkButton.addEventListener('click', async () => {
+      shippingDataPromise = shippingDataPromise || loadCSVData();
+      const shippingData = await shippingDataPromise;
+      const zip = zipInput.value.trim();
+      if (zip.length === 0) {
+        result.textContent = "Please enter a ZIP code.";
+        result.style.color = "#d93025";
+        return;
+      }
+
+      if (shippingData[zip]) {
+        result.textContent = `COD Available For This Pin Code, Estimated Shipping Time: ${shippingData[zip]}`;
+        result.style.color = "#188038";
+      } else {
+        result.textContent = 'COD Not Available for this Pin Code Only Prepaid Orders are Available, Estimated Shipping Time: 3-4 Days';
+        result.style.color = "#d93025";
+      }
+    });
+  });
+</script>

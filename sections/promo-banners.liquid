@@ -1,0 +1,589 @@
+
+
+<div class="promo-banners-section {% if section.settings.full_width %}full-width{% else %}page-width{% endif %}">
+  <div class="promo-banners-slider" id="promoBannersSlider-{{ section.id }}">
+    {% for block in section.blocks %}
+      {% if block.type == 'banner_card' %}
+        <div class="promo-banner-card" {{ block.shopify_attributes }}>
+          <!-- Background Image -->
+          {% if block.settings.background_image != blank %}
+            <img
+              src="{{ block.settings.background_image | image_url: width: 800 }}"
+              alt="{{ block.settings.heading | escape }}"
+              loading="lazy"
+              width="{{ block.settings.background_image.width }}"
+              height="{{ block.settings.background_image.height }}"
+              class="promo-banner-bg"
+            >
+          {% else %}
+            <div class="promo-banner-bg-placeholder"></div>
+          {% endif %}
+
+          <!-- Overlay -->
+          <div class="promo-banner-overlay" style="background: {{ block.settings.overlay_color }};opacity: {{ block.settings.overlay_opacity | divided_by: 100.0 }};"></div>
+
+          <!-- Content -->
+          <div class="promo-banner-content">
+            {% if block.settings.heading != blank %}
+              <h3 class="promo-banner-heading">
+                {{ block.settings.heading }}
+                {% if block.settings.heading_underline != blank %}
+                  <br><span class="promo-heading-underline">{{ block.settings.heading_underline }}</span>
+                {% endif %}
+              </h3>
+            {% endif %}
+
+            {% if block.settings.subheading != blank %}
+              <p class="promo-banner-subheading">{{ block.settings.subheading }}</p>
+            {% endif %}
+
+            {% if block.settings.button_text != blank %}
+              <a href="{{ block.settings.button_link }}" class="promo-banner-button">
+                {{ block.settings.button_text }}
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+              </a>
+            {% endif %}
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  <!-- Desktop Arrow (Right only, visible on desktop if more than 3 cards) -->
+  {% if section.blocks.size > 3 %}
+    <button class="promo-arrow-desktop promo-arrow-next" id="promoNextDesktop-{{ section.id }}" aria-label="Next">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+    </button>
+  {% endif %}
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const sectionId = '{{ section.id }}';
+  const slider = document.getElementById('promoBannersSlider-' + sectionId);
+
+  if (!slider) return;
+
+  // Desktop arrow
+  const nextDesktop = document.getElementById('promoNextDesktop-' + sectionId);
+  if (nextDesktop) {
+    nextDesktop.addEventListener('click', function() {
+      const card = slider.querySelector('.promo-banner-card');
+      if (card) {
+        const gap = parseFloat(getComputedStyle(slider).gap) || 20;
+        slider.scrollBy({ left: card.offsetWidth + gap, behavior: 'smooth' });
+      }
+    });
+  }
+
+  // Mobile: Snap scroll one by one (CSS handles snap, JS enhances)
+  let isDown = false;
+  let startX;
+  let scrollLeft;
+
+  // Hide scrollbar completely and enable touch swipe
+  slider.addEventListener('mousedown', (e) => {
+    isDown = true;
+    slider.classList.add('active-drag');
+    startX = e.pageX - slider.offsetLeft;
+    scrollLeft = slider.scrollLeft;
+  });
+
+  slider.addEventListener('mouseleave', () => {
+    isDown = false;
+    slider.classList.remove('active-drag');
+  });
+
+  slider.addEventListener('mouseup', () => {
+    isDown = false;
+    slider.classList.remove('active-drag');
+  });
+
+  slider.addEventListener('mousemove', (e) => {
+    if (!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - slider.offsetLeft;
+    const walk = (x - startX) * 1.5;
+    slider.scrollLeft = scrollLeft - walk;
+  });
+});
+</script>
+
+{% schema %}
+{
+  "name": "Promo Banners",
+  "tag": "section",
+  "class": "promo-banners-wrapper",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Make section full width",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top (px)",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom (px)",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "card_height_desktop",
+      "label": "Card Height Desktop (px)",
+      "min": 150,
+      "max": 400,
+      "step": 10,
+      "default": 220
+    },
+    {
+      "type": "range",
+      "id": "card_height_mobile",
+      "label": "Card Height Mobile (px)",
+      "min": 150,
+      "max": 350,
+      "step": 10,
+      "default": 200
+    },
+    {
+      "type": "range",
+      "id": "card_border_radius",
+      "label": "Card Border Radius (px)",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "default": 14
+    }
+  ],
+  "blocks": [
+    {
+      "type": "banner_card",
+      "name": "Banner Card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "background_image",
+          "label": "Background Image"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Extra Savings on"
+        },
+        {
+          "type": "text",
+          "id": "heading_underline",
+          "label": "Heading Underline Text (italic)",
+          "default": "Fresh Items"
+        },
+        {
+          "type": "text",
+          "id": "subheading",
+          "label": "Subheading",
+          "default": "Flat $10 OFF on Fruits"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Text",
+          "default": "Shop Now"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button Link"
+        },
+        {
+          "type": "color",
+          "id": "overlay_color",
+          "label": "Overlay Color",
+          "default": "#000000"
+        },
+        {
+          "type": "range",
+          "id": "overlay_opacity",
+          "label": "Overlay Opacity (%)",
+          "min": 0,
+          "max": 80,
+          "step": 5,
+          "default": 15
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text Color",
+          "default": "#ffffff"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Promo Banners",
+      "category": "Image",
+      "blocks": [
+        {
+          "type": "banner_card",
+          "settings": {
+            "heading": "Extra Savings on",
+            "heading_underline": "Fresh Items",
+            "subheading": "Flat $10 OFF on Fruits",
+            "button_text": "Shop Now"
+          }
+        },
+        {
+          "type": "banner_card",
+          "settings": {
+            "heading": "Fresh Groceries at",
+            "heading_underline": "Your Door",
+            "subheading": "Flat $25 Savings Today",
+            "button_text": "Shop Now"
+          }
+        },
+        {
+          "type": "banner_card",
+          "settings": {
+            "heading": "Free Delivery on",
+            "heading_underline": "Selected Orders",
+            "subheading": "Free Delivery + $40 OFF",
+            "button_text": "Shop Now"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+<style>
+  /* ============ SECTION CONTAINER ============ */
+  .promo-banners-section {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    position: relative;
+    box-sizing: border-box;
+  }
+
+  .promo-banners-section.page-width {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+
+  .promo-banners-section.full-width {
+    max-width: 100%;
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  /* ============ SLIDER ============ */
+  .promo-banners-slider {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    scroll-snap-type: x mandatory;
+  }
+
+  .promo-banners-slider::-webkit-scrollbar {
+    display: none;
+  }
+
+  .promo-banners-slider.active-drag {
+    scroll-behavior: auto;
+    cursor: grabbing;
+  }
+
+  /* ============ BANNER CARD ============ */
+  .promo-banner-card {
+    flex: 1 1 0;
+    min-width: 0;
+    height: {{ section.settings.card_height_desktop }}px;
+    border-radius: {{ section.settings.card_border_radius }}px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    scroll-snap-align: start;
+    transition: transform 0.3s ease;
+  }
+
+  .promo-banner-card:hover {
+    transform: scale(1.01);
+  }
+
+  /* Background Image */
+  .promo-banner-bg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+  }
+
+  .promo-banner-bg-placeholder {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    background: linear-gradient(135deg, #2d8a4e 0%, #1a6b3c 50%, #0d4a2a 100%);
+  }
+
+  /* Overlay */
+  .promo-banner-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+
+  /* Content */
+  .promo-banner-content {
+    position: relative;
+    z-index: 2;
+    padding: 28px 24px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-sizing: border-box;
+  }
+
+  {% for block in section.blocks %}
+    .promo-banner-card:nth-child({{ forloop.index }}) .promo-banner-content {
+      color: {{ block.settings.text_color }};
+    }
+    .promo-banner-card:nth-child({{ forloop.index }}) .promo-banner-heading {
+      color: {{ block.settings.text_color }};
+    }
+    .promo-banner-card:nth-child({{ forloop.index }}) .promo-banner-subheading {
+      color: {{ block.settings.text_color }};
+    }
+  {% endfor %}
+
+  .promo-banner-heading {
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0 0 8px 0;
+    color: #ffffff;
+  }
+
+  .promo-heading-underline {
+    font-style: italic;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    text-decoration-thickness: 2px;
+  }
+
+  .promo-banner-subheading {
+    font-size: 14px;
+    font-weight: 400;
+    margin: 0 0 18px 0;
+    color: #ffffff;
+    opacity: 0.95;
+  }
+
+  .promo-banner-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 24px;
+    background-color: #ffffff;
+    color: #1a1a1a;
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    width: fit-content;
+    transition: all 0.3s ease;
+    border: none;
+  }
+
+  .promo-banner-button:hover {
+    background-color: #f0f0f0;
+    transform: translateX(4px);
+  }
+
+  /* Desktop Arrow */
+  .promo-arrow-desktop {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid #e0e0e0;
+    background: #ffffff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 5;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    color: #1a1a1a;
+  }
+
+  .promo-arrow-desktop:hover {
+    background: #1a1a1a;
+    color: #ffffff;
+    border-color: #1a1a1a;
+  }
+
+  .promo-arrow-desktop:hover svg {
+    stroke: #ffffff;
+  }
+
+  /* ============ DESKTOP: 3 equal columns ============ */
+  @media (min-width: 992px) {
+    .promo-banners-slider {
+      overflow-x: hidden;
+    }
+
+    .promo-banner-card {
+      flex: 1 1 0;
+      min-width: 0;
+      scroll-snap-align: none;
+    }
+  }
+
+  /* ============ TABLET ============ */
+  @media (max-width: 991px) {
+    .promo-banners-section.page-width,
+    .promo-banners-section.full-width {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+
+    .promo-banners-slider {
+      overflow-x: auto;
+      gap: 16px;
+    }
+
+    .promo-banner-card {
+      flex: 0 0 calc(50% - 8px);
+      min-width: calc(50% - 8px);
+      height: {{ section.settings.card_height_desktop }}px;
+    }
+
+    .promo-banner-heading {
+      font-size: 22px;
+    }
+
+    .promo-arrow-desktop {
+      display: none;
+    }
+  }
+
+  /* ============ MOBILE ============ */
+  @media (max-width: 767px) {
+    .promo-banners-section.page-width,
+    .promo-banners-section.full-width {
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+
+    .promo-banners-slider {
+      gap: 12px;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .promo-banner-card {
+      flex: 0 0 calc(100% - 40px);
+      min-width: calc(100% - 40px);
+      height: {{ section.settings.card_height_mobile }}px;
+      scroll-snap-align: center;
+    }
+
+    .promo-banner-content {
+      padding: 22px 20px;
+    }
+
+    .promo-banner-heading {
+      font-size: 20px;
+    }
+
+    .promo-banner-subheading {
+      font-size: 13px;
+      margin-bottom: 14px;
+    }
+
+    .promo-banner-button {
+      padding: 9px 20px;
+      font-size: 12px;
+    }
+
+    .promo-arrow-desktop {
+      display: none;
+    }
+  }
+
+  /* ============ SMALL MOBILE ============ */
+  @media (max-width: 480px) {
+    .promo-banners-section.page-width,
+    .promo-banners-section.full-width {
+      padding-left: 12px;
+      padding-right: 12px;
+    }
+
+    .promo-banners-slider {
+      gap: 10px;
+    }
+
+    .promo-banner-card {
+      flex: 0 0 calc(100% - 24px);
+      min-width: calc(100% - 24px);
+      border-radius: {{ section.settings.card_border_radius | minus: 4 }}px;
+    }
+
+    .promo-banner-content {
+      padding: 18px 16px;
+    }
+
+    .promo-banner-heading {
+      font-size: 18px;
+      margin-bottom: 6px;
+    }
+
+    .promo-heading-underline {
+      text-underline-offset: 3px;
+    }
+
+    .promo-banner-subheading {
+      font-size: 12px;
+      margin-bottom: 12px;
+    }
+
+    .promo-banner-button {
+      padding: 8px 18px;
+      font-size: 11px;
+      gap: 6px;
+    }
+  }
+</style>
+
+
