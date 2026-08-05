@@ -111,8 +111,8 @@
         "full_width": true,
         "section_width": 1400,
         "bg_color": "#425139",
-        "text_color": "#FFFFFF",
-        "divider_color": "#FFFFFF",
+        "text_color": "#ffffff",
+        "divider_color": "#ffffff",
         "divider_size": 18,
         "text_size": 20,
         "text_size_mobile": 15,
@@ -229,13 +229,13 @@
         "progress_height": 3,
         "nav_size": 38,
         "nav_radius": 6,
-        "bg_color": "#FFFFFF",
+        "bg_color": "#ffffff",
         "text_color": "#000000",
         "body_color": "#000000",
         "badge_text_color": "#ffffff",
         "button_bg_color": "#ffffff",
         "button_text_color": "#111111",
-        "progress_bg_color": "#BEB8B8",
+        "progress_bg_color": "#beb8b8",
         "progress_fill_color": "#425139",
         "padding_top": 84,
         "padding_bottom": 56,
@@ -693,7 +693,7 @@
         "section_width": 1500,
         "section_bg": "#ffffff",
         "heading_color": "#000000",
-        "card_bg": "#F4F4F4",
+        "card_bg": "#f4f4f4",
         "text_color": "#111111",
         "subtext_color": "#222222",
         "icon_bg": "#eaeaea",
@@ -994,6 +994,82 @@
         "mobile_padding_top": 32,
         "mobile_padding_bottom": 32
       }
+    },
+    "turcy_premium_faq_PnG7q6": {
+      "type": "turcy-premium-faq",
+      "blocks": {
+        "faq_6pXHtE": {
+          "type": "faq",
+          "settings": {
+            "question": "How should I choose my first Turcy product?",
+            "answer": "<p>Start with your primary need. Choose a cleanser for daily maintenance, salicylic acid for oil and congestion, Vitamin C and niacinamide for a glow-focused routine, moisturiser or aloe for hydration, sunscreen for morning protection, or rosemary spray for scalp care.</p>",
+            "open_by_default": true
+          }
+        },
+        "faq_naPkyC": {
+          "type": "faq",
+          "settings": {
+            "question": "Can I use every active product together?",
+            "answer": "<p>Introduce active products gradually rather than using several new formulas at once. Patch test where appropriate and follow the usage instructions printed on the final product packaging.</p>",
+            "open_by_default": false
+          }
+        },
+        "faq_KiHteh": {
+          "type": "faq",
+          "settings": {
+            "question": "What is the correct skincare order?",
+            "answer": "<p>A simple order is cleanser, treatment or serum, moisturiser and sunscreen in the morning. Aloe vera gel may be added as a lightweight soothing layer depending on your routine.</p>",
+            "open_by_default": false
+          }
+        },
+        "faq_wiQbcC": {
+          "type": "faq",
+          "settings": {
+            "question": "Are the product images shown here final?",
+            "answer": "<p>Use final, accurate and high-resolution product photography before publishing the storefront. Stock or concept images should be replaced with official Turcy packaging images.</p>",
+            "open_by_default": false
+          }
+        },
+        "faq_hrqpPx": {
+          "type": "faq",
+          "settings": {
+            "question": "Where should final safety information appear?",
+            "answer": "<p>Display the complete ingredient list, usage directions, warnings, net quantity, manufacturer details, batch information and expiry information on the product page and packaging as required.</p>",
+            "open_by_default": false
+          }
+        }
+      },
+      "block_order": [
+        "faq_6pXHtE",
+        "faq_naPkyC",
+        "faq_KiHteh",
+        "faq_wiQbcC",
+        "faq_hrqpPx"
+      ],
+      "name": "Turcy premium FAQ",
+      "settings": {
+        "eyebrow": "Frequently asked",
+        "show_eyebrow_line": true,
+        "heading": "Good care starts with good information.",
+        "description": "<p>These answers are written for the storefront layout. Final directions, warnings and ingredient lists should match the approved product packaging.</p>",
+        "open_first": true,
+        "single_open": true,
+        "max_width": 1440,
+        "left_column_width": 36,
+        "column_gap": 90,
+        "mobile_alignment": "left",
+        "radius": 4,
+        "heading_size": 70,
+        "question_size": 16,
+        "answer_size": 15,
+        "background_color": "#FCFCFA",
+        "heading_color": "#17211E",
+        "text_color": "#67736E",
+        "accent_color": "#173F35",
+        "line_color": "#D8DEDA",
+        "padding_top": 90,
+        "padding_bottom": 90
+      }
     }
   },
   "order": [
@@ -1010,6 +1086,7 @@
     "sh_image_with_text_ARHLDD",
     "17797033528d6814a0",
     "bt_testimonial_VH3yTt",
+    "turcy_premium_faq_PnG7q6",
     "available_on_P7xQCx"
   ]
 }
