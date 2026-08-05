@@ -211,7 +211,7 @@
         "card_width_mobile": 280,
         "card_gap": 16,
         "mobile_card_gap": 14,
-        "card_radius": 8,
+        "card_radius": 17,
         "image_position": "center center",
         "overlay_opacity": 35,
         "show_card_arrow": true,
@@ -333,7 +333,7 @@
       ],
       "name": "t:sections.featured-collection.presets.name",
       "settings": {
-        "collection": "frontpage",
+        "collection": "glow-tone",
         "products_to_show": 4,
         "title": "<strong>ACNE & BLEMISH CARE</strong>",
         "heading_size": "h1",
