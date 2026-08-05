@@ -1,0 +1,1212 @@
+{% comment %}
+  Turcy Editorial Featured Collection
+  - Bordered product-grid layout inspired by the supplied reference
+  - Collection picker and product limit
+  - Quick add with AJAX enhancement and non-JS fallback
+  - Rating/review metafield support with editable fallbacks
+  - Desktop grid and optional mobile horizontal scroll
+{% endcomment %}
+
+{% liquid
+  assign featured_collection = section.settings.collection
+  assign product_limit = section.settings.products_to_show
+%}
+
+<section
+  id="TurcyFeaturedCollection-{{ section.id }}"
+  class="
+    turcy-featured
+    turcy-featured--mobile-{{ section.settings.mobile_layout }}
+    {% if section.settings.full_width %}turcy-featured--full-width{% endif %}
+  "
+  style="
+    --tfc-background: {{ section.settings.background_color }};
+    --tfc-text: {{ section.settings.text_color }};
+    --tfc-muted: {{ section.settings.muted_color }};
+    --tfc-border: {{ section.settings.border_color }};
+    --tfc-accent: {{ section.settings.accent_color }};
+    --tfc-accent-text: {{ section.settings.accent_text_color }};
+    --tfc-star: {{ section.settings.star_color }};
+    --tfc-card-background: {{ section.settings.card_background }};
+    --tfc-image-background: {{ section.settings.image_background }};
+    --tfc-max-width: {{ section.settings.max_width }}px;
+    --tfc-columns: {{ section.settings.columns_desktop }};
+    --tfc-gap: {{ section.settings.grid_gap }}px;
+    --tfc-image-height: {{ section.settings.image_height }}px;
+    --tfc-heading-size: {{ section.settings.heading_size }}px;
+    --tfc-title-size: {{ section.settings.product_title_size }}px;
+    --tfc-price-size: {{ section.settings.price_size }}px;
+    --tfc-padding-top: {{ section.settings.padding_top }}px;
+    --tfc-padding-bottom: {{ section.settings.padding_bottom }}px;
+    --tfc-card-padding: {{ section.settings.card_padding }}px;
+  "
+>
+  <div class="turcy-featured__container">
+
+    <header class="turcy-featured__header">
+      <div class="turcy-featured__heading-group">
+        {% if section.settings.eyebrow != blank %}
+          <p class="turcy-featured__eyebrow">
+            {{ section.settings.eyebrow | escape }}
+          </p>
+        {% endif %}
+
+        {% if section.settings.heading != blank %}
+          <h2 class="turcy-featured__heading">
+            {{ section.settings.heading | escape }}
+          </h2>
+        {% elsif featured_collection != blank %}
+          <h2 class="turcy-featured__heading">
+            {{ featured_collection.title | escape }}
+          </h2>
+        {% endif %}
+      </div>
+
+      {% if section.settings.show_view_all and featured_collection != blank %}
+        <a
+          class="turcy-featured__view-all"
+          href="{{ featured_collection.url }}"
+          aria-label="{{ section.settings.view_all_label | escape }} — {{ featured_collection.title | escape }}"
+        >
+          <span>{{ section.settings.view_all_label | escape }}</span>
+          <span class="turcy-featured__view-all-arrow" aria-hidden="true">→</span>
+        </a>
+      {% endif %}
+    </header>
+
+    {% if featured_collection != blank and featured_collection.products_count > 0 %}
+      <div
+        class="turcy-featured__grid"
+        role="list"
+        aria-label="{{ featured_collection.title | escape }}"
+      >
+        {% for product in featured_collection.products limit: product_limit %}
+          {% liquid
+            assign selected_variant = product.selected_or_first_available_variant
+            assign rating_value = section.settings.fallback_rating
+            assign rating_count = section.settings.fallback_review_count
+
+            if product.metafields.reviews.rating.value != blank
+              assign rating_value = product.metafields.reviews.rating.value.rating
+            elsif product.metafields.reviews.rating != blank
+              assign rating_value = product.metafields.reviews.rating
+            endif
+
+            if product.metafields.reviews.rating_count != blank
+              assign rating_count = product.metafields.reviews.rating_count
+            endif
+
+            assign rating_rounded = rating_value | round
+          %}
+
+          <article
+            class="turcy-featured__card"
+            role="listitem"
+            data-product-card
+          >
+            <div class="turcy-featured__card-top">
+              <div class="turcy-featured__product-line">
+                <h3 class="turcy-featured__product-title">
+                  <a href="{{ product.url }}">
+                    {{ product.title | escape }}
+                  </a>
+                </h3>
+
+                <div class="turcy-featured__price">
+                  {% if product.price_varies %}
+                    <span class="turcy-featured__from">
+                      {{ 'products.product.price.from_price_html' | t: price: product.price_min | money }}
+                    </span>
+                  {% else %}
+                    <span>{{ product.price | money }}</span>
+                  {% endif %}
+                </div>
+              </div>
+
+              {% if section.settings.show_rating %}
+                <div
+                  class="turcy-featured__rating"
+                  aria-label="{{ rating_value }} out of 5 stars, {{ rating_count }} reviews"
+                >
+                  <div class="turcy-featured__stars" aria-hidden="true">
+                    {% for star in (1..5) %}
+                      <span class="{% if star <= rating_rounded %}is-filled{% endif %}">★</span>
+                    {% endfor %}
+                  </div>
+
+                  {% if section.settings.show_review_count %}
+                    <span class="turcy-featured__review-count">
+                      {{ rating_count }}{% if section.settings.review_suffix != blank %}{{ section.settings.review_suffix }}{% endif %}
+                    </span>
+                  {% endif %}
+                </div>
+              {% endif %}
+            </div>
+
+            <a
+              class="turcy-featured__media"
+              href="{{ product.url }}"
+              aria-label="{{ product.title | escape }}"
+            >
+              {% if product.featured_media != blank %}
+                {{
+                  product.featured_media
+                  | image_url: width: 1000
+                  | image_tag:
+                    loading: 'lazy',
+                    widths: '240, 360, 480, 640, 800, 1000',
+                    sizes: '(max-width: 749px) 78vw, (max-width: 1199px) 33vw, 25vw',
+                    class: 'turcy-featured__image',
+                    alt: product.featured_media.alt
+                }}
+              {% else %}
+                {{ 'product-1' | placeholder_svg_tag: 'turcy-featured__placeholder' }}
+              {% endif %}
+
+              {% if section.settings.show_sale_badge and product.compare_at_price_max > product.price %}
+                {% assign saving = product.compare_at_price_max | minus: product.price %}
+                {% assign saving_percent = saving | times: 100.0 | divided_by: product.compare_at_price_max | round %}
+                <span class="turcy-featured__badge">
+                  {{ saving_percent }}% off
+                </span>
+              {% endif %}
+            </a>
+
+            {% if section.settings.show_quick_add %}
+              {% if product.available %}
+                {% if product.has_only_default_variant or section.settings.add_first_available_variant %}
+                  <form
+                    method="post"
+                    action="{{ routes.cart_add_url }}"
+                    class="turcy-featured__quick-form"
+                    data-turcy-product-form
+                  >
+                    <input type="hidden" name="id" value="{{ selected_variant.id }}">
+                    <input type="hidden" name="quantity" value="1">
+
+                    <button
+                      class="turcy-featured__quick-add"
+                      type="submit"
+                      aria-label="{{ section.settings.add_to_cart_label | escape }} — {{ product.title | escape }}"
+                    >
+                      <span class="turcy-featured__button-label">
+                        {{ section.settings.add_to_cart_label | escape }}
+                      </span>
+                      <span class="turcy-featured__button-loading" hidden>
+                        {{ section.settings.adding_label | escape }}
+                      </span>
+                    </button>
+                  </form>
+                {% else %}
+                  <a
+                    class="turcy-featured__quick-add"
+                    href="{{ product.url }}"
+                    aria-label="{{ section.settings.choose_options_label | escape }} — {{ product.title | escape }}"
+                  >
+                    {{ section.settings.choose_options_label | escape }}
+                  </a>
+                {% endif %}
+              {% else %}
+                <button
+                  class="turcy-featured__quick-add is-disabled"
+                  type="button"
+                  disabled
+                >
+                  {{ section.settings.sold_out_label | escape }}
+                </button>
+              {% endif %}
+            {% endif %}
+          </article>
+        {% endfor %}
+      </div>
+
+      {% if section.settings.show_mobile_scroll_hint and section.settings.mobile_layout == 'scroll' %}
+        <div class="turcy-featured__scroll-hint" aria-hidden="true">
+          <span></span>
+        </div>
+      {% endif %}
+    {% else %}
+      <div class="turcy-featured__empty">
+        <p>Select a collection in the theme editor to display products.</p>
+      </div>
+    {% endif %}
+
+  </div>
+
+  <div
+    class="turcy-featured__toast"
+    role="status"
+    aria-live="polite"
+    aria-atomic="true"
+    data-turcy-toast
+  >
+    {{ section.settings.added_label | escape }}
+  </div>
+</section>
+
+<style>
+  #TurcyFeaturedCollection-{{ section.id }} {
+    position: relative;
+    overflow: hidden;
+    padding-top: var(--tfc-padding-top);
+    padding-bottom: var(--tfc-padding-bottom);
+    background: var(--tfc-background);
+    color: var(--tfc-text);
+  }
+
+  #TurcyFeaturedCollection-{{ section.id }} * {
+    box-sizing: border-box;
+  }
+
+  #TurcyFeaturedCollection-{{ section.id }} .turcy-featured__container {
+    width: min(calc(100% - 40px), var(--tfc-max-width));
+    margin: 0 auto;
+  }
+
+  #TurcyFeaturedCollection-{{ section.id }}.turcy-featured--full-width
+    .turcy-featured__container {
+    width: 100%;
+    max-width: none;
+  }
+
+  #TurcyFeaturedCollection-{{ section.id }} .turcy-featured__header {
+    min-height: 82px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+    padding: 15px 22px;
+    border: 1px solid var(--tfc-border);
+    border-bottom: 0;
+    background: var(--tfc-background);
+  }
+
+  #TurcyFeaturedCollection-{{ section.id }} .turcy-featured__heading-group {
+    min-width: 0;
+  }
+
+  #TurcyFeaturedCollection-{{ section.id }} .turcy-featured__eyebrow {
+    margin: 0 0 5px;
+    color: var(--tfc-muted);
+    font-size: 11px;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: .13em;
+    text-transform: uppercase;
+  }
+
+  #TurcyFeaturedCollection-{{ section.id }} .turcy-featured__heading {
+    margin: 0;
+    color: var(--tfc-text);
+    font-family: inherit;
+    font-size: clamp(24px, 3vw, var(--tfc-heading-size));
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -.045em;
+  }
+
+  #TurcyFeaturedCollection-{{ section.id }} .turcy-featured__view-all {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    flex: 0 0 auto;
+    min-height: 42px;
+    padding-left: 21px;
+    border: 1px solid var(--tfc-accent);
+    border-radius: 999px;
+    background: var(--tfc-accent);
+    color: var(--tfc-accent-text);
+    font-size: 12px;
+    font-weight: 750;
+    text-decoration: none;
+    transition:
+      transform .22s ease,
+      box-shadow .22s ease;
+  }
+
+  #TurcyFeaturedCollection-{{ section.id }} .turcy-featured__view-all:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px color-mix(in srgb, var(--tfc-accent) 28%, transparent);
+  }
+
+  #TurcyFeaturedCollection-{{ section.id }} .turcy-featured__view-all-arrow {
+    width: 38px;
+    height: 38px;
+    display: grid;
+    place-items: center;
+    margin-right: 2px;
+    border: 1px solid color-mix(in srgb, var(--tfc-accent-text) 42%, transparent);
+    border-radius: 50%;
+    font-size: 17px;
+    transition: transform .22s ease;
+  }
+
+  #TurcyFeaturedCollection-{{ section.id }} .turcy-featured__view-all:hover
+    .turcy-featured__view-all-arrow {
+    transform: translateX(2px);
+  }
+
+  #TurcyFeaturedCollection-{{ section.id }} .turcy-featured__grid {
+    display: grid;
+    grid-template-columns: repeat(var(--tfc-columns), minmax(0, 1fr));
+    gap: var(--tfc-gap);
+    border-top: 1px solid var(--tfc-border);
+    border-left: 1px solid var(--tfc-border);
+  }
+
+  #TurcyFeaturedCollection-{{ section.id }} .turcy-featured__card {
+    position: relative;
+    min-width: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    border-right: 1px solid var(--tfc-border);
+    border-bottom: 1px solid var(--tfc-border);
+    background: var(--tfc-card-background);
+  }
+
+  #TurcyFeaturedCollection-{{ section.id }} .turcy-featured__card-top {
+    position: relative;
+    z-index: 2;
+    padding:
+      var(--tfc-card-padding)
+      var(--tfc-card-padding)
+      5px;
+    background: var(--tfc-card-background);
+  }
+
+  #TurcyFeaturedCollection-{{ section.id }} .turcy-featured__product-line {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: start;
+    gap: 12px;
+  }
+
+  #TurcyFeaturedCollection-{{ section.id }} .turcy-featured__product-title {
+    min-width: 0;
+    margin: 0;
+    color: var(--tfc-text);
+    font-size: var(--tfc-title-size);
+    font-weight: 800;
+    line-height: 1.3;
+    letter-spacing: -.02em;
+  }
+
+  #TurcyFeaturedCollection-{{ section.id }} .turcy-featured__product-title a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  #TurcyFeaturedCollection-{{ section.id }} .turcy-featured__product-title a:hover {
+    color: var(--tfc-accent);
+  }
+
+  #TurcyFeaturedCollection-{{ section.id }} .turcy-featured__price {
+    color: var(--tfc-text);
+    font-size: var(--tfc-price-size);
+    font-weight: 800;
+    line-height: 1.35;
+    white-space: nowrap;
+  }
+
+  #TurcyFeaturedCollection-{{ section.id }} .turcy-featured__from {
+    font-size: .9em;
+  }
+
+  #TurcyFeaturedCollection-{{ section.id }} .turcy-featured__rating {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1px;
+    margin-top: 5px;
+  }
+
+  #TurcyFeaturedCollection-{{ section.id }} .turcy-featured__stars {
+    display: flex;
+    gap: 1px;
+    color: color-mix(in srgb, var(--tfc-star) 28%, transparent);
+    font-size: 12px;
+    line-height: 1;
+    letter-spacing: 0;
+  }
+
+  #TurcyFeaturedCollection-{{ section.id }} .turcy-featured__stars .is-filled {
+    color: var(--tfc-star);
+  }
+
+  #TurcyFeaturedCollection-{{ section.id }} .turcy-featured__review-count {
+    color: var(--tfc-muted);
+    font-size: 10px;
+    line-height: 1.3;
+  }
+
+  #TurcyFeaturedCollection-{{ section.id }} .turcy-featured__media {
+    position: relative;
+    display: grid;
+    place-items: center;
+    flex: 1 1 auto;
+    min-height: var(--tfc-image-height);
+    overflow: hidden;
+    padding: 18px;
+    background: var(--tfc-image-background);
+    text-decoration: none;
+  }
+
+  #TurcyFeaturedCollection-{{ section.id }} .turcy-featured__image,
+  #TurcyFeaturedCollection-{{ section.id }} .turcy-featured__placeholder {
+    display: block;
+    width: 100%;
+    height: calc(var(--tfc-image-height) - 32px);
+    object-fit: contain;
+    transform: scale({{ section.settings.image_scale | divided_by: 100.0 }});
+    transition: transform .45s cubic-bezier(.2, .7, .2, 1);
+  }
+
+  #TurcyFeaturedCollection-{{ section.id }} .turcy-featured__card:hover
+    .turcy-featured__image {
+    transform:
+      scale(calc({{ section.settings.image_scale | divided_by: 100.0 }} + .045))
+      translateY(-3px);
+  }
+
+  #TurcyFeaturedCollection-{{ section.id }} .turcy-featured__badge {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    z-index: 2;
+    padding: 6px 9px;
+    border-radius: 999px;
+    background: var(--tfc-accent);
+    color: var(--tfc-accent-text);
+    font-size: 9px;
+    font-weight: 850;
+    line-height: 1;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+  }
+
+  #TurcyFeaturedCollection-{{ section.id }} .turcy-featured__quick-form {
+    margin: 0;
+  }
+
+  #TurcyFeaturedCollection-{{ section.id }} .turcy-featured__quick-add {
+    width: 100%;
+    min-height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    border-top: 1px solid var(--tfc-border);
+    border-radius: 0;
+    background: var(--tfc-accent);
+    color: var(--tfc-accent-text);
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.2;
+    text-decoration: none;
+    cursor: pointer;
+    transform: translateY(100%);
+    margin-top: -42px;
+    transition:
+      transform .25s ease,
+      filter .2s ease;
+  }
+
+  #TurcyFeaturedCollection-{{ section.id }} .turcy-featured__card:hover
+    .turcy-featured__quick-add,
+  #TurcyFeaturedCollection-{{ section.id }} .turcy-featured__quick-add:focus-visible {
+    transform: translateY(0);
+    margin-top: 0;
+  }
+
+  #TurcyFeaturedCollection-{{ section.id }} .turcy-featured__quick-add:hover {
+    filter: brightness(.96);
+  }
+
+  #TurcyFeaturedCollection-{{ section.id }} .turcy-featured__quick-add.is-disabled {
+    background: var(--tfc-muted);
+    cursor: not-allowed;
+    opacity: .65;
+  }
+
+  #TurcyFeaturedCollection-{{ section.id }} .turcy-featured__quick-add.is-loading {
+    cursor: wait;
+    opacity: .78;
+  }
+
+  #TurcyFeaturedCollection-{{ section.id }} .turcy-featured__empty {
+    padding: 55px 25px;
+    border: 1px solid var(--tfc-border);
+    color: var(--tfc-muted);
+    text-align: center;
+  }
+
+  #TurcyFeaturedCollection-{{ section.id }} .turcy-featured__empty p {
+    margin: 0;
+  }
+
+  #TurcyFeaturedCollection-{{ section.id }} .turcy-featured__scroll-hint {
+    display: none;
+  }
+
+  #TurcyFeaturedCollection-{{ section.id }} .turcy-featured__toast {
+    position: fixed;
+    left: 50%;
+    bottom: 24px;
+    z-index: 80;
+    max-width: calc(100vw - 30px);
+    padding: 12px 19px;
+    border-radius: 999px;
+    background: var(--tfc-text);
+    color: var(--tfc-card-background);
+    font-size: 12px;
+    font-weight: 750;
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, 20px);
+    transition:
+      opacity .22s ease,
+      transform .22s ease;
+  }
+
+  #TurcyFeaturedCollection-{{ section.id }} .turcy-featured__toast.is-visible {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+
+  @media screen and (max-width: 1199px) {
+    #TurcyFeaturedCollection-{{ section.id }} .turcy-featured__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  @media screen and (max-width: 989px) {
+    #TurcyFeaturedCollection-{{ section.id }} {
+      padding-top: calc(var(--tfc-padding-top) * .8);
+      padding-bottom: calc(var(--tfc-padding-bottom) * .8);
+    }
+
+    #TurcyFeaturedCollection-{{ section.id }} .turcy-featured__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    #TurcyFeaturedCollection-{{ section.id }} .turcy-featured__quick-add {
+      margin-top: 0;
+      transform: none;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    #TurcyFeaturedCollection-{{ section.id }} {
+      padding-top: calc(var(--tfc-padding-top) * .6);
+      padding-bottom: calc(var(--tfc-padding-bottom) * .6);
+    }
+
+    #TurcyFeaturedCollection-{{ section.id }} .turcy-featured__container {
+      width: min(calc(100% - 24px), var(--tfc-max-width));
+    }
+
+    #TurcyFeaturedCollection-{{ section.id }}.turcy-featured--full-width
+      .turcy-featured__container {
+      width: 100%;
+    }
+
+    #TurcyFeaturedCollection-{{ section.id }} .turcy-featured__header {
+      min-height: 70px;
+      padding: 13px 14px;
+      gap: 14px;
+    }
+
+    #TurcyFeaturedCollection-{{ section.id }} .turcy-featured__heading {
+      font-size: clamp(21px, 7vw, 30px);
+    }
+
+    #TurcyFeaturedCollection-{{ section.id }} .turcy-featured__eyebrow {
+      font-size: 9px;
+    }
+
+    #TurcyFeaturedCollection-{{ section.id }} .turcy-featured__view-all {
+      min-height: 37px;
+      padding-left: 14px;
+      font-size: 10px;
+    }
+
+    #TurcyFeaturedCollection-{{ section.id }} .turcy-featured__view-all-arrow {
+      width: 33px;
+      height: 33px;
+    }
+
+    #TurcyFeaturedCollection-{{ section.id }}.turcy-featured--mobile-grid
+      .turcy-featured__grid {
+      grid-template-columns: repeat({{ section.settings.columns_mobile }}, minmax(0, 1fr));
+    }
+
+    #TurcyFeaturedCollection-{{ section.id }}.turcy-featured--mobile-scroll
+      .turcy-featured__grid {
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(245px, 78vw);
+      grid-template-columns: none;
+      overflow-x: auto;
+      overscroll-behavior-inline: contain;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: thin;
+      scrollbar-color: var(--tfc-accent) transparent;
+    }
+
+    #TurcyFeaturedCollection-{{ section.id }}.turcy-featured--mobile-scroll
+      .turcy-featured__card {
+      scroll-snap-align: start;
+    }
+
+    #TurcyFeaturedCollection-{{ section.id }} .turcy-featured__card-top {
+      padding: 15px 14px 4px;
+    }
+
+    #TurcyFeaturedCollection-{{ section.id }} .turcy-featured__product-title {
+      font-size: max(13px, calc(var(--tfc-title-size) - 1px));
+    }
+
+    #TurcyFeaturedCollection-{{ section.id }} .turcy-featured__price {
+      font-size: max(11px, calc(var(--tfc-price-size) - 1px));
+    }
+
+    #TurcyFeaturedCollection-{{ section.id }} .turcy-featured__media {
+      min-height: calc(var(--tfc-image-height) * .84);
+    }
+
+    #TurcyFeaturedCollection-{{ section.id }} .turcy-featured__image,
+    #TurcyFeaturedCollection-{{ section.id }} .turcy-featured__placeholder {
+      height: calc(var(--tfc-image-height) * .84 - 28px);
+    }
+
+    #TurcyFeaturedCollection-{{ section.id }} .turcy-featured__scroll-hint {
+      display: block;
+      width: 68px;
+      height: 3px;
+      margin: 14px auto 0;
+      overflow: hidden;
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--tfc-border) 70%, transparent);
+    }
+
+    #TurcyFeaturedCollection-{{ section.id }} .turcy-featured__scroll-hint span {
+      display: block;
+      width: 30px;
+      height: 100%;
+      border-radius: inherit;
+      background: var(--tfc-accent);
+    }
+  }
+
+  @media screen and (max-width: 420px) {
+    #TurcyFeaturedCollection-{{ section.id }}.turcy-featured--mobile-grid
+      .turcy-featured__grid {
+      {% if section.settings.columns_mobile == 2 %}
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      {% else %}
+        grid-template-columns: 1fr;
+      {% endif %}
+    }
+
+    #TurcyFeaturedCollection-{{ section.id }}.turcy-featured--mobile-grid
+      .turcy-featured__product-line {
+      grid-template-columns: 1fr;
+      gap: 4px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #TurcyFeaturedCollection-{{ section.id }} .turcy-featured__image,
+    #TurcyFeaturedCollection-{{ section.id }} .turcy-featured__quick-add,
+    #TurcyFeaturedCollection-{{ section.id }} .turcy-featured__view-all,
+    #TurcyFeaturedCollection-{{ section.id }} .turcy-featured__view-all-arrow,
+    #TurcyFeaturedCollection-{{ section.id }} .turcy-featured__toast {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  (() => {
+    const section = document.getElementById('TurcyFeaturedCollection-{{ section.id }}');
+    if (!section || section.dataset.turcyInitialized === 'true') return;
+
+    section.dataset.turcyInitialized = 'true';
+
+    const forms = section.querySelectorAll('[data-turcy-product-form]');
+    const toast = section.querySelector('[data-turcy-toast]');
+    let toastTimer;
+
+    function showToast(message) {
+      if (!toast) return;
+
+      toast.textContent = message;
+      toast.classList.add('is-visible');
+
+      window.clearTimeout(toastTimer);
+      toastTimer = window.setTimeout(() => {
+        toast.classList.remove('is-visible');
+      }, 2200);
+    }
+
+    async function refreshCartCount() {
+      try {
+        const response = await fetch(`${window.Shopify?.routes?.root || '/'}cart.js`, {
+          headers: {
+            Accept: 'application/json'
+          }
+        });
+
+        if (!response.ok) return;
+
+        const cart = await response.json();
+        const commonCountSelectors = [
+          '#cart-icon-bubble .cart-count-bubble span[aria-hidden="true"]',
+          '#cart-icon-bubble .cart-count-bubble span',
+          '.cart-count-bubble span[aria-hidden="true"]',
+          '.cart-count-bubble span',
+          '[data-cart-count]'
+        ];
+
+        commonCountSelectors.forEach(selector => {
+          document.querySelectorAll(selector).forEach(element => {
+            element.textContent = cart.item_count;
+          });
+        });
+
+        document.documentElement.dispatchEvent(
+          new CustomEvent('cart:refresh', {
+            bubbles: true,
+            detail: { cart }
+          })
+        );
+      } catch (error) {
+        console.warn('Turcy featured collection cart refresh failed:', error);
+      }
+    }
+
+    forms.forEach(form => {
+      form.addEventListener('submit', async event => {
+        if (!window.fetch || !window.FormData) return;
+
+        event.preventDefault();
+
+        const button = form.querySelector('button[type="submit"]');
+        const label = button?.querySelector('.turcy-featured__button-label');
+        const loading = button?.querySelector('.turcy-featured__button-loading');
+
+        if (!button || button.classList.contains('is-loading')) return;
+
+        button.classList.add('is-loading');
+        button.disabled = true;
+
+        if (label) label.hidden = true;
+        if (loading) loading.hidden = false;
+
+        try {
+          const response = await fetch(window.Shopify?.routes?.root
+            ? `${window.Shopify.routes.root}cart/add.js`
+            : '/cart/add.js', {
+            method: 'POST',
+            headers: {
+              Accept: 'application/json'
+            },
+            body: new FormData(form)
+          });
+
+          if (!response.ok) {
+            const errorData = await response.json().catch(() => ({}));
+            throw new Error(errorData.description || 'Unable to add this product.');
+          }
+
+          await response.json();
+          showToast('{{ section.settings.added_label | escape }}');
+          await refreshCartCount();
+        } catch (error) {
+          showToast(error.message || '{{ section.settings.error_label | escape }}');
+        } finally {
+          button.classList.remove('is-loading');
+          button.disabled = false;
+
+          if (label) label.hidden = false;
+          if (loading) loading.hidden = true;
+        }
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Turcy featured collection",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Collection"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Featured collection"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "label": "Products to show",
+      "default": 4
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Skin Essentials Products"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "label": "Show view-all button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "view_all_label",
+      "label": "View-all label",
+      "default": "See all Products"
+    },
+    {
+      "type": "header",
+      "content": "Product cards"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_quick_add",
+      "label": "Show add-to-cart bar",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "add_first_available_variant",
+      "label": "Quick add first variant for products with options",
+      "default": false,
+      "info": "When disabled, products with multiple options link to the product page."
+    },
+    {
+      "type": "text",
+      "id": "add_to_cart_label",
+      "label": "Add-to-cart label",
+      "default": "Add to cart"
+    },
+    {
+      "type": "text",
+      "id": "adding_label",
+      "label": "Loading label",
+      "default": "Adding..."
+    },
+    {
+      "type": "text",
+      "id": "choose_options_label",
+      "label": "Choose-options label",
+      "default": "Choose options"
+    },
+    {
+      "type": "text",
+      "id": "sold_out_label",
+      "label": "Sold-out label",
+      "default": "Sold out"
+    },
+    {
+      "type": "text",
+      "id": "added_label",
+      "label": "Success message",
+      "default": "Product added to cart"
+    },
+    {
+      "type": "text",
+      "id": "error_label",
+      "label": "Error message",
+      "default": "Unable to add this product"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sale_badge",
+      "label": "Show percentage-off badge",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Reviews"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "label": "Show star rating",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_review_count",
+      "label": "Show review count",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "fallback_rating",
+      "min": 0,
+      "max": 5,
+      "step": 0.5,
+      "label": "Fallback rating",
+      "default": 4.5,
+      "info": "Used when the product has no reviews.rating metafield."
+    },
+    {
+      "type": "range",
+      "id": "fallback_review_count",
+      "min": 0,
+      "max": 5000,
+      "step": 50,
+      "label": "Fallback review count",
+      "default": 1250,
+      "info": "Used when the product has no reviews.rating_count metafield."
+    },
+    {
+      "type": "text",
+      "id": "review_suffix",
+      "label": "Text after review count",
+      "default": "+ Reviews"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Use full page width",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "min": 1000,
+      "max": 1800,
+      "step": 20,
+      "unit": "px",
+      "label": "Maximum width",
+      "default": 1440
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "label": "Desktop columns",
+      "default": 4
+    },
+    {
+      "type": "select",
+      "id": "mobile_layout",
+      "label": "Mobile layout",
+      "default": "scroll",
+      "options": [
+        {
+          "value": "scroll",
+          "label": "Horizontal scroll"
+        },
+        {
+          "value": "grid",
+          "label": "Grid"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "columns_mobile",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "label": "Mobile grid columns",
+      "default": 2
+    },
+    {
+      "type": "checkbox",
+      "id": "show_mobile_scroll_hint",
+      "label": "Show mobile scroll indicator",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "grid_gap",
+      "min": 0,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "label": "Grid gap",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "card_padding",
+      "min": 10,
+      "max": 34,
+      "step": 2,
+      "unit": "px",
+      "label": "Card text padding",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "image_height",
+      "min": 220,
+      "max": 620,
+      "step": 20,
+      "unit": "px",
+      "label": "Product image area height",
+      "default": 360
+    },
+    {
+      "type": "range",
+      "id": "image_scale",
+      "min": 70,
+      "max": 120,
+      "step": 5,
+      "unit": "%",
+      "label": "Product image scale",
+      "default": 90
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 24,
+      "max": 58,
+      "step": 2,
+      "unit": "px",
+      "label": "Heading size",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "product_title_size",
+      "min": 12,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "label": "Product title size",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "price_size",
+      "min": 11,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Price size",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Section background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Card background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "image_background",
+      "label": "Image area background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Primary text",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "muted_color",
+      "label": "Secondary text",
+      "default": "#555555"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Borders",
+      "default": "#222222"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Button and add-to-cart",
+      "default": "#FF8A21"
+    },
+    {
+      "type": "color",
+      "id": "accent_text_color",
+      "label": "Button text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "star_color",
+      "label": "Star rating",
+      "default": "#FF7A00"
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 160,
+      "step": 5,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 160,
+      "step": 5,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 30
+    }
+  ],
+  "presets": [
+    {
+      "name": "Turcy featured collection"
+    }
+  ]
+}
+{% endschema %}
