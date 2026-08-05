@@ -504,6 +504,109 @@
         "padding_bottom": 36
       }
     },
+    "turcy_ingredients_HceJQz": {
+      "type": "turcy-ingredients",
+      "blocks": {
+        "ingredient_AVTTkf": {
+          "type": "ingredient",
+          "settings": {
+            "symbol": "C",
+            "title": "Vitamin C",
+            "text": "<p>Used in brightening routines to support a more radiant-looking complexion.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "ingredient_8VxJDM": {
+          "type": "ingredient",
+          "settings": {
+            "symbol": "B3",
+            "title": "Niacinamide",
+            "text": "<p>A versatile active used for uneven-looking tone, pores and barrier support.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "ingredient_3rcUx3": {
+          "type": "ingredient",
+          "settings": {
+            "symbol": "2%",
+            "title": "Salicylic Acid",
+            "text": "<p>An exfoliating acid commonly used in oily and blemish-prone skin routines.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "ingredient_VB6nKQ": {
+          "type": "ingredient",
+          "settings": {
+            "symbol": "K",
+            "title": "Kojic Acid",
+            "text": "<p>Included in tone-focused care for the appearance of spots and pigmentation.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "ingredient_DMBA8b": {
+          "type": "ingredient",
+          "settings": {
+            "symbol": "A",
+            "title": "Aloe Vera",
+            "text": "<p>Known for lightweight hydration and a soothing feel on the skin.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "ingredient_mBGwKF": {
+          "type": "ingredient",
+          "settings": {
+            "symbol": "R",
+            "title": "Rosemary",
+            "text": "<p>A familiar botanical ingredient in scalp and hair wellness routines.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "ingredient_AVTTkf",
+        "ingredient_8VxJDM",
+        "ingredient_3rcUx3",
+        "ingredient_VB6nKQ",
+        "ingredient_DMBA8b",
+        "ingredient_mBGwKF"
+      ],
+      "name": "Turcy ingredient index",
+      "settings": {
+        "eyebrow": "Ingredient index",
+        "show_eyebrow_line": true,
+        "heading": "Know what each hero ingredient is here to do.",
+        "description": "<p>Product suitability varies by skin type. Introduce actives gradually, patch test where appropriate and follow the final packaging directions.</p>",
+        "max_width": 1440,
+        "columns_desktop": 6,
+        "mobile_layout": "scroll",
+        "columns_mobile": 1,
+        "card_gap": 14,
+        "card_min_height": 250,
+        "card_radius": 18,
+        "enable_hover": true,
+        "heading_size": 68,
+        "title_size": 15,
+        "body_size": 13,
+        "symbol_size": 26,
+        "icon_size": 64,
+        "background_color": "#F5ECE3",
+        "heading_color": "#17211E",
+        "text_color": "#66716D",
+        "accent_color": "#173F35",
+        "card_background": "#FCFAF6",
+        "card_border_color": "#E0E2DE",
+        "icon_background": "#DDEAE2",
+        "icon_color": "#173F35",
+        "padding_top": 90,
+        "padding_bottom": 90
+      }
+    },
     "new_apart_XPcT3d": {
       "type": "new-apart",
       "blocks": {
@@ -949,6 +1052,7 @@
     "sh_image_with_text_3_z3LP76",
     "sh_featured_banner_image_Rn79ib",
     "featured_collection_CXxJxB",
+    "turcy_ingredients_HceJQz",
     "new_apart_XPcT3d",
     "sh_image_with_text_ARHLDD",
     "17797033528d6814a0",
