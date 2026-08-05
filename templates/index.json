@@ -193,7 +193,7 @@
         "category_DHekXm": {
           "type": "category",
           "settings": {
-            "title": "Skin Care",
+            "title": "Acne &Oil",
             "link": "shopify://collections/texture",
             "open_new_tab": true
           }
@@ -201,7 +201,7 @@
         "category_Hj8EEp": {
           "type": "category",
           "settings": {
-            "title": "Face Care",
+            "title": "Glow &Tone",
             "link": "shopify://collections/face-care",
             "open_new_tab": true
           }
@@ -217,7 +217,7 @@
         "category_UxCBLj": {
           "type": "category",
           "settings": {
-            "title": "Sun Protection",
+            "title": "Hydration &Soothing",
             "link": "shopify://collections/sun-protection",
             "open_new_tab": true
           }
@@ -225,42 +225,15 @@
         "category_axNDhB": {
           "type": "category",
           "settings": {
-            "title": "Hair Oil & Hair Serum",
+            "title": "Daily SunCare",
             "link": "shopify://collections/hair-care",
             "open_new_tab": true
           }
         },
-        "category_3HRe7P": {
-          "type": "category",
-          "disabled": true,
-          "settings": {
-            "title": "Health & Fitness",
-            "link": "shopify://collections/health-fitness",
-            "open_new_tab": true
-          }
-        },
-        "category_hrAHnK": {
+        "category_N7b9CQ": {
           "type": "category",
           "settings": {
-            "title": "Acne & Blemishes",
-            "link": "shopify://collections/acne",
-            "open_new_tab": true
-          }
-        },
-        "category_6Mnrim": {
-          "type": "category",
-          "disabled": true,
-          "settings": {
-            "title": "Fragrances",
-            "link": "",
-            "open_new_tab": false
-          }
-        },
-        "category_XPJVGf": {
-          "type": "category",
-          "disabled": true,
-          "settings": {
-            "title": "Lip Oils",
+            "title": "Scalp &Hair",
             "link": "",
             "open_new_tab": false
           }
@@ -272,10 +245,7 @@
         "category_W7QnUt",
         "category_UxCBLj",
         "category_axNDhB",
-        "category_3HRe7P",
-        "category_hrAHnK",
-        "category_6Mnrim",
-        "category_XPJVGf"
+        "category_N7b9CQ"
       ],
       "name": "Shop Now Category Slider",
       "settings": {
