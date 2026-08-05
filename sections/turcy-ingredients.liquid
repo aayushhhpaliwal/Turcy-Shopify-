@@ -1,0 +1,741 @@
+{% comment %}
+  Turcy Ingredient Index
+  - Editorial heading layout
+  - Fully customizable ingredient cards
+  - Symbol or uploaded image support
+  - Responsive grid / mobile scroll option
+{% endcomment %}
+
+<section
+  id="TurcyIngredients-{{ section.id }}"
+  class="turcy-ingredients turcy-ingredients--mobile-{{ section.settings.mobile_layout }}"
+  style="
+    --ti-bg: {{ section.settings.background_color }};
+    --ti-heading: {{ section.settings.heading_color }};
+    --ti-text: {{ section.settings.text_color }};
+    --ti-accent: {{ section.settings.accent_color }};
+    --ti-card-bg: {{ section.settings.card_background }};
+    --ti-card-border: {{ section.settings.card_border_color }};
+    --ti-icon-bg: {{ section.settings.icon_background }};
+    --ti-icon-color: {{ section.settings.icon_color }};
+    --ti-max-width: {{ section.settings.max_width }}px;
+    --ti-columns: {{ section.settings.columns_desktop }};
+    --ti-gap: {{ section.settings.card_gap }}px;
+    --ti-card-radius: {{ section.settings.card_radius }}px;
+    --ti-card-min-height: {{ section.settings.card_min_height }}px;
+    --ti-heading-size: {{ section.settings.heading_size }}px;
+    --ti-body-size: {{ section.settings.body_size }}px;
+    --ti-title-size: {{ section.settings.title_size }}px;
+    --ti-symbol-size: {{ section.settings.symbol_size }}px;
+    --ti-icon-size: {{ section.settings.icon_size }}px;
+    --ti-pad-top: {{ section.settings.padding_top }}px;
+    --ti-pad-bottom: {{ section.settings.padding_bottom }}px;
+  "
+>
+  <div class="turcy-ingredients__container">
+
+    <div class="turcy-ingredients__header">
+      <div class="turcy-ingredients__heading-wrap">
+        {% if section.settings.eyebrow != blank %}
+          <div class="turcy-ingredients__eyebrow">
+            {% if section.settings.show_eyebrow_line %}
+              <span class="turcy-ingredients__eyebrow-line" aria-hidden="true"></span>
+            {% endif %}
+            <span>{{ section.settings.eyebrow | escape }}</span>
+          </div>
+        {% endif %}
+
+        {% if section.settings.heading != blank %}
+          <h2 class="turcy-ingredients__heading">
+            {{ section.settings.heading | newline_to_br }}
+          </h2>
+        {% endif %}
+      </div>
+
+      {% if section.settings.description != blank %}
+        <div class="turcy-ingredients__description rte">
+          {{ section.settings.description }}
+        </div>
+      {% endif %}
+    </div>
+
+    {% if section.blocks.size > 0 %}
+      <div class="turcy-ingredients__grid" role="list">
+        {% for block in section.blocks %}
+          <article
+            class="turcy-ingredients__card"
+            role="listitem"
+            {{ block.shopify_attributes }}
+          >
+            <div class="turcy-ingredients__icon" aria-hidden="true">
+              {% if block.settings.image != blank %}
+                {{
+                  block.settings.image
+                  | image_url: width: 240
+                  | image_tag:
+                    loading: 'lazy',
+                    widths: '80, 120, 160, 240',
+                    sizes: '(max-width: 749px) 64px, 72px',
+                    class: 'turcy-ingredients__icon-image',
+                    alt: ''
+                }}
+              {% elsif block.settings.symbol != blank %}
+                <span>{{ block.settings.symbol | escape }}</span>
+              {% else %}
+                <span>•</span>
+              {% endif %}
+            </div>
+
+            {% if block.settings.title != blank %}
+              <h3 class="turcy-ingredients__title">
+                {{ block.settings.title | escape }}
+              </h3>
+            {% endif %}
+
+            {% if block.settings.text != blank %}
+              <div class="turcy-ingredients__text rte">
+                {{ block.settings.text }}
+              </div>
+            {% endif %}
+
+            {% if block.settings.link != blank and block.settings.link_label != blank %}
+              <a
+                class="turcy-ingredients__link"
+                href="{{ block.settings.link }}"
+                aria-label="{{ block.settings.link_label | escape }} — {{ block.settings.title | escape }}"
+              >
+                {{ block.settings.link_label | escape }}
+                <span aria-hidden="true">→</span>
+              </a>
+            {% endif %}
+          </article>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+  </div>
+</section>
+
+<style>
+  #TurcyIngredients-{{ section.id }} {
+    overflow: hidden;
+    padding-top: var(--ti-pad-top);
+    padding-bottom: var(--ti-pad-bottom);
+    background: var(--ti-bg);
+    color: var(--ti-text);
+  }
+
+  #TurcyIngredients-{{ section.id }} * {
+    box-sizing: border-box;
+  }
+
+  #TurcyIngredients-{{ section.id }} .turcy-ingredients__container {
+    width: min(calc(100% - 40px), var(--ti-max-width));
+    margin: 0 auto;
+  }
+
+  #TurcyIngredients-{{ section.id }} .turcy-ingredients__header {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(300px, .85fr);
+    gap: 70px;
+    align-items: end;
+    margin-bottom: 52px;
+  }
+
+  #TurcyIngredients-{{ section.id }} .turcy-ingredients__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 16px;
+    color: var(--ti-accent);
+    font-size: 12px;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+  }
+
+  #TurcyIngredients-{{ section.id }} .turcy-ingredients__eyebrow-line {
+    width: 28px;
+    height: 1px;
+    flex: 0 0 auto;
+    background: currentColor;
+  }
+
+  #TurcyIngredients-{{ section.id }} .turcy-ingredients__heading {
+    max-width: 820px;
+    margin: 0;
+    color: var(--ti-heading);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(42px, 5.1vw, var(--ti-heading-size));
+    font-weight: 400;
+    line-height: .98;
+    letter-spacing: -.045em;
+  }
+
+  #TurcyIngredients-{{ section.id }} .turcy-ingredients__description {
+    max-width: 560px;
+    justify-self: end;
+    color: var(--ti-text);
+    font-size: var(--ti-body-size);
+    line-height: 1.65;
+    opacity: .88;
+  }
+
+  #TurcyIngredients-{{ section.id }} .turcy-ingredients__description > *:last-child,
+  #TurcyIngredients-{{ section.id }} .turcy-ingredients__text > *:last-child {
+    margin-bottom: 0;
+  }
+
+  #TurcyIngredients-{{ section.id }} .turcy-ingredients__grid {
+    display: grid;
+    grid-template-columns: repeat(var(--ti-columns), minmax(0, 1fr));
+    gap: var(--ti-gap);
+  }
+
+  #TurcyIngredients-{{ section.id }} .turcy-ingredients__card {
+    min-width: 0;
+    min-height: var(--ti-card-min-height);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 25px 18px 24px;
+    border: 1px solid var(--ti-card-border);
+    border-radius: 999px 999px var(--ti-card-radius) var(--ti-card-radius);
+    background: var(--ti-card-bg);
+    text-align: center;
+    transition:
+      transform .28s ease,
+      box-shadow .28s ease,
+      border-color .28s ease;
+  }
+
+  {% if section.settings.enable_hover %}
+    #TurcyIngredients-{{ section.id }} .turcy-ingredients__card:hover {
+      transform: translateY(-7px);
+      border-color: color-mix(in srgb, var(--ti-accent) 28%, var(--ti-card-border));
+      box-shadow: 0 20px 42px rgba(23, 63, 53, .10);
+    }
+  {% endif %}
+
+  #TurcyIngredients-{{ section.id }} .turcy-ingredients__icon {
+    width: var(--ti-icon-size);
+    height: var(--ti-icon-size);
+    flex: 0 0 var(--ti-icon-size);
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    margin-bottom: 21px;
+    border-radius: 50%;
+    background: var(--ti-icon-bg);
+    color: var(--ti-icon-color);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: var(--ti-symbol-size);
+    line-height: 1;
+  }
+
+  #TurcyIngredients-{{ section.id }} .turcy-ingredients__icon-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  #TurcyIngredients-{{ section.id }} .turcy-ingredients__title {
+    margin: 0 0 10px;
+    color: var(--ti-heading);
+    font-size: var(--ti-title-size);
+    font-weight: 800;
+    line-height: 1.35;
+  }
+
+  #TurcyIngredients-{{ section.id }} .turcy-ingredients__text {
+    color: var(--ti-text);
+    font-size: var(--ti-body-size);
+    line-height: 1.55;
+    opacity: .9;
+  }
+
+  #TurcyIngredients-{{ section.id }} .turcy-ingredients__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: auto;
+    padding-top: 16px;
+    color: var(--ti-accent);
+    font-size: 12px;
+    font-weight: 800;
+    text-decoration: none;
+  }
+
+  #TurcyIngredients-{{ section.id }} .turcy-ingredients__link span {
+    transition: transform .2s ease;
+  }
+
+  #TurcyIngredients-{{ section.id }} .turcy-ingredients__link:hover span {
+    transform: translateX(4px);
+  }
+
+  #TurcyIngredients-{{ section.id }} .turcy-ingredients__link:focus-visible {
+    outline: 2px solid var(--ti-accent);
+    outline-offset: 4px;
+    border-radius: 4px;
+  }
+
+  @media screen and (max-width: 1180px) {
+    #TurcyIngredients-{{ section.id }} .turcy-ingredients__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    #TurcyIngredients-{{ section.id }} .turcy-ingredients__header {
+      grid-template-columns: minmax(0, 1fr) minmax(280px, .75fr);
+      gap: 45px;
+    }
+  }
+
+  @media screen and (max-width: 989px) {
+    #TurcyIngredients-{{ section.id }} {
+      padding-top: calc(var(--ti-pad-top) * .75);
+      padding-bottom: calc(var(--ti-pad-bottom) * .75);
+    }
+
+    #TurcyIngredients-{{ section.id }} .turcy-ingredients__header {
+      grid-template-columns: 1fr;
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+
+    #TurcyIngredients-{{ section.id }} .turcy-ingredients__description {
+      max-width: 700px;
+      justify-self: start;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    #TurcyIngredients-{{ section.id }} {
+      padding-top: calc(var(--ti-pad-top) * .58);
+      padding-bottom: calc(var(--ti-pad-bottom) * .58);
+    }
+
+    #TurcyIngredients-{{ section.id }} .turcy-ingredients__container {
+      width: min(calc(100% - 28px), var(--ti-max-width));
+    }
+
+    #TurcyIngredients-{{ section.id }} .turcy-ingredients__heading {
+      font-size: clamp(38px, 12vw, 54px);
+      line-height: 1;
+    }
+
+    #TurcyIngredients-{{ section.id }} .turcy-ingredients__description {
+      font-size: max(14px, calc(var(--ti-body-size) - 1px));
+    }
+
+    #TurcyIngredients-{{ section.id }}.turcy-ingredients--mobile-grid .turcy-ingredients__grid {
+      grid-template-columns: repeat({{ section.settings.columns_mobile }}, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    #TurcyIngredients-{{ section.id }}.turcy-ingredients--mobile-scroll .turcy-ingredients__grid {
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(210px, 74vw);
+      grid-template-columns: none;
+      gap: 12px;
+      overflow-x: auto;
+      padding: 2px 2px 14px;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: thin;
+      scrollbar-color: var(--ti-accent) transparent;
+    }
+
+    #TurcyIngredients-{{ section.id }}.turcy-ingredients--mobile-scroll .turcy-ingredients__card {
+      scroll-snap-align: start;
+    }
+
+    #TurcyIngredients-{{ section.id }} .turcy-ingredients__card {
+      min-height: calc(var(--ti-card-min-height) * .92);
+      padding: 22px 14px 20px;
+    }
+
+    #TurcyIngredients-{{ section.id }} .turcy-ingredients__icon {
+      width: calc(var(--ti-icon-size) * .9);
+      height: calc(var(--ti-icon-size) * .9);
+      flex-basis: calc(var(--ti-icon-size) * .9);
+      margin-bottom: 16px;
+    }
+
+    #TurcyIngredients-{{ section.id }} .turcy-ingredients__title {
+      font-size: max(14px, calc(var(--ti-title-size) - 1px));
+    }
+
+    #TurcyIngredients-{{ section.id }} .turcy-ingredients__text {
+      font-size: max(12px, calc(var(--ti-body-size) - 1px));
+    }
+  }
+
+  @media screen and (max-width: 420px) {
+    #TurcyIngredients-{{ section.id }}.turcy-ingredients--mobile-grid .turcy-ingredients__grid {
+      {% if section.settings.columns_mobile == 2 %}
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      {% else %}
+        grid-template-columns: 1fr;
+      {% endif %}
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #TurcyIngredients-{{ section.id }} .turcy-ingredients__card,
+    #TurcyIngredients-{{ section.id }} .turcy-ingredients__link span {
+      transition: none;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Turcy ingredient index",
+  "tag": "section",
+  "class": "section",
+  "max_blocks": 12,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Ingredient index"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_eyebrow_line",
+      "label": "Show eyebrow line",
+      "default": true
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Know what each hero ingredient is here to do."
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Product suitability varies by skin type. Introduce actives gradually, patch test where appropriate and follow the final packaging directions.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Grid layout"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "min": 1000,
+      "max": 1800,
+      "step": 20,
+      "unit": "px",
+      "label": "Maximum width",
+      "default": 1440
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 3,
+      "max": 6,
+      "step": 1,
+      "label": "Desktop columns",
+      "default": 6
+    },
+    {
+      "type": "select",
+      "id": "mobile_layout",
+      "label": "Mobile layout",
+      "default": "scroll",
+      "options": [
+        {
+          "value": "grid",
+          "label": "Grid"
+        },
+        {
+          "value": "scroll",
+          "label": "Horizontal scroll"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "columns_mobile",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "label": "Mobile grid columns",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "card_gap",
+      "min": 8,
+      "max": 36,
+      "step": 2,
+      "unit": "px",
+      "label": "Card gap",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "card_min_height",
+      "min": 190,
+      "max": 360,
+      "step": 10,
+      "unit": "px",
+      "label": "Minimum card height",
+      "default": 250
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "min": 0,
+      "max": 36,
+      "step": 2,
+      "unit": "px",
+      "label": "Bottom card radius",
+      "default": 18
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_hover",
+      "label": "Enable card hover effect",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 48,
+      "max": 96,
+      "step": 2,
+      "unit": "px",
+      "label": "Heading size",
+      "default": 68
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "min": 13,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Ingredient title size",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "body_size",
+      "min": 11,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Body text size",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "symbol_size",
+      "min": 18,
+      "max": 42,
+      "step": 2,
+      "unit": "px",
+      "label": "Symbol size",
+      "default": 26
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "min": 48,
+      "max": 96,
+      "step": 4,
+      "unit": "px",
+      "label": "Icon circle size",
+      "default": 64
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Section background",
+      "default": "#F5ECE3"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading and titles",
+      "default": "#17211E"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Body text",
+      "default": "#66716D"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Eyebrow and links",
+      "default": "#173F35"
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Card background",
+      "default": "#FCFAF6"
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Card border",
+      "default": "#E0E2DE"
+    },
+    {
+      "type": "color",
+      "id": "icon_background",
+      "label": "Icon background",
+      "default": "#DDEAE2"
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Icon text",
+      "default": "#173F35"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 20,
+      "max": 180,
+      "step": 5,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 90
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 20,
+      "max": 180,
+      "step": 5,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 90
+    }
+  ],
+  "blocks": [
+    {
+      "type": "ingredient",
+      "name": "Ingredient",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Icon image"
+        },
+        {
+          "type": "text",
+          "id": "symbol",
+          "label": "Symbol",
+          "default": "C",
+          "info": "Used when no icon image is selected."
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Ingredient name",
+          "default": "Vitamin C"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Description",
+          "default": "<p>Used in brightening routines to support a more radiant-looking complexion.</p>"
+        },
+        {
+          "type": "text",
+          "id": "link_label",
+          "label": "Link label"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Turcy ingredient index",
+      "blocks": [
+        {
+          "type": "ingredient",
+          "settings": {
+            "symbol": "C",
+            "title": "Vitamin C",
+            "text": "<p>Used in brightening routines to support a more radiant-looking complexion.</p>"
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "symbol": "B3",
+            "title": "Niacinamide",
+            "text": "<p>A versatile active used for uneven-looking tone, pores and barrier support.</p>"
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "symbol": "2%",
+            "title": "Salicylic Acid",
+            "text": "<p>An exfoliating acid commonly used in oily and blemish-prone skin routines.</p>"
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "symbol": "K",
+            "title": "Kojic Acid",
+            "text": "<p>Included in tone-focused care for the appearance of spots and pigmentation.</p>"
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "symbol": "A",
+            "title": "Aloe Vera",
+            "text": "<p>Known for lightweight hydration and a soothing feel on the skin.</p>"
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "symbol": "R",
+            "title": "Rosemary",
+            "text": "<p>A familiar botanical ingredient in scalp and hair wellness routines.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
