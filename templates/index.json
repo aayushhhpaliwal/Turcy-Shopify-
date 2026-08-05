@@ -478,7 +478,7 @@
       ],
       "name": "t:sections.featured-collection.presets.name",
       "settings": {
-        "collection": "bodycare",
+        "collection": "hydration",
         "products_to_show": 4,
         "title": "<strong>BODY CARE BEST SELLER</strong>",
         "heading_size": "h1",
@@ -501,99 +501,6 @@
         "swipe_on_mobile": false,
         "padding_top": 36,
         "padding_bottom": 36
-      }
-    },
-    "bt_shop_by_skin_type_3RqDCc": {
-      "type": "BT-shop-by-skin-type",
-      "blocks": {
-        "skin_type_W3bNUz": {
-          "type": "skin_type",
-          "settings": {
-            "title": "Normal",
-            "collection": "",
-            "link": "",
-            "open_new_tab": true
-          }
-        },
-        "skin_type_jkf8zi": {
-          "type": "skin_type",
-          "settings": {
-            "title": "Oily",
-            "collection": "",
-            "link": "",
-            "open_new_tab": true
-          }
-        },
-        "skin_type_FtUwGA": {
-          "type": "skin_type",
-          "settings": {
-            "title": "Dry",
-            "collection": "",
-            "link": "",
-            "open_new_tab": true
-          }
-        },
-        "skin_type_hBP8nx": {
-          "type": "skin_type",
-          "settings": {
-            "title": "Sensitive",
-            "collection": "",
-            "link": "",
-            "open_new_tab": true
-          }
-        },
-        "skin_type_gbE8AM": {
-          "type": "skin_type",
-          "settings": {
-            "title": "Combination",
-            "collection": "",
-            "link": "",
-            "open_new_tab": true
-          }
-        }
-      },
-      "block_order": [
-        "skin_type_W3bNUz",
-        "skin_type_jkf8zi",
-        "skin_type_FtUwGA",
-        "skin_type_hBP8nx",
-        "skin_type_gbE8AM"
-      ],
-      "name": "Shop by skin type",
-      "settings": {
-        "heading": "Shop By Skin Type",
-        "heading_background": "#f1f1f1",
-        "heading_color": "#000000",
-        "heading_bar_height": 60,
-        "heading_size": 32,
-        "heading_weight": "600",
-        "mobile_heading_bar_height": 54,
-        "mobile_heading_size": 26,
-        "section_background": "#ffffff",
-        "max_width": 1260,
-        "desktop_columns": 5,
-        "tablet_columns": 3,
-        "card_ratio": "1 / 1",
-        "image_fit": "cover",
-        "desktop_gap": 10,
-        "card_radius": 0,
-        "overlay_opacity": 40,
-        "hover_zoom": 4,
-        "label_color": "#ffffff",
-        "label_size": 23,
-        "label_weight": "700",
-        "label_horizontal_padding": 16,
-        "label_bottom_spacing": 18,
-        "mobile_label_size": 18,
-        "mobile_label_horizontal_padding": 12,
-        "mobile_label_bottom_spacing": 12,
-        "mobile_card_width": 68,
-        "mobile_gap": 10,
-        "mobile_scroll_bottom_padding": 2,
-        "padding_top": 40,
-        "padding_bottom": 40,
-        "mobile_padding_top": 30,
-        "mobile_padding_bottom": 30
       }
     },
     "featured_collection_eMrH6z": {
@@ -1479,7 +1386,6 @@
     "sh_image_with_text_3_z3LP76",
     "sh_featured_banner_image_Rn79ib",
     "featured_collection_CXxJxB",
-    "bt_shop_by_skin_type_3RqDCc",
     "featured_collection_eMrH6z",
     "sh_featured_banner_image_V7TraB",
     "sh_featured_collection_5_UakgQH",
