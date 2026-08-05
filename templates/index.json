@@ -401,10 +401,10 @@
         "title_font_size": 28,
         "content_font_size": 16,
         "text_font_size": 20,
-        "bg_color": "#f8f4f1",
+        "bg_color": "#FFFFFF",
         "title_color": "#121212",
         "content_color": "#121212",
-        "content_bg_color": "#f8f4f1",
+        "content_bg_color": "#F7F4EF",
         "text_color": "#ffffff",
         "text_bg_color": "#121212",
         "btn_bg_color": "#121212",
@@ -858,6 +858,82 @@
         "section_padding": 66
       }
     },
+    "turcy_premium_faq_PnG7q6": {
+      "type": "turcy-premium-faq",
+      "blocks": {
+        "faq_6pXHtE": {
+          "type": "faq",
+          "settings": {
+            "question": "How should I choose my first Turcy product?",
+            "answer": "<p>Start with your primary need. Choose a cleanser for daily maintenance, salicylic acid for oil and congestion, Vitamin C and niacinamide for a glow-focused routine, moisturiser or aloe for hydration, sunscreen for morning protection, or rosemary spray for scalp care.</p>",
+            "open_by_default": true
+          }
+        },
+        "faq_naPkyC": {
+          "type": "faq",
+          "settings": {
+            "question": "Can I use every active product together?",
+            "answer": "<p>Introduce active products gradually rather than using several new formulas at once. Patch test where appropriate and follow the usage instructions printed on the final product packaging.</p>",
+            "open_by_default": false
+          }
+        },
+        "faq_KiHteh": {
+          "type": "faq",
+          "settings": {
+            "question": "What is the correct skincare order?",
+            "answer": "<p>A simple order is cleanser, treatment or serum, moisturiser and sunscreen in the morning. Aloe vera gel may be added as a lightweight soothing layer depending on your routine.</p>",
+            "open_by_default": false
+          }
+        },
+        "faq_wiQbcC": {
+          "type": "faq",
+          "settings": {
+            "question": "Are the product images shown here final?",
+            "answer": "<p>Use final, accurate and high-resolution product photography before publishing the storefront. Stock or concept images should be replaced with official Turcy packaging images.</p>",
+            "open_by_default": false
+          }
+        },
+        "faq_hrqpPx": {
+          "type": "faq",
+          "settings": {
+            "question": "Where should final safety information appear?",
+            "answer": "<p>Display the complete ingredient list, usage directions, warnings, net quantity, manufacturer details, batch information and expiry information on the product page and packaging as required.</p>",
+            "open_by_default": false
+          }
+        }
+      },
+      "block_order": [
+        "faq_6pXHtE",
+        "faq_naPkyC",
+        "faq_KiHteh",
+        "faq_wiQbcC",
+        "faq_hrqpPx"
+      ],
+      "name": "Turcy premium FAQ",
+      "settings": {
+        "eyebrow": "Frequently asked",
+        "show_eyebrow_line": true,
+        "heading": "Good care starts with good information.",
+        "description": "<p>These answers are written for the storefront layout. Final directions, warnings and ingredient lists should match the approved product packaging.</p>",
+        "open_first": true,
+        "single_open": true,
+        "max_width": 1440,
+        "left_column_width": 36,
+        "column_gap": 90,
+        "mobile_alignment": "left",
+        "radius": 4,
+        "heading_size": 70,
+        "question_size": 16,
+        "answer_size": 15,
+        "background_color": "#FCFCFA",
+        "heading_color": "#17211E",
+        "text_color": "#67736E",
+        "accent_color": "#173F35",
+        "line_color": "#D8DEDA",
+        "padding_top": 90,
+        "padding_bottom": 90
+      }
+    },
     "available_on_P7xQCx": {
       "type": "available-on",
       "blocks": {
@@ -993,82 +1069,6 @@
         "padding_bottom": 20,
         "mobile_padding_top": 32,
         "mobile_padding_bottom": 32
-      }
-    },
-    "turcy_premium_faq_PnG7q6": {
-      "type": "turcy-premium-faq",
-      "blocks": {
-        "faq_6pXHtE": {
-          "type": "faq",
-          "settings": {
-            "question": "How should I choose my first Turcy product?",
-            "answer": "<p>Start with your primary need. Choose a cleanser for daily maintenance, salicylic acid for oil and congestion, Vitamin C and niacinamide for a glow-focused routine, moisturiser or aloe for hydration, sunscreen for morning protection, or rosemary spray for scalp care.</p>",
-            "open_by_default": true
-          }
-        },
-        "faq_naPkyC": {
-          "type": "faq",
-          "settings": {
-            "question": "Can I use every active product together?",
-            "answer": "<p>Introduce active products gradually rather than using several new formulas at once. Patch test where appropriate and follow the usage instructions printed on the final product packaging.</p>",
-            "open_by_default": false
-          }
-        },
-        "faq_KiHteh": {
-          "type": "faq",
-          "settings": {
-            "question": "What is the correct skincare order?",
-            "answer": "<p>A simple order is cleanser, treatment or serum, moisturiser and sunscreen in the morning. Aloe vera gel may be added as a lightweight soothing layer depending on your routine.</p>",
-            "open_by_default": false
-          }
-        },
-        "faq_wiQbcC": {
-          "type": "faq",
-          "settings": {
-            "question": "Are the product images shown here final?",
-            "answer": "<p>Use final, accurate and high-resolution product photography before publishing the storefront. Stock or concept images should be replaced with official Turcy packaging images.</p>",
-            "open_by_default": false
-          }
-        },
-        "faq_hrqpPx": {
-          "type": "faq",
-          "settings": {
-            "question": "Where should final safety information appear?",
-            "answer": "<p>Display the complete ingredient list, usage directions, warnings, net quantity, manufacturer details, batch information and expiry information on the product page and packaging as required.</p>",
-            "open_by_default": false
-          }
-        }
-      },
-      "block_order": [
-        "faq_6pXHtE",
-        "faq_naPkyC",
-        "faq_KiHteh",
-        "faq_wiQbcC",
-        "faq_hrqpPx"
-      ],
-      "name": "Turcy premium FAQ",
-      "settings": {
-        "eyebrow": "Frequently asked",
-        "show_eyebrow_line": true,
-        "heading": "Good care starts with good information.",
-        "description": "<p>These answers are written for the storefront layout. Final directions, warnings and ingredient lists should match the approved product packaging.</p>",
-        "open_first": true,
-        "single_open": true,
-        "max_width": 1440,
-        "left_column_width": 36,
-        "column_gap": 90,
-        "mobile_alignment": "left",
-        "radius": 4,
-        "heading_size": 70,
-        "question_size": 16,
-        "answer_size": 15,
-        "background_color": "#FCFCFA",
-        "heading_color": "#17211E",
-        "text_color": "#67736E",
-        "accent_color": "#173F35",
-        "line_color": "#D8DEDA",
-        "padding_top": 90,
-        "padding_bottom": 90
       }
     }
   },
