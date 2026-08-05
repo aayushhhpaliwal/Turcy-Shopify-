@@ -504,69 +504,6 @@
         "padding_bottom": 36
       }
     },
-    "turcy_hero_C7wVtW": {
-      "type": "turcy-hero",
-      "blocks": {
-        "highlight_NNham4": {
-          "type": "highlight",
-          "disabled": true,
-          "settings": {
-            "icon": "01",
-            "title": "Focused formulas",
-            "text": "Routine-friendly essentials"
-          }
-        },
-        "highlight_9xAzJ7": {
-          "type": "highlight",
-          "disabled": true,
-          "settings": {
-            "icon": "01",
-            "title": "Focused formulas",
-            "text": "Routine-friendly essentials"
-          }
-        },
-        "highlight_pNJ7cz": {
-          "type": "highlight",
-          "disabled": true,
-          "settings": {
-            "icon": "01",
-            "title": "Focused formulas",
-            "text": "Routine-friendly essentials"
-          }
-        },
-        "highlight_rzCjbK": {
-          "type": "highlight",
-          "disabled": true,
-          "settings": {
-            "icon": "01",
-            "title": "Focused formulas",
-            "text": "Routine-friendly essentials"
-          }
-        }
-      },
-      "block_order": [
-        "highlight_NNham4",
-        "highlight_9xAzJ7",
-        "highlight_pNJ7cz",
-        "highlight_rzCjbK"
-      ],
-      "name": "Turcy hero",
-      "settings": {
-        "eyebrow": "Thoughtful skin + hair care",
-        "heading": "Care that fits\nreal life.",
-        "text": "<p>Focused essentials for cleansing, brightening, hydration, sun care and hair wellness—made to keep your routine clear and consistent.</p>",
-        "primary_label": "Shop all products",
-        "primary_link": "",
-        "secondary_label": "",
-        "secondary_link": "",
-        "proof": "",
-        "note_one_title": "",
-        "note_one_text": "",
-        "note_two_title": "Made for consistency",
-        "note_two_text": "Simple formats that are easy to keep using.",
-        "orbit_text": "Skin • Hair • Everyday care"
-      }
-    },
     "available_on_fGVMhz": {
       "type": "available-on",
       "blocks": {
@@ -756,7 +693,7 @@
         "section_width": 1500,
         "section_bg": "#ffffff",
         "heading_color": "#000000",
-        "card_bg": "#f3f3f3",
+        "card_bg": "#F4F4F4",
         "text_color": "#111111",
         "subtext_color": "#222222",
         "icon_bg": "#eaeaea",
@@ -1068,7 +1005,6 @@
     "sh_image_with_text_3_z3LP76",
     "sh_featured_banner_image_Rn79ib",
     "featured_collection_CXxJxB",
-    "turcy_hero_C7wVtW",
     "available_on_fGVMhz",
     "new_apart_XPcT3d",
     "sh_image_with_text_ARHLDD",
