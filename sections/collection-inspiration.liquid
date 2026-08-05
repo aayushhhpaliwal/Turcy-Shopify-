@@ -1,0 +1,1131 @@
+{% liquid
+  assign section_id = 'style-inspiration-' | append: section.id
+%}
+
+<section
+  id="{{ section_id }}"
+  class="style-inspiration"
+  style="
+    --si-bg: {{ section.settings.bg_color }};
+    --si-text: {{ section.settings.text_color }};
+    --si-muted: {{ section.settings.body_color }};
+    --si-card-radius: {{ section.settings.card_radius }}px;
+    --si-gap: {{ section.settings.card_gap }}px;
+    --si-card-width: {{ section.settings.card_width }}px;
+    --si-card-width-tablet: {{ section.settings.card_width_tablet }}px;
+    --si-card-width-mobile: {{ section.settings.card_width_mobile }}px;
+    --si-overlay-opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
+    --si-progress-bg: {{ section.settings.progress_bg_color }};
+    --si-progress-fill: {{ section.settings.progress_fill_color }};
+    --si-button-bg: {{ section.settings.button_bg_color }};
+    --si-button-text: {{ section.settings.button_text_color }};
+    --si-badge-text: {{ section.settings.badge_text_color }};
+    --si-padding-top: {{ section.settings.padding_top }}px;
+    --si-padding-bottom: {{ section.settings.padding_bottom }}px;
+    --si-mobile-padding-top: {{ section.settings.mobile_padding_top }}px;
+    --si-mobile-padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
+  "
+>
+  <div class="style-inspiration__inner{% if section.settings.full_width == false %} page-width{% endif %}">
+    <div class="style-inspiration__header">
+      {% if section.settings.heading != blank %}
+        <h2 class="style-inspiration__heading{% if section.settings.heading_font == 'serif' %} style-inspiration__heading--serif{% endif %}{% if section.settings.heading_italic %} style-inspiration__heading--italic{% endif %}">
+          {{ section.settings.heading | escape | newline_to_br }}
+        </h2>
+      {% endif %}
+
+      {% if section.settings.body != blank %}
+        <div class="style-inspiration__body">
+          {{ section.settings.body }}
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="style-inspiration__slider-shell">
+      <div class="style-inspiration__track" data-style-inspiration-track>
+        {% for block in section.blocks %}
+          <article class="style-inspiration__card" {{ block.shopify_attributes }}>
+            {% liquid
+              assign card_collection = block.settings.collection
+              assign card_link = block.settings.link
+              if card_link == blank
+                if card_collection != blank
+                  assign card_link = card_collection.url
+                else
+                  assign card_link = '#'
+                endif
+              endif
+
+              assign card_badge = block.settings.badge
+              if card_badge == blank and card_collection != blank
+                assign card_badge = card_collection.title
+              endif
+
+              assign card_image = block.settings.image
+              if card_image == blank and card_collection != blank
+                assign first_collection_product = card_collection.products.first
+                if first_collection_product != blank and first_collection_product.featured_image != blank
+                  assign card_image = first_collection_product.featured_image
+                else
+                  assign card_image = card_collection.image
+                endif
+              endif
+
+              assign card_label = block.settings.accessibility_label
+              if card_label == blank
+                assign card_label = card_badge
+              endif
+              if card_label == blank
+                assign card_label = 'Open style inspiration'
+              endif
+            %}
+
+            <a class="style-inspiration__card-link" href="{{ card_link }}" aria-label="{{ card_label | escape }}">
+              {% if card_image != blank %}
+                {{
+                  card_image
+                  | image_url: width: 900
+                  | image_tag:
+                    loading: 'lazy',
+                    widths: '260, 360, 480, 640, 800, 900',
+                    sizes: '(max-width: 749px) 78vw, (max-width: 989px) 48vw, 420px',
+                    class: 'style-inspiration__image',
+                    alt: card_image.alt | default: card_badge | escape
+                }}
+              {% else %}
+                <div class="style-inspiration__placeholder">
+                  {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                </div>
+              {% endif %}
+
+              <span class="style-inspiration__shade" aria-hidden="true"></span>
+
+              {% if card_badge != blank %}
+                <span class="style-inspiration__badge">{{ card_badge }}</span>
+              {% endif %}
+
+              {% if section.settings.show_card_arrow %}
+                <span class="style-inspiration__card-arrow" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" focusable="false">
+                    <path d="M7 17 17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+              {% endif %}
+            </a>
+          </article>
+        {% endfor %}
+      </div>
+
+      {% if section.settings.show_controls %}
+        <div class="style-inspiration__controls">
+          <div class="style-inspiration__progress" aria-hidden="true">
+            <span class="style-inspiration__progress-fill" data-style-inspiration-progress></span>
+          </div>
+
+          <div class="style-inspiration__buttons">
+            <button class="style-inspiration__nav" type="button" aria-label="Previous slide" data-style-inspiration-prev>
+              <svg viewBox="0 0 24 24" focusable="false">
+                <path d="m15 18-6-6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <button class="style-inspiration__nav" type="button" aria-label="Next slide" data-style-inspiration-next>
+              <svg viewBox="0 0 24 24" focusable="false">
+                <path d="m9 18 6-6-6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<style>
+  #{{ section_id }} {
+    background: var(--si-bg);
+    color: var(--si-text);
+    padding: var(--si-padding-top) 0 var(--si-padding-bottom);
+    overflow: hidden;
+  }
+
+  #{{ section_id }} .style-inspiration__inner {
+    max-width: {{ section.settings.max_width }}px;
+    margin: 0 auto;
+    padding-left: {% if section.settings.full_width %}0{% else %}20px{% endif %};
+    padding-right: {% if section.settings.full_width %}0{% else %}20px{% endif %};
+  }
+
+  #{{ section_id }} .style-inspiration__header {
+    display: grid;
+    grid-template-columns: minmax(0, {{ section.settings.heading_width }}fr) minmax(280px, {{ section.settings.body_width }}fr);
+    gap: clamp(28px, 6vw, 92px);
+    align-items: start;
+    margin: 0 auto {{ section.settings.header_bottom_space }}px;
+    max-width: {{ section.settings.header_max_width }}px;
+    padding: 0 {% if section.settings.full_width %}20px{% else %}0{% endif %};
+  }
+
+  #{{ section_id }} .style-inspiration__heading {
+    margin: 0;
+    color: var(--si-text);
+    font-size: clamp({{ section.settings.heading_mobile_size }}px, 3.4vw, {{ section.settings.heading_size }}px);
+    line-height: {{ section.settings.heading_line_height | divided_by: 100.0 }};
+    font-weight: {{ section.settings.heading_weight }};
+    letter-spacing: 0;
+  }
+
+  #{{ section_id }} .style-inspiration__heading--serif {
+    font-family: Georgia, 'Times New Roman', serif;
+  }
+
+  #{{ section_id }} .style-inspiration__heading--italic {
+    font-style: italic;
+  }
+
+  #{{ section_id }} .style-inspiration__body {
+    color: var(--si-muted);
+    font-size: {{ section.settings.body_size }}px;
+    line-height: 1.55;
+    font-weight: {{ section.settings.body_weight }};
+    max-width: {{ section.settings.body_max_width }}px;
+  }
+
+  #{{ section_id }} .style-inspiration__body p {
+    margin: 0;
+  }
+
+  #{{ section_id }} .style-inspiration__slider-shell {
+    position: relative;
+  }
+
+  #{{ section_id }} .style-inspiration__track {
+    display: flex;
+    gap: var(--si-gap);
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    padding: 0 {% if section.settings.full_width %}20px{% else %}0{% endif %};
+  }
+
+  #{{ section_id }} .style-inspiration__track::-webkit-scrollbar {
+    display: none;
+  }
+
+  #{{ section_id }} .style-inspiration__card {
+    flex: 0 0 var(--si-card-width);
+    min-width: var(--si-card-width);
+    scroll-snap-align: start;
+  }
+
+  #{{ section_id }} .style-inspiration__card-link {
+    position: relative;
+    display: block;
+    aspect-ratio: {{ section.settings.card_aspect_ratio }};
+    border-radius: var(--si-card-radius);
+    overflow: hidden;
+    background: #171717;
+    color: var(--si-text);
+    text-decoration: none;
+    isolation: isolate;
+  }
+
+  #{{ section_id }} .style-inspiration__image,
+  #{{ section_id }} .style-inspiration__placeholder,
+  #{{ section_id }} .style-inspiration__placeholder .placeholder-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  #{{ section_id }} .style-inspiration__image {
+    object-fit: cover;
+    object-position: {{ section.settings.image_position }};
+    transition: transform 350ms ease;
+  }
+
+  #{{ section_id }} .style-inspiration__card-link:hover .style-inspiration__image {
+    transform: scale(1.035);
+  }
+
+  #{{ section_id }} .style-inspiration__placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #{{ section_id }} .style-inspiration__shade {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background:
+      linear-gradient(180deg, rgba(0, 0, 0, 0) 38%, rgba(0, 0, 0, .28) 68%, rgba(0, 0, 0, .82) 100%),
+      linear-gradient(180deg, rgba(0, 0, 0, calc(var(--si-overlay-opacity) * .35)), rgba(0, 0, 0, calc(var(--si-overlay-opacity) * .5)));
+    pointer-events: none;
+  }
+
+  #{{ section_id }} .style-inspiration__badge,
+  #{{ section_id }} .style-inspiration__card-arrow {
+    position: absolute;
+    z-index: 2;
+  }
+
+  #{{ section_id }} .style-inspiration__badge {
+    bottom: {{ section.settings.badge_top }}px;
+    left: {{ section.settings.badge_left }}px;
+    display: inline-block;
+    max-width: calc(100% - {{ section.settings.badge_left | times: 2 }}px);
+    padding: 0 0 9px;
+    background: transparent;
+    color: var(--si-badge-text);
+    font-size: {{ section.settings.badge_size }}px;
+    line-height: 1.2;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, .55);
+    overflow-wrap: anywhere;
+    transition: transform 250ms ease, letter-spacing 250ms ease;
+  }
+
+  #{{ section_id }} .style-inspiration__badge::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 34px;
+    height: 2px;
+    border-radius: 999px;
+    background: currentColor;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .35);
+    transition: width 300ms ease;
+  }
+
+  #{{ section_id }} .style-inspiration__card-link:hover .style-inspiration__badge,
+  #{{ section_id }} .style-inspiration__card-link:focus-visible .style-inspiration__badge {
+    letter-spacing: .17em;
+    transform: translateY(-2px);
+  }
+
+  #{{ section_id }} .style-inspiration__card-link:hover .style-inspiration__badge::after,
+  #{{ section_id }} .style-inspiration__card-link:focus-visible .style-inspiration__badge::after {
+    width: 100%;
+  }
+
+  #{{ section_id }} .style-inspiration__card-arrow {
+    top: {{ section.settings.arrow_top }}px;
+    right: {{ section.settings.arrow_right }}px;
+    width: {{ section.settings.card_arrow_size }}px;
+    height: {{ section.settings.card_arrow_size }}px;
+    border-radius: {{ section.settings.card_arrow_radius }}px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--si-button-bg);
+    color: var(--si-button-text);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(8px) scale(.9);
+    transition: opacity 250ms ease, visibility 250ms ease, transform 300ms cubic-bezier(.2,.7,.2,1);
+  }
+
+  #{{ section_id }} .style-inspiration__card-link:hover .style-inspiration__card-arrow,
+  #{{ section_id }} .style-inspiration__card-link:focus-visible .style-inspiration__card-arrow {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+  }
+
+  #{{ section_id }} .style-inspiration__card-arrow svg {
+    width: 62%;
+    height: 62%;
+  }
+
+  @media (hover: none) {
+    #{{ section_id }} .style-inspiration__card-arrow {
+      opacity: 1;
+      visibility: visible;
+      transform: none;
+    }
+  }
+
+  #{{ section_id }} .style-inspiration__controls {
+    display: grid;
+    grid-template-columns: minmax(160px, {{ section.settings.progress_width }}px) auto;
+    gap: 24px;
+    align-items: center;
+    justify-content: center;
+    margin-top: {{ section.settings.controls_top_space }}px;
+    padding: 0 {% if section.settings.full_width %}20px{% else %}0{% endif %};
+  }
+
+  #{{ section_id }} .style-inspiration__progress {
+    position: relative;
+    height: {{ section.settings.progress_height }}px;
+    border-radius: 999px;
+    background: var(--si-progress-bg);
+    overflow: hidden;
+  }
+
+  #{{ section_id }} .style-inspiration__progress-fill {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 0;
+    border-radius: inherit;
+    background: var(--si-progress-fill);
+    transition: width 180ms ease;
+  }
+
+  #{{ section_id }} .style-inspiration__buttons {
+    display: flex;
+    gap: 8px;
+  }
+
+  #{{ section_id }} .style-inspiration__nav {
+    width: {{ section.settings.nav_size }}px;
+    height: {{ section.settings.nav_size }}px;
+    border: 0;
+    border-radius: {{ section.settings.nav_radius }}px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--si-button-bg);
+    color: var(--si-button-text);
+    cursor: pointer;
+    padding: 0;
+    transition: opacity 180ms ease, transform 180ms ease;
+  }
+
+  #{{ section_id }} .style-inspiration__nav:hover {
+    transform: translateY(-1px);
+  }
+
+  #{{ section_id }} .style-inspiration__nav:disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
+    transform: none;
+  }
+
+  #{{ section_id }} .style-inspiration__nav svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  @media screen and (max-width: 989px) {
+    #{{ section_id }} .style-inspiration__header {
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+
+    #{{ section_id }} .style-inspiration__body {
+      max-width: 720px;
+    }
+
+    #{{ section_id }} .style-inspiration__card {
+      flex-basis: var(--si-card-width-tablet);
+      min-width: var(--si-card-width-tablet);
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    #{{ section_id }} {
+      padding-top: var(--si-mobile-padding-top);
+      padding-bottom: var(--si-mobile-padding-bottom);
+    }
+
+    #{{ section_id }} .style-inspiration__inner {
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    #{{ section_id }} .style-inspiration__header {
+      margin-bottom: {{ section.settings.mobile_header_bottom_space }}px;
+      padding: 0 16px;
+    }
+
+    #{{ section_id }} .style-inspiration__body {
+      font-size: {{ section.settings.mobile_body_size }}px;
+    }
+
+    #{{ section_id }} .style-inspiration__track {
+      gap: {{ section.settings.mobile_card_gap }}px;
+      padding: 0 16px;
+    }
+
+    #{{ section_id }} .style-inspiration__card {
+      flex-basis: var(--si-card-width-mobile);
+      min-width: var(--si-card-width-mobile);
+    }
+
+    #{{ section_id }} .style-inspiration__controls {
+      grid-template-columns: 1fr auto;
+      justify-content: stretch;
+      gap: 16px;
+      margin-top: {{ section.settings.mobile_controls_top_space }}px;
+      padding: 0 16px;
+    }
+  }
+</style>
+
+<script>
+  (function () {
+    function initStyleInspiration(section) {
+      if (!section || section.dataset.styleInspirationInit === 'true') return;
+      section.dataset.styleInspirationInit = 'true';
+
+      var track = section.querySelector('[data-style-inspiration-track]');
+      var prev = section.querySelector('[data-style-inspiration-prev]');
+      var next = section.querySelector('[data-style-inspiration-next]');
+      var progress = section.querySelector('[data-style-inspiration-progress]');
+
+      if (!track) return;
+
+      function getStep() {
+        var card = track.querySelector('.style-inspiration__card');
+        if (!card) return track.clientWidth;
+
+        var styles = window.getComputedStyle(track);
+        var gap = parseFloat(styles.columnGap || styles.gap || 0);
+        return card.getBoundingClientRect().width + gap;
+      }
+
+      function updateControls() {
+        var maxScroll = track.scrollWidth - track.clientWidth;
+        var scrollLeft = track.scrollLeft;
+
+        if (progress) {
+          if (maxScroll <= 0) {
+            progress.style.width = '100%';
+          } else {
+            var visible = track.clientWidth / track.scrollWidth * 100;
+            var current = scrollLeft / maxScroll * (100 - visible);
+            progress.style.width = Math.min(100, Math.max(visible, current + visible)) + '%';
+          }
+        }
+
+        if (prev) prev.disabled = scrollLeft <= 2;
+        if (next) next.disabled = maxScroll <= 2 || scrollLeft >= maxScroll - 2;
+      }
+
+      if (prev) {
+        prev.addEventListener('click', function () {
+          track.scrollBy({ left: -getStep(), behavior: 'smooth' });
+        });
+      }
+
+      if (next) {
+        next.addEventListener('click', function () {
+          track.scrollBy({ left: getStep(), behavior: 'smooth' });
+        });
+      }
+
+      track.addEventListener('scroll', updateControls, { passive: true });
+      window.addEventListener('resize', updateControls);
+      updateControls();
+    }
+
+    function boot() {
+      initStyleInspiration(document.getElementById('{{ section_id }}'));
+    }
+
+    boot();
+    document.addEventListener('DOMContentLoaded', boot);
+    document.addEventListener('shopify:section:load', function (event) {
+      if (event.target && event.target.querySelector('#{{ section_id }}')) {
+        initStyleInspiration(event.target.querySelector('#{{ section_id }}'));
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Style inspiration slider",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Style Inspiration for Every Moment\nof Your Day"
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Body",
+      "default": "<p>Kickstart your mornings with comfortable and stylish pieces that keep you cozy and ready for whatever the day holds, whether you're working from home or heading to the office.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Full width",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Max width",
+      "min": 1000,
+      "max": 1800,
+      "step": 20,
+      "unit": "px",
+      "default": 1600
+    },
+    {
+      "type": "range",
+      "id": "header_max_width",
+      "label": "Header max width",
+      "min": 900,
+      "max": 1700,
+      "step": 20,
+      "unit": "px",
+      "default": 1300
+    },
+    {
+      "type": "range",
+      "id": "heading_width",
+      "label": "Heading column width",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "body_width",
+      "label": "Body column width",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "body_max_width",
+      "label": "Body max width",
+      "min": 360,
+      "max": 900,
+      "step": 20,
+      "unit": "px",
+      "default": 700
+    },
+    {
+      "type": "range",
+      "id": "header_bottom_space",
+      "label": "Header bottom spacing",
+      "min": 20,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 52
+    },
+    {
+      "type": "range",
+      "id": "mobile_header_bottom_space",
+      "label": "Mobile header bottom spacing",
+      "min": 16,
+      "max": 72,
+      "step": 4,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "select",
+      "id": "heading_font",
+      "label": "Heading font",
+      "options": [
+        { "value": "serif", "label": "Serif" },
+        { "value": "sans", "label": "Theme font" }
+      ],
+      "default": "serif"
+    },
+    {
+      "type": "checkbox",
+      "id": "heading_italic",
+      "label": "Italic heading",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Heading size",
+      "min": 28,
+      "max": 72,
+      "step": 1,
+      "unit": "px",
+      "default": 42
+    },
+    {
+      "type": "range",
+      "id": "heading_mobile_size",
+      "label": "Mobile heading size",
+      "min": 24,
+      "max": 46,
+      "step": 1,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "heading_line_height",
+      "label": "Heading line height",
+      "min": 85,
+      "max": 130,
+      "step": 1,
+      "unit": "%",
+      "default": 105
+    },
+    {
+      "type": "select",
+      "id": "heading_weight",
+      "label": "Heading weight",
+      "options": [
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi bold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "range",
+      "id": "body_size",
+      "label": "Body size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "mobile_body_size",
+      "label": "Mobile body size",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "select",
+      "id": "body_weight",
+      "label": "Body weight",
+      "options": [
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi bold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "700"
+    },
+    {
+      "type": "header",
+      "content": "Cards"
+    },
+    {
+      "type": "text",
+      "id": "card_aspect_ratio",
+      "label": "Card aspect ratio",
+      "default": "0.86 / 1",
+      "info": "Use CSS aspect-ratio values, for example 4 / 5 or 0.86 / 1."
+    },
+    {
+      "type": "range",
+      "id": "card_width",
+      "label": "Card width desktop",
+      "min": 220,
+      "max": 520,
+      "step": 10,
+      "unit": "px",
+      "default": 420
+    },
+    {
+      "type": "range",
+      "id": "card_width_tablet",
+      "label": "Card width tablet",
+      "min": 220,
+      "max": 460,
+      "step": 10,
+      "unit": "px",
+      "default": 360
+    },
+    {
+      "type": "range",
+      "id": "card_width_mobile",
+      "label": "Card width mobile",
+      "min": 100,
+      "max": 360,
+      "step": 10,
+      "unit": "px",
+      "default": 280
+    },
+    {
+      "type": "range",
+      "id": "card_gap",
+      "label": "Card gap",
+      "min": 8,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "mobile_card_gap",
+      "label": "Mobile card gap",
+      "min": 8,
+      "max": 28,
+      "step": 2,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Card radius",
+      "min": 0,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Image position",
+      "options": [
+        { "value": "center center", "label": "Center" },
+        { "value": "top center", "label": "Top" },
+        { "value": "bottom center", "label": "Bottom" },
+        { "value": "center left", "label": "Left" },
+        { "value": "center right", "label": "Right" }
+      ],
+      "default": "center center"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Overlay opacity",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "unit": "%",
+      "default": 35
+    },
+    {
+      "type": "header",
+      "content": "Badges and arrows"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_card_arrow",
+      "label": "Show card arrow",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "badge_size",
+      "label": "Badge text size",
+      "min": 9,
+      "max": 16,
+      "step": 1,
+      "unit": "px",
+      "default": 11
+    },
+    {
+      "type": "range",
+      "id": "badge_top",
+      "label": "Badge bottom",
+      "min": 8,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "badge_left",
+      "label": "Badge left",
+      "min": 8,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "card_arrow_size",
+      "label": "Card arrow size",
+      "min": 24,
+      "max": 54,
+      "step": 1,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "card_arrow_radius",
+      "label": "Card arrow radius",
+      "min": 0,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "arrow_top",
+      "label": "Card arrow top",
+      "min": 8,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 34
+    },
+    {
+      "type": "range",
+      "id": "arrow_right",
+      "label": "Card arrow right",
+      "min": 8,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "header",
+      "content": "Controls"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_controls",
+      "label": "Show slider controls",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "controls_top_space",
+      "label": "Controls top spacing",
+      "min": 20,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "mobile_controls_top_space",
+      "label": "Mobile controls top spacing",
+      "min": 16,
+      "max": 56,
+      "step": 4,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "progress_width",
+      "label": "Progress width",
+      "min": 220,
+      "max": 900,
+      "step": 20,
+      "unit": "px",
+      "default": 780
+    },
+    {
+      "type": "range",
+      "id": "progress_height",
+      "label": "Progress height",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "unit": "px",
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "nav_size",
+      "label": "Navigation button size",
+      "min": 28,
+      "max": 56,
+      "step": 1,
+      "unit": "px",
+      "default": 38
+    },
+    {
+      "type": "range",
+      "id": "nav_radius",
+      "label": "Navigation button radius",
+      "min": 0,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 6
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Heading text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "body_color",
+      "label": "Body text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "badge_text_color",
+      "label": "Badge text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color",
+      "label": "Button background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button icon",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "progress_bg_color",
+      "label": "Progress background",
+      "default": "#777777"
+    },
+    {
+      "type": "color",
+      "id": "progress_fill_color",
+      "label": "Progress fill",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 140,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 140,
+      "step": 4,
+      "unit": "px",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "label": "Mobile padding top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_bottom",
+      "label": "Mobile padding bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "style_card",
+      "name": "Style card",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection",
+          "info": "Used for the card link, title, and image when those fields are not set manually."
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "badge",
+          "label": "Badge",
+          "default": "Winter"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        },
+        {
+          "type": "text",
+          "id": "accessibility_label",
+          "label": "Accessibility label",
+          "default": "Open style inspiration"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 12,
+  "presets": [
+    {
+      "name": "Style inspiration slider",
+      "blocks": [
+        { "type": "style_card", "settings": { "badge": "" } },
+        { "type": "style_card", "settings": { "badge": "Winter" } },
+        { "type": "style_card", "settings": { "badge": "Leather" } },
+        { "type": "style_card", "settings": { "badge": "Dress" } },
+        { "type": "style_card", "settings": { "badge": "Trendy" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

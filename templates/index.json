@@ -193,6 +193,7 @@
         "category_DHekXm": {
           "type": "category",
           "settings": {
+            "image": "shopify://shop_images/images.jpg",
             "title": "Acne &Oil",
             "link": "shopify://collections/texture",
             "open_new_tab": true
