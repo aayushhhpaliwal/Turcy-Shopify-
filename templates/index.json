@@ -824,10 +824,10 @@
         "autoplay": false,
         "autoplay_interval": 4500,
         "bg": "#ffffff",
-        "card": "#ffffff",
+        "card": "#F7F4EF",
         "text": "#111111",
         "muted": "#000000",
-        "section_padding": 66
+        "section_padding": 42
       }
     },
     "turcy_premium_faq_PnG7q6": {
