@@ -101,9 +101,9 @@
         ".list-menu__item {font-size: 14px;}"
       ],
       "settings": {
-        "logo_position": "top-center",
+        "logo_position": "middle-center",
         "mobile_logo_position": "center",
-        "menu": "main-menu-copy",
+        "menu": "main-menu",
         "menu_type_desktop": "dropdown",
         "mega_menu_images_toggle": "collection_product",
         "mega_menu_images_title": false,
@@ -121,8 +121,8 @@
         "enable_language_selector": false,
         "enable_customer_avatar": true,
         "margin_bottom": 0,
-        "padding_top": 8,
-        "padding_bottom": 8
+        "padding_top": 16,
+        "padding_bottom": 16
       }
     }
   },

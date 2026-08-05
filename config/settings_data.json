@@ -9,7 +9,7 @@
  */
 {
   "current": {
-    "logo": "shopify://shop_images/final_BM_1-removebg-preview.png",
+    "logo": "shopify://shop_images/f7b69d29-cc04-4281-a758-92bf16a9eb09.png",
     "logo_width": 150,
     "favicon": "shopify://shop_images/final_BM_1-removebg-preview.png",
     "type_header_font": "jost_n4",
@@ -145,67 +145,8 @@
     },
     "content_for_index": [],
     "blocks": {
-      "14710238943034738919": {
-        "type": "shopify://apps/ag-product-reviews/blocks/app-embed/c4e1e9ca-4d46-4e76-bc39-7e42417cb327",
-        "disabled": false,
-        "settings": {
-          "air_reviews_json_ld_v2": "{% assign productTitle = product.title | default: '' %}{% assign productDesc = product.description | default: '' | escape | truncate: 150 %}{% assign productImage = product.featured_image | default: '' %}{% assign ratingValue = product.metafields.reviews.rating.value.rating | default: product.metafields.air_reviews_product.review_avg | default: 0 %}{% assign bestRating = product.metafields.reviews.rating.value.scale_max | default: 5 %}{% assign reviewCount = product.metafields.air_reviews_product.review_count | default: 0 %}{% assign worstRating = product.metafields.reviews.rating.value.scale_min | default: 1 %}{\n\"@context\": \"http://schema.org\",\n\"@type\": \"Product\",\n\"name\": \"{{ productTitle | escape }}\",\n\"description\": \"{{ productDesc | escape }}\",\n\"image\": \"{{ productImage | escape }}\",\n\"aggregateRating\": {\n  \"@type\": \"AggregateRating\",\n  \"ratingValue\": {{ ratingValue }},\n  \"bestRating\": {{ bestRating }},\n  \"reviewCount\": {{ reviewCount }}\n }{% if shop.metafields.air_reviews_has_ugc_content.data.value == true and product.metafields.air_reviews_product.data.value.reviews %}, \n  \"review\":[{% assign reviewsData = product.metafields.air_reviews_product.data.value.reviews %}\n  {% for review in reviewsData limit: 10 %}\n    {\n      \"@type\": \"Review\",\n      \"author\": {\n        \"@type\": \"Person\",\n        \"name\": \"{% if review.firstName %}{{ review.firstName | escape }}{% elsif review.lastName %}{{ review.lastName | escape }}{% else %}Anonymous{% endif %}\"\n      },\n      \"reviewRating\": {\n          \"@type\": \"Rating\",\n          \"bestRating\": {{ bestRating }},\n          \"ratingValue\": {{ review.rate | default: 0 }},\n          \"worstRating\": {{ worstRating }}\n      },\n      \"reviewBody\": \"{{ review.content | default: '' | escape }}\",\n      \"datePublished\": \"{{ review.createdAt | date: '%Y-%m-%d' }}\"\n    }{% unless forloop.last %},{% endunless %} \n  {% endfor %}]{% endif %}\n}"
-        }
-      },
-      "15710897563947040993": {
-        "type": "shopify://apps/avada-boost-sales-trust-badge/blocks/app-embed/45454b7f-f6a7-4852-b770-8e0c3992a226",
-        "disabled": false,
-        "settings": {}
-      },
       "12695309257651622986": {
         "type": "shopify://apps/sectionhub/blocks/app-embed/9b74df56-d9a0-4a6f-8248-1a8825110996",
-        "disabled": false,
-        "settings": {}
-      },
-      "1232542678405107163": {
-        "type": "shopify://apps/instafeed/blocks/head-block/c447db20-095d-4a10-9725-b5977662c9d5",
-        "disabled": false,
-        "settings": {}
-      },
-      "14020781649437803805": {
-        "type": "shopify://apps/ag-shoppable-video/blocks/app_embed/1216543a-6237-4445-a5f2-61991cd76022",
-        "disabled": false,
-        "settings": {}
-      },
-      "2965712708760319418": {
-        "type": "shopify://apps/proof-bear-sales-popup/blocks/widget/6e90b7fd-96ea-488b-9571-34f0c382838a",
-        "disabled": false,
-        "settings": {}
-      },
-      "8776485610325655785": {
-        "type": "shopify://apps/hiko-social-login/blocks/hiko-auth/3832d7e1-5bcd-4b72-91da-236b57feef8f",
-        "disabled": false,
-        "settings": {
-          "social_font": "enable"
-        }
-      },
-      "7555218208816688692": {
-        "type": "shopify://apps/tydal-popups-email-pop-ups/blocks/app-embed/48a5a3ef-b6ff-431f-842f-6f17862c4a63",
-        "disabled": false,
-        "settings": {}
-      },
-      "10012068959737676665": {
-        "type": "shopify://apps/gropulse-wishlist/blocks/gropulse-wishlist/d606b448-832c-4b0a-adbb-21c7fa132df1",
-        "disabled": false,
-        "settings": {}
-      },
-      "4015264832934714879": {
-        "type": "shopify://apps/sendwill-email-popups/blocks/app/a5670cf8-5705-4b01-ad9e-447033feae26",
-        "disabled": false,
-        "settings": {}
-      },
-      "9139608461449719892": {
-        "type": "shopify://apps/chatwill-ai-chatbot/blocks/aichatbot/e7b73941-aea6-4bde-bb29-6e9e414581d0",
-        "disabled": false,
-        "settings": {}
-      },
-      "5368581398600051233": {
-        "type": "shopify://apps/bloy-loyalty-rewards/blocks/bloy-popup/97e8894d-00f0-41a9-b986-49828146257c",
         "disabled": false,
         "settings": {}
       }
