@@ -480,7 +480,7 @@
       "settings": {
         "collection": "hydration",
         "products_to_show": 4,
-        "title": "<strong>BODY CARE BEST SELLER</strong>",
+        "title": "<strong>Hydration</strong>",
         "heading_size": "h1",
         "description": "",
         "show_description": false,
@@ -503,386 +503,63 @@
         "padding_bottom": 36
       }
     },
-    "featured_collection_eMrH6z": {
-      "type": "featured-collection",
-      "custom_css": [
-        "@media screen and (min-width: 990px) {.page-width-desktop {max-width: var(--page-width); padding: 0 1rem; }}",
-        "h2.title.inline-richtext.h1 {font-size: 32px;}",
-        ".card__heading a {font-weight: 600;}",
-        "@media (max-width: 749px) {h2.title.inline-richtext.h1 {font-size: 26px; }}"
-      ],
-      "name": "t:sections.featured-collection.presets.name",
-      "settings": {
-        "collection": "haircare",
-        "products_to_show": 4,
-        "title": "<strong>Hair Care</strong>",
-        "heading_size": "h1",
-        "description": "",
-        "show_description": false,
-        "description_style": "body",
-        "columns_desktop": 4,
-        "enable_desktop_slider": false,
-        "full_width": false,
-        "show_view_all": false,
-        "view_all_style": "solid",
-        "color_scheme": "",
-        "image_ratio": "square",
-        "image_shape": "default",
-        "show_secondary_image": true,
-        "show_vendor": false,
-        "show_rating": false,
-        "quick_add": "none",
-        "columns_mobile": "2",
-        "swipe_on_mobile": false,
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
-    "sh_featured_banner_image_V7TraB": {
-      "type": "sh-featured-banner-image",
-      "name": "SH: Featured banner image",
-      "settings": {
-        "image_height": "adapt",
-        "heading": "",
-        "text": "",
-        "button_label_1": "",
-        "button_link_1": "/",
-        "btn_outline": false,
-        "outline_btn_text_color": "#000",
-        "button_label_2": "",
-        "button_link_2": "",
-        "btn_outline2": false,
-        "outline_btn_text_color2": "#000",
-        "border_radius1": 0,
-        "desktop_content_position": "middle-center",
-        "desktop_content_alignment": "center",
-        "mobile_content_position": "middle",
-        "mobile_content_alignment": "center",
-        "heading_font_size": 30,
-        "content_font_size": 16,
-        "opacity": 0,
-        "overlay_color": "#000",
-        "heading_color": "#121212",
-        "content_color": "#121212",
-        "btn_bg_color": "#000",
-        "btn_text_color": "#fff",
-        "btn_border_color": "#000",
-        "btn_hover_bg_color": "#fff",
-        "btn_hover_text_color": "#000",
-        "btn_hover_border_color": "#000",
-        "btn_shadow_color": "#000",
-        "btn_bg_color2": "#000",
-        "btn_text_color2": "#fff",
-        "btn_border_color2": "#000",
-        "btn_hover_bg_color2": "#fff",
-        "btn_hover_text_color2": "#000",
-        "btn_hover_border_color2": "#000",
-        "btn_shadow_color2": "#000",
-        "padding_top": 0,
-        "padding_bottom": 0,
-        "mob_padding_top": 0,
-        "mob_padding_bottom": 0,
-        "section_max_width": "2000"
-      }
-    },
-    "sh_featured_collection_5_UakgQH": {
-      "type": "sh-featured-collection-5",
+    "turcy_hero_C7wVtW": {
+      "type": "turcy-hero",
       "blocks": {
-        "product_tab_cHrUfQ": {
-          "type": "product_tab",
+        "highlight_NNham4": {
+          "type": "highlight",
           "settings": {
-            "tab_title": "FACE CARE",
-            "content": "",
-            "collection": "face-care",
-            "btn_label": "",
-            "outline_btn": true,
-            "outline_btn_color": "#121212",
-            "btn_radius": 20,
-            "tab_title_color": "#000000",
-            "content_color": "#ffffff",
-            "btn_bg_color": "#ffffff",
-            "btn_label_color": "#121212",
-            "btn_border_color": "#ffffff",
-            "btn_bg_hover_color": "#121212",
-            "btn_label_hover_color": "#ffffff",
-            "btn_border_hover_color": "#121212",
-            "btn_shadow_color": "#606060"
+            "icon": "01",
+            "title": "Focused formulas",
+            "text": "Routine-friendly essentials"
+          }
+        },
+        "highlight_9xAzJ7": {
+          "type": "highlight",
+          "settings": {
+            "icon": "01",
+            "title": "Focused formulas",
+            "text": "Routine-friendly essentials"
+          }
+        },
+        "highlight_pNJ7cz": {
+          "type": "highlight",
+          "settings": {
+            "icon": "01",
+            "title": "Focused formulas",
+            "text": "Routine-friendly essentials"
+          }
+        },
+        "highlight_rzCjbK": {
+          "type": "highlight",
+          "settings": {
+            "icon": "01",
+            "title": "Focused formulas",
+            "text": "Routine-friendly essentials"
           }
         }
       },
       "block_order": [
-        "product_tab_cHrUfQ"
+        "highlight_NNham4",
+        "highlight_9xAzJ7",
+        "highlight_pNJ7cz",
+        "highlight_rzCjbK"
       ],
-      "name": "SH: Featured collection 5",
+      "name": "Turcy hero",
       "settings": {
-        "max_product": 6,
-        "show_second_img": true,
-        "show_vendor": false,
-        "show_badge": true,
-        "sale_tag_content": "Special Offer",
-        "btn_label": "Add To Cart",
-        "outline_btn": false,
-        "outline_btn_color": "#121212",
-        "btn_radius": 20,
-        "tab_title_font_size": 25,
-        "tab_image_size": 36,
-        "content_font_size": 16,
-        "pro_title_font_size": 14,
-        "pro_price_font_size": 16,
-        "pro_vendor_font_size": 14,
-        "pro_tag_font_size": 12,
-        "bg_color": "#f3f3f3",
-        "pro_title_color": "#121212",
-        "pro_price_color": "#121212",
-        "pro_compare_price_color": "#a6a6a6",
-        "pro_vendor_color": "#121212",
-        "badge_bg_color": "#000000",
-        "badge_text_color": "#ffffff",
-        "btn_bg_color": "#121212",
-        "btn_label_color": "#ffffff",
-        "btn_border_color": "#121212",
-        "btn_bg_hover_color": "#ffffff",
-        "btn_label_hover_color": "#121212",
-        "btn_border_hover_color": "#121212",
-        "btn_shadow_color": "#606060",
-        "arrow_bg_color": "#121212",
-        "arrow_color": "#ffffff",
-        "arrow_border_color": "#121212",
-        "arrow_size": 12,
-        "padding_top": 40,
-        "padding_bottom": 40,
-        "mobile_padding_top": 30,
-        "mobile_padding_bottom": 30,
-        "section_max_width": "1600"
-      }
-    },
-    "17790857401a4e72bb": {
-      "type": "apps",
-      "settings": {
-        "include_margins": true
-      }
-    },
-    "sh_text_marquee_mP3WKj": {
-      "type": "sh-text-marquee",
-      "blocks": {
-        "marquee_AEYyMc": {
-          "type": "marquee",
-          "settings": {
-            "title": "Paraben free daily care"
-          }
-        },
-        "marquee_9n46rC": {
-          "type": "marquee",
-          "settings": {
-            "title": "No sulphates or dyes"
-          }
-        },
-        "marquee_JAhf84": {
-          "type": "marquee",
-          "settings": {
-            "title": "Vegan and alcohol free"
-          }
-        },
-        "marquee_kHciEP": {
-          "type": "marquee",
-          "settings": {
-            "title": "Fast shipping, easy return"
-          }
-        }
-      },
-      "block_order": [
-        "marquee_AEYyMc",
-        "marquee_9n46rC",
-        "marquee_JAhf84",
-        "marquee_kHciEP"
-      ],
-      "name": "SH: Text marquee",
-      "settings": {
-        "speed": "20s",
-        "pause_on_hover": true,
-        "image_position": "left",
-        "image_size": 24,
-        "space_between": 15,
-        "space_between_marquee": 60,
-        "font_size": 25,
-        "bg_color": "#000000",
-        "text_color": "#ffffff",
-        "padding_top": 10,
-        "padding_bottom": 10,
-        "mob_padding_top": 10,
-        "mob_padding_bottom": 10,
-        "section_max_width": "1140"
-      }
-    },
-    "for_every_you_carousel_zbDeRF": {
-      "type": "for-every-you-carousel",
-      "blocks": {
-        "slide_eTHTgq": {
-          "type": "slide",
-          "settings": {
-            "title": "Dark Spots & Pigmentation",
-            "link": "shopify://collections/dark-spots"
-          }
-        },
-        "slide_A68zPL": {
-          "type": "slide",
-          "settings": {
-            "title": "Fine Lines & Wrinkles",
-            "link": "shopify://collections/fine-lines"
-          }
-        },
-        "slide_gcDYe4": {
-          "type": "slide",
-          "settings": {
-            "title": "Dry & Dull Skin Solutions",
-            "link": "shopify://collections/dryness"
-          }
-        },
-        "slide_9PqrhL": {
-          "type": "slide",
-          "disabled": true,
-          "settings": {
-            "title": "Hair Care",
-            "link": "shopify://collections/hair-care"
-          }
-        },
-        "slide_YknGaL": {
-          "type": "slide",
-          "settings": {
-            "title": "Redness Relief Cream & Serums",
-            "link": "shopify://collections/redness"
-          }
-        }
-      },
-      "block_order": [
-        "slide_eTHTgq",
-        "slide_A68zPL",
-        "slide_gcDYe4",
-        "slide_9PqrhL",
-        "slide_YknGaL"
-      ],
-      "name": "For Every You Palmonas",
-      "settings": {
-        "full_width": false,
-        "label_text": "SKIN CONCERNS",
-        "label_size": 32,
-        "label_size_mobile": 26,
-        "caption_size": 21,
-        "caption_size_mobile": 16,
-        "desktop_height": 420,
-        "mobile_height": 420,
-        "overlay_opacity": 15,
-        "arrow_offset": 16,
-        "start_from": 1,
-        "autoplay": true,
-        "autoplay_speed": 4,
-        "section_bg": "#ffffff",
-        "label_bg": "#ffffff",
-        "label_color": "#000000",
-        "caption_color": "#121212",
-        "arrow_bg": "#ffffff",
-        "arrow_color": "#222222",
-        "padding_top": 40,
-        "padding_bottom": 40,
-        "padding_top_mobile": 28,
-        "padding_bottom_mobile": 28
-      }
-    },
-    "178461780096adbb25": {
-      "type": "apps",
-      "settings": {
-        "include_margins": true
-      }
-    },
-    "bt_behind_brand_hzbBdQ": {
-      "type": "BT-behind-brand",
-      "blocks": {
-        "person_yzGQKP": {
-          "type": "person",
-          "settings": {
-            "heading_top": "The People Behind",
-            "heading_highlight": "BIO MYSTERY",
-            "role": "Founder",
-            "description": "When effective and trustworthy skincare felt difficult to find, Tarun Kumar Kansal decided to create his own solution. Starting with a vision to make high-quality skincare accessible for everyone, he built Bio Mystery to deliver innovative, affordable, and result-driven skincare products made for all types of skin and everyday care.",
-            "name": "Tarun Kumar Kansal (Founder)"
-          }
-        },
-        "person_UQUXph": {
-          "type": "person",
-          "disabled": true,
-          "settings": {
-            "heading_top": "The People Behind",
-            "heading_highlight": "SUROSKIE",
-            "role": "Founder",
-            "description": "Driven by a clear vision, our founder works closely on product quality, customer experience, and brand direction to build a beauty brand customers can trust.",
-            "name": "Founder Name"
-          }
-        }
-      },
-      "block_order": [
-        "person_yzGQKP",
-        "person_UQUXph"
-      ],
-      "name": "People Behind Brand",
-      "settings": {
-        "full_width": true,
-        "max_width": 1600,
-        "section_height": 540,
-        "content_width": 56,
-        "section_bg": "#f4f2fa",
-        "accent_color": "#434343",
-        "background_size": "cover",
-        "background_position": "center center",
-        "mobile_background_position": "top center",
-        "bg_overlay_color": "#ffffff",
-        "bg_overlay_opacity": 0,
-        "padding_top": 12,
-        "padding_bottom": 0,
-        "mobile_padding_top": 24,
-        "mobile_padding_bottom": 32,
-        "card_bg": "#ffffff",
-        "enable_card_shadow": false,
-        "card_radius": 0,
-        "card_height": 470,
-        "card_left_spacing": 64,
-        "card_bottom_spacing": 32,
-        "card_padding_top": 48,
-        "card_padding_bottom": 44,
-        "card_padding_x": 80,
-        "mobile_card_padding_top": 36,
-        "mobile_card_padding_bottom": 36,
-        "mobile_card_padding_x": 24,
-        "heading_color": "#000000",
-        "heading_size": 42,
-        "mobile_heading_size": 30,
-        "heading_letter_spacing": 2,
-        "heading_bottom_spacing": 26,
-        "highlight_size": 36,
-        "mobile_highlight_size": 26,
-        "highlight_letter_spacing": 4,
-        "text_color": "#1f1f1f",
-        "text_size": 19,
-        "mobile_text_size": 15,
-        "text_width": 580,
-        "name_color": "#000000",
-        "name_size": 18,
-        "name_top_spacing": 16,
-        "role_text_color": "#ffffff",
-        "role_width": 124,
-        "role_font_size": 15,
-        "role_radius": 0,
-        "role_bottom_spacing": 22,
-        "image_width": 520,
-        "image_height": 530,
-        "mobile_image_width": 340,
-        "mobile_image_height": 380,
-        "arrow_bg": "#f4f4f4",
-        "arrow_color": "#222222",
-        "arrow_size": 36,
-        "arrow_font_size": 30,
-        "arrow_top_spacing": 34,
-        "enable_autoplay": false,
-        "autoplay_speed": 4
+        "eyebrow": "Thoughtful skin + hair care",
+        "heading": "Care that fits\nreal life.",
+        "text": "<p>Focused essentials for cleansing, brightening, hydration, sun care and hair wellness—made to keep your routine clear and consistent.</p>",
+        "primary_label": "Shop all products",
+        "primary_link": "",
+        "secondary_label": "Build your routine",
+        "secondary_link": "",
+        "proof": "Everyday essentials at accessible prices",
+        "note_one_title": "Targeted, not complicated",
+        "note_one_text": "Familiar actives for practical daily routines.",
+        "note_two_title": "Made for consistency",
+        "note_two_text": "Simple formats that are easy to keep using.",
+        "orbit_text": "Skin • Hair • Everyday care"
       }
     },
     "available_on_fGVMhz": {
@@ -1386,14 +1063,7 @@
     "sh_image_with_text_3_z3LP76",
     "sh_featured_banner_image_Rn79ib",
     "featured_collection_CXxJxB",
-    "featured_collection_eMrH6z",
-    "sh_featured_banner_image_V7TraB",
-    "sh_featured_collection_5_UakgQH",
-    "17790857401a4e72bb",
-    "sh_text_marquee_mP3WKj",
-    "for_every_you_carousel_zbDeRF",
-    "178461780096adbb25",
-    "bt_behind_brand_hzbBdQ",
+    "turcy_hero_C7wVtW",
     "available_on_fGVMhz",
     "new_apart_XPcT3d",
     "sh_image_with_text_ARHLDD",
