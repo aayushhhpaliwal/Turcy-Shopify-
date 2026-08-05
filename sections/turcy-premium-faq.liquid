@@ -1,0 +1,694 @@
+{% comment %}
+  Turcy Premium FAQ Section
+  - Two-column editorial layout
+  - Fully customizable from Shopify theme editor
+  - Accessible accordion
+  - Optional single-open behavior
+{% endcomment %}
+
+<section
+  id="TurcyFaq-{{ section.id }}"
+  class="turcy-faq turcy-faq--{{ section.settings.mobile_alignment }}"
+  style="
+    --tf-bg: {{ section.settings.background_color }};
+    --tf-heading: {{ section.settings.heading_color }};
+    --tf-text: {{ section.settings.text_color }};
+    --tf-accent: {{ section.settings.accent_color }};
+    --tf-line: {{ section.settings.line_color }};
+    --tf-max-width: {{ section.settings.max_width }}px;
+    --tf-left-width: {{ section.settings.left_column_width }}%;
+    --tf-gap: {{ section.settings.column_gap }}px;
+    --tf-pad-top: {{ section.settings.padding_top }}px;
+    --tf-pad-bottom: {{ section.settings.padding_bottom }}px;
+    --tf-heading-size: {{ section.settings.heading_size }}px;
+    --tf-question-size: {{ section.settings.question_size }}px;
+    --tf-answer-size: {{ section.settings.answer_size }}px;
+    --tf-radius: {{ section.settings.radius }}px;
+  "
+>
+  <div class="turcy-faq__container">
+    <div class="turcy-faq__grid">
+
+      <div class="turcy-faq__intro">
+        {% if section.settings.eyebrow != blank %}
+          <div class="turcy-faq__eyebrow">
+            {% if section.settings.show_eyebrow_line %}
+              <span class="turcy-faq__eyebrow-line" aria-hidden="true"></span>
+            {% endif %}
+            <span>{{ section.settings.eyebrow | escape }}</span>
+          </div>
+        {% endif %}
+
+        {% if section.settings.heading != blank %}
+          <h2 class="turcy-faq__heading">
+            {{ section.settings.heading | newline_to_br }}
+          </h2>
+        {% endif %}
+
+        {% if section.settings.description != blank %}
+          <div class="turcy-faq__description rte">
+            {{ section.settings.description }}
+          </div>
+        {% endif %}
+      </div>
+
+      <div
+        class="turcy-faq__items"
+        data-accordion
+        data-single-open="{{ section.settings.single_open }}"
+      >
+        {% for block in section.blocks %}
+          {% assign should_open = false %}
+          {% if block.settings.open_by_default %}
+            {% assign should_open = true %}
+          {% elsif section.settings.open_first and forloop.first %}
+            {% assign should_open = true %}
+          {% endif %}
+
+          <div
+            class="turcy-faq__item{% if should_open %} is-open{% endif %}"
+            {{ block.shopify_attributes }}
+          >
+            <button
+              type="button"
+              class="turcy-faq__question"
+              aria-expanded="{% if should_open %}true{% else %}false{% endif %}"
+              aria-controls="TurcyFaqAnswer-{{ section.id }}-{{ block.id }}"
+              id="TurcyFaqQuestion-{{ section.id }}-{{ block.id }}"
+            >
+              <span class="turcy-faq__question-text">
+                {{ block.settings.question | escape }}
+              </span>
+
+              <span class="turcy-faq__icon" aria-hidden="true">
+                <span class="turcy-faq__icon-line turcy-faq__icon-line--horizontal"></span>
+                <span class="turcy-faq__icon-line turcy-faq__icon-line--vertical"></span>
+              </span>
+            </button>
+
+            <div
+              id="TurcyFaqAnswer-{{ section.id }}-{{ block.id }}"
+              class="turcy-faq__answer-wrap"
+              role="region"
+              aria-labelledby="TurcyFaqQuestion-{{ section.id }}-{{ block.id }}"
+              {% unless should_open %}hidden{% endunless %}
+            >
+              <div class="turcy-faq__answer rte">
+                {{ block.settings.answer }}
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  #TurcyFaq-{{ section.id }} {
+    background: var(--tf-bg);
+    color: var(--tf-text);
+    padding-top: var(--tf-pad-top);
+    padding-bottom: var(--tf-pad-bottom);
+  }
+
+  #TurcyFaq-{{ section.id }} * {
+    box-sizing: border-box;
+  }
+
+  #TurcyFaq-{{ section.id }} .turcy-faq__container {
+    width: min(calc(100% - 40px), var(--tf-max-width));
+    margin: 0 auto;
+  }
+
+  #TurcyFaq-{{ section.id }} .turcy-faq__grid {
+    display: grid;
+    grid-template-columns:
+      minmax(0, var(--tf-left-width))
+      minmax(0, calc(100% - var(--tf-left-width)));
+    gap: var(--tf-gap);
+    align-items: start;
+  }
+
+  #TurcyFaq-{{ section.id }} .turcy-faq__intro {
+    position: sticky;
+    top: 120px;
+  }
+
+  #TurcyFaq-{{ section.id }} .turcy-faq__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 18px;
+    color: var(--tf-accent);
+    font-size: 12px;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+  }
+
+  #TurcyFaq-{{ section.id }} .turcy-faq__eyebrow-line {
+    display: block;
+    width: 28px;
+    height: 1px;
+    background: currentColor;
+    flex: 0 0 auto;
+  }
+
+  #TurcyFaq-{{ section.id }} .turcy-faq__heading {
+    max-width: 520px;
+    margin: 0;
+    color: var(--tf-heading);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(42px, 5vw, var(--tf-heading-size));
+    font-weight: 400;
+    line-height: .98;
+    letter-spacing: -.045em;
+  }
+
+  #TurcyFaq-{{ section.id }} .turcy-faq__description {
+    max-width: 470px;
+    margin-top: 28px;
+    color: var(--tf-text);
+    font-size: 18px;
+    line-height: 1.75;
+    opacity: .88;
+  }
+
+  #TurcyFaq-{{ section.id }} .turcy-faq__description > *:last-child,
+  #TurcyFaq-{{ section.id }} .turcy-faq__answer > *:last-child {
+    margin-bottom: 0;
+  }
+
+  #TurcyFaq-{{ section.id }} .turcy-faq__items {
+    border-top: 1px solid var(--tf-line);
+  }
+
+  #TurcyFaq-{{ section.id }} .turcy-faq__item {
+    border-bottom: 1px solid var(--tf-line);
+  }
+
+  #TurcyFaq-{{ section.id }} .turcy-faq__question {
+    width: 100%;
+    min-height: 78px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+    padding: 22px 4px 22px 0;
+    border: 0;
+    background: transparent;
+    color: var(--tf-heading);
+    text-align: left;
+    cursor: pointer;
+  }
+
+  #TurcyFaq-{{ section.id }} .turcy-faq__question:hover .turcy-faq__question-text {
+    color: var(--tf-accent);
+  }
+
+  #TurcyFaq-{{ section.id }} .turcy-faq__question:focus-visible {
+    outline: 2px solid var(--tf-accent);
+    outline-offset: 5px;
+    border-radius: var(--tf-radius);
+  }
+
+  #TurcyFaq-{{ section.id }} .turcy-faq__question-text {
+    font-size: var(--tf-question-size);
+    font-weight: 750;
+    line-height: 1.4;
+    transition: color .2s ease;
+  }
+
+  #TurcyFaq-{{ section.id }} .turcy-faq__icon {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    flex: 0 0 20px;
+    color: var(--tf-accent);
+  }
+
+  #TurcyFaq-{{ section.id }} .turcy-faq__icon-line {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: block;
+    width: 11px;
+    height: 2px;
+    border-radius: 999px;
+    background: currentColor;
+    transform: translate(-50%, -50%);
+    transition: transform .24s ease, opacity .24s ease;
+  }
+
+  #TurcyFaq-{{ section.id }} .turcy-faq__icon-line--vertical {
+    transform: translate(-50%, -50%) rotate(90deg);
+  }
+
+  #TurcyFaq-{{ section.id }} .turcy-faq__item.is-open .turcy-faq__icon-line--vertical {
+    transform: translate(-50%, -50%) rotate(0deg);
+    opacity: 0;
+  }
+
+  #TurcyFaq-{{ section.id }} .turcy-faq__answer-wrap {
+    overflow: hidden;
+  }
+
+  #TurcyFaq-{{ section.id }} .turcy-faq__answer {
+    max-width: 760px;
+    padding: 2px 48px 24px 0;
+    color: var(--tf-text);
+    font-size: var(--tf-answer-size);
+    line-height: 1.75;
+    opacity: .88;
+  }
+
+  #TurcyFaq-{{ section.id }} .turcy-faq__answer a {
+    color: var(--tf-accent);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  @media screen and (max-width: 989px) {
+    #TurcyFaq-{{ section.id }} {
+      padding-top: calc(var(--tf-pad-top) * .75);
+      padding-bottom: calc(var(--tf-pad-bottom) * .75);
+    }
+
+    #TurcyFaq-{{ section.id }} .turcy-faq__grid {
+      grid-template-columns: 1fr;
+      gap: 46px;
+    }
+
+    #TurcyFaq-{{ section.id }} .turcy-faq__intro {
+      position: static;
+    }
+
+    #TurcyFaq-{{ section.id }} .turcy-faq__heading,
+    #TurcyFaq-{{ section.id }} .turcy-faq__description {
+      max-width: 760px;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    #TurcyFaq-{{ section.id }} {
+      padding-top: calc(var(--tf-pad-top) * .58);
+      padding-bottom: calc(var(--tf-pad-bottom) * .58);
+    }
+
+    #TurcyFaq-{{ section.id }} .turcy-faq__container {
+      width: min(calc(100% - 28px), var(--tf-max-width));
+    }
+
+    #TurcyFaq-{{ section.id }} .turcy-faq__grid {
+      gap: 34px;
+    }
+
+    #TurcyFaq-{{ section.id }} .turcy-faq__heading {
+      font-size: clamp(38px, 12vw, 54px);
+      line-height: 1;
+    }
+
+    #TurcyFaq-{{ section.id }} .turcy-faq__description {
+      margin-top: 20px;
+      font-size: 16px;
+      line-height: 1.65;
+    }
+
+    #TurcyFaq-{{ section.id }} .turcy-faq__question {
+      min-height: 68px;
+      gap: 18px;
+      padding: 19px 0;
+    }
+
+    #TurcyFaq-{{ section.id }} .turcy-faq__question-text {
+      font-size: max(15px, calc(var(--tf-question-size) - 1px));
+    }
+
+    #TurcyFaq-{{ section.id }} .turcy-faq__answer {
+      padding-right: 24px;
+      padding-bottom: 20px;
+      font-size: max(14px, calc(var(--tf-answer-size) - 1px));
+      line-height: 1.7;
+    }
+
+    #TurcyFaq-{{ section.id }}.turcy-faq--center .turcy-faq__intro {
+      text-align: center;
+    }
+
+    #TurcyFaq-{{ section.id }}.turcy-faq--center .turcy-faq__eyebrow {
+      justify-content: center;
+    }
+
+    #TurcyFaq-{{ section.id }}.turcy-faq--center .turcy-faq__heading,
+    #TurcyFaq-{{ section.id }}.turcy-faq--center .turcy-faq__description {
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #TurcyFaq-{{ section.id }} .turcy-faq__icon-line {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  (() => {
+    const section = document.getElementById('TurcyFaq-{{ section.id }}');
+    if (!section || section.dataset.initialized === 'true') return;
+
+    section.dataset.initialized = 'true';
+
+    const accordion = section.querySelector('[data-accordion]');
+    if (!accordion) return;
+
+    const items = [...accordion.querySelectorAll('.turcy-faq__item')];
+    const singleOpen = accordion.dataset.singleOpen === 'true';
+
+    function closeItem(item) {
+      const button = item.querySelector('.turcy-faq__question');
+      const answer = item.querySelector('.turcy-faq__answer-wrap');
+
+      item.classList.remove('is-open');
+      button.setAttribute('aria-expanded', 'false');
+      answer.hidden = true;
+    }
+
+    function openItem(item) {
+      const button = item.querySelector('.turcy-faq__question');
+      const answer = item.querySelector('.turcy-faq__answer-wrap');
+
+      if (singleOpen) {
+        items.forEach(otherItem => {
+          if (otherItem !== item) closeItem(otherItem);
+        });
+      }
+
+      item.classList.add('is-open');
+      button.setAttribute('aria-expanded', 'true');
+      answer.hidden = false;
+    }
+
+    items.forEach(item => {
+      const button = item.querySelector('.turcy-faq__question');
+      const answer = item.querySelector('.turcy-faq__answer-wrap');
+
+      if (!button || !answer) return;
+
+      button.addEventListener('click', () => {
+        const isOpen = item.classList.contains('is-open');
+
+        if (isOpen) {
+          closeItem(item);
+        } else {
+          openItem(item);
+        }
+      });
+    });
+
+    document.addEventListener('shopify:block:select', event => {
+      const item = event.target.closest('.turcy-faq__item');
+      if (item && section.contains(item)) openItem(item);
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Turcy premium FAQ",
+  "tag": "section",
+  "class": "section",
+  "max_blocks": 20,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Frequently asked"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_eyebrow_line",
+      "label": "Show line before eyebrow",
+      "default": true
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Good care starts with good information."
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>These answers are written for the storefront layout. Final directions, warnings and ingredient lists should match the approved product packaging.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Accordion behavior"
+    },
+    {
+      "type": "checkbox",
+      "id": "open_first",
+      "label": "Open first FAQ by default",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "single_open",
+      "label": "Keep only one FAQ open",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "min": 1000,
+      "max": 1800,
+      "step": 20,
+      "unit": "px",
+      "label": "Maximum width",
+      "default": 1440
+    },
+    {
+      "type": "range",
+      "id": "left_column_width",
+      "min": 28,
+      "max": 48,
+      "step": 1,
+      "unit": "%",
+      "label": "Left column width",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "column_gap",
+      "min": 30,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "label": "Column gap",
+      "default": 90
+    },
+    {
+      "type": "select",
+      "id": "mobile_alignment",
+      "label": "Mobile intro alignment",
+      "default": "left",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "radius",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Focus border radius",
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 48,
+      "max": 96,
+      "step": 2,
+      "unit": "px",
+      "label": "Heading size",
+      "default": 70
+    },
+    {
+      "type": "range",
+      "id": "question_size",
+      "min": 14,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Question size",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "answer_size",
+      "min": 13,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "label": "Answer size",
+      "default": 15
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#FCFCFA"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading and question",
+      "default": "#17211E"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Body text",
+      "default": "#67736E"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent and icons",
+      "default": "#173F35"
+    },
+    {
+      "type": "color",
+      "id": "line_color",
+      "label": "Divider lines",
+      "default": "#D8DEDA"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 20,
+      "max": 180,
+      "step": 5,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 90
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 20,
+      "max": 180,
+      "step": 5,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 90
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "FAQ item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "How should I choose my first Turcy product?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>Start with your primary need. Choose the product that best matches your skin or hair concern, then add other products gradually as your routine develops.</p>"
+        },
+        {
+          "type": "checkbox",
+          "id": "open_by_default",
+          "label": "Open this item by default",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Turcy premium FAQ",
+      "blocks": [
+        {
+          "type": "faq",
+          "settings": {
+            "question": "How should I choose my first Turcy product?",
+            "answer": "<p>Start with your primary need. Choose a cleanser for daily maintenance, salicylic acid for oil and congestion, Vitamin C and niacinamide for a glow-focused routine, moisturiser or aloe for hydration, sunscreen for morning protection, or rosemary spray for scalp care.</p>",
+            "open_by_default": true
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Can I use every active product together?",
+            "answer": "<p>Introduce active products gradually rather than using several new formulas at once. Patch test where appropriate and follow the usage instructions printed on the final product packaging.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "What is the correct skincare order?",
+            "answer": "<p>A simple order is cleanser, treatment or serum, moisturiser and sunscreen in the morning. Aloe vera gel may be added as a lightweight soothing layer depending on your routine.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Are the product images shown here final?",
+            "answer": "<p>Use final, accurate and high-resolution product photography before publishing the storefront. Stock or concept images should be replaced with official Turcy packaging images.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Where should final safety information appear?",
+            "answer": "<p>Display the complete ingredient list, usage directions, warnings, net quantity, manufacturer details, batch information and expiry information on the product page and packaging as required.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
