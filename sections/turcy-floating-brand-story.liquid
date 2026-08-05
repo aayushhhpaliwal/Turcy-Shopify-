@@ -1,0 +1,805 @@
+{% comment %}
+  Turcy Floating Brand Story
+  - Editorial centered heading and description
+  - Multiple independently positioned product-image blocks
+  - Separate desktop/mobile positions, sizes and rotations
+  - Optional floating animation, shadows and watermark text
+{% endcomment %}
+
+<section
+  id="TurcyBrandStory-{{ section.id }}"
+  class="turcy-brand-story"
+  style="
+    --tbs-background: {{ section.settings.background_color }};
+    --tbs-heading-color: {{ section.settings.heading_color }};
+    --tbs-text-color: {{ section.settings.text_color }};
+    --tbs-accent-color: {{ section.settings.accent_color }};
+    --tbs-watermark-color: {{ section.settings.watermark_color }};
+    --tbs-watermark-opacity: {{ section.settings.watermark_opacity | divided_by: 100.0 }};
+    --tbs-max-width: {{ section.settings.max_width }}px;
+    --tbs-desktop-height: {{ section.settings.desktop_height }}px;
+    --tbs-mobile-height: {{ section.settings.mobile_height }}px;
+    --tbs-padding-top: {{ section.settings.padding_top }}px;
+    --tbs-padding-bottom: {{ section.settings.padding_bottom }}px;
+    --tbs-heading-size: {{ section.settings.heading_size }}px;
+    --tbs-body-size: {{ section.settings.body_size }}px;
+    --tbs-watermark-size: {{ section.settings.watermark_size }}px;
+  "
+>
+  <div class="turcy-brand-story__inner">
+
+    <div class="turcy-brand-story__content">
+      {% if section.settings.eyebrow != blank %}
+        <p class="turcy-brand-story__eyebrow">
+          {{ section.settings.eyebrow | escape }}
+        </p>
+      {% endif %}
+
+      {% if section.settings.heading != blank %}
+        <h2 class="turcy-brand-story__heading">
+          {{ section.settings.heading | newline_to_br }}
+        </h2>
+      {% endif %}
+
+      {% if section.settings.description != blank %}
+        <div class="turcy-brand-story__description rte">
+          {{ section.settings.description }}
+        </div>
+      {% endif %}
+
+      {% if section.settings.button_label != blank and section.settings.button_link != blank %}
+        <a class="turcy-brand-story__button" href="{{ section.settings.button_link }}">
+          {{ section.settings.button_label | escape }}
+          <span aria-hidden="true">→</span>
+        </a>
+      {% endif %}
+    </div>
+
+    {% if section.settings.watermark_text != blank %}
+      <div class="turcy-brand-story__watermark" aria-hidden="true">
+        {{ section.settings.watermark_text | escape }}
+      </div>
+    {% endif %}
+
+    {% if section.settings.decorative_shape %}
+      <div class="turcy-brand-story__shape" aria-hidden="true">
+        <svg viewBox="0 0 200 180" role="presentation">
+          <path d="M100 0C119 25 137 32 169 28C164 58 174 77 200 91C174 107 165 128 170 158C139 154 119 163 100 180C81 161 61 154 30 158C35 128 26 107 0 91C26 77 36 58 31 28C63 32 81 25 100 0Z" fill="currentColor"/>
+        </svg>
+      </div>
+    {% endif %}
+
+    <div class="turcy-brand-story__products" aria-label="Featured products">
+      {% for block in section.blocks %}
+        {% if block.settings.image != blank %}
+          <figure
+            class="turcy-brand-story__product{% if block.settings.enable_float %} is-floating{% endif %}"
+            style="
+              --tbs-x: {{ block.settings.desktop_x }}%;
+              --tbs-y: {{ block.settings.desktop_y }}%;
+              --tbs-mobile-x: {{ block.settings.mobile_x }}%;
+              --tbs-mobile-y: {{ block.settings.mobile_y }}%;
+              --tbs-width: {{ block.settings.desktop_width }}px;
+              --tbs-mobile-width: {{ block.settings.mobile_width }}px;
+              --tbs-rotate: {{ block.settings.rotation }}deg;
+              --tbs-float-delay: {{ block.settings.animation_delay | times: 0.1 }}s;
+              --tbs-shadow-opacity: {{ block.settings.shadow_opacity | divided_by: 100.0 }};
+              --tbs-z-index: {{ block.settings.z_index }};
+            "
+            {{ block.shopify_attributes }}
+          >
+            {{
+              block.settings.image
+              | image_url: width: 1200
+              | image_tag:
+                loading: 'lazy',
+                widths: '180, 260, 360, 480, 720, 960, 1200',
+                sizes: '(max-width: 749px) 38vw, 24vw',
+                class: 'turcy-brand-story__product-image',
+                alt: block.settings.alt_text
+            }}
+
+            {% if block.settings.caption != blank %}
+              <figcaption class="turcy-brand-story__caption">
+                {{ block.settings.caption | escape }}
+              </figcaption>
+            {% endif %}
+          </figure>
+        {% endif %}
+      {% endfor %}
+    </div>
+
+  </div>
+</section>
+
+<style>
+  #TurcyBrandStory-{{ section.id }} {
+    position: relative;
+    overflow: hidden;
+    min-height: var(--tbs-desktop-height);
+    padding-top: var(--tbs-padding-top);
+    padding-bottom: var(--tbs-padding-bottom);
+    background: var(--tbs-background);
+    color: var(--tbs-text-color);
+  }
+
+  #TurcyBrandStory-{{ section.id }} * {
+    box-sizing: border-box;
+  }
+
+  #TurcyBrandStory-{{ section.id }} .turcy-brand-story__inner {
+    position: relative;
+    width: min(calc(100% - 40px), var(--tbs-max-width));
+    min-height: calc(
+      var(--tbs-desktop-height) -
+      var(--tbs-padding-top) -
+      var(--tbs-padding-bottom)
+    );
+    margin: 0 auto;
+  }
+
+  #TurcyBrandStory-{{ section.id }} .turcy-brand-story__content {
+    position: relative;
+    z-index: 10;
+    width: min(100%, 800px);
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  #TurcyBrandStory-{{ section.id }} .turcy-brand-story__eyebrow {
+    margin: 0 0 18px;
+    color: var(--tbs-accent-color);
+    font-size: 12px;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+  }
+
+  #TurcyBrandStory-{{ section.id }} .turcy-brand-story__heading {
+    margin: 0;
+    color: var(--tbs-heading-color);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(38px, 4.5vw, var(--tbs-heading-size));
+    font-weight: 400;
+    line-height: 1.12;
+    letter-spacing: -.04em;
+  }
+
+  #TurcyBrandStory-{{ section.id }} .turcy-brand-story__description {
+    width: min(100%, 700px);
+    margin: 23px auto 0;
+    color: var(--tbs-text-color);
+    font-size: var(--tbs-body-size);
+    line-height: 1.75;
+  }
+
+  #TurcyBrandStory-{{ section.id }} .turcy-brand-story__description > *:last-child {
+    margin-bottom: 0;
+  }
+
+  #TurcyBrandStory-{{ section.id }} .turcy-brand-story__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    min-height: 48px;
+    margin-top: 26px;
+    padding: 0 22px;
+    border: 1px solid var(--tbs-accent-color);
+    border-radius: 999px;
+    background: var(--tbs-accent-color);
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 800;
+    text-decoration: none;
+    transition:
+      transform .22s ease,
+      box-shadow .22s ease,
+      background .22s ease;
+  }
+
+  #TurcyBrandStory-{{ section.id }} .turcy-brand-story__button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 30px rgba(23, 63, 53, .18);
+  }
+
+  #TurcyBrandStory-{{ section.id }} .turcy-brand-story__button span {
+    transition: transform .22s ease;
+  }
+
+  #TurcyBrandStory-{{ section.id }} .turcy-brand-story__button:hover span {
+    transform: translateX(4px);
+  }
+
+  #TurcyBrandStory-{{ section.id }} .turcy-brand-story__watermark {
+    position: absolute;
+    left: 50%;
+    bottom: -0.19em;
+    z-index: 0;
+    width: 100%;
+    transform: translateX(-50%);
+    color: var(--tbs-watermark-color);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: clamp(100px, 18vw, var(--tbs-watermark-size));
+    font-weight: 800;
+    line-height: .78;
+    letter-spacing: -.08em;
+    text-align: center;
+    opacity: var(--tbs-watermark-opacity);
+    white-space: nowrap;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  #TurcyBrandStory-{{ section.id }} .turcy-brand-story__shape {
+    position: absolute;
+    left: -5%;
+    bottom: -8%;
+    z-index: 1;
+    width: min(250px, 24vw);
+    color: var(--tbs-watermark-color);
+    opacity: calc(var(--tbs-watermark-opacity) * 1.4);
+    pointer-events: none;
+  }
+
+  #TurcyBrandStory-{{ section.id }} .turcy-brand-story__shape svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  #TurcyBrandStory-{{ section.id }} .turcy-brand-story__products {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    pointer-events: none;
+  }
+
+  #TurcyBrandStory-{{ section.id }} .turcy-brand-story__product {
+    position: absolute;
+    left: var(--tbs-x);
+    top: var(--tbs-y);
+    z-index: var(--tbs-z-index);
+    width: var(--tbs-width);
+    max-width: 30vw;
+    margin: 0;
+    transform: translate(-50%, -50%) rotate(var(--tbs-rotate));
+    filter: drop-shadow(
+      0 17px 17px rgba(20, 34, 30, var(--tbs-shadow-opacity))
+    );
+    pointer-events: auto;
+    transition:
+      transform .3s ease,
+      filter .3s ease;
+  }
+
+  #TurcyBrandStory-{{ section.id }} .turcy-brand-story__product:hover {
+    transform:
+      translate(-50%, -50%)
+      rotate(var(--tbs-rotate))
+      translateY(-8px)
+      scale(1.025);
+    filter: drop-shadow(
+      0 25px 26px rgba(20, 34, 30, calc(var(--tbs-shadow-opacity) + .08))
+    );
+  }
+
+  #TurcyBrandStory-{{ section.id }} .turcy-brand-story__product-image {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+
+  #TurcyBrandStory-{{ section.id }} .turcy-brand-story__caption {
+    margin-top: 10px;
+    color: var(--tbs-heading-color);
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1.35;
+    text-align: center;
+  }
+
+  #TurcyBrandStory-{{ section.id }} .turcy-brand-story__product.is-floating {
+    animation:
+      TurcyBrandStoryFloat-{{ section.id }}
+      4.8s ease-in-out
+      var(--tbs-float-delay)
+      infinite;
+  }
+
+  @keyframes TurcyBrandStoryFloat-{{ section.id }} {
+    0%,
+    100% {
+      margin-top: 0;
+    }
+
+    50% {
+      margin-top: -11px;
+    }
+  }
+
+  @media screen and (max-width: 989px) {
+    #TurcyBrandStory-{{ section.id }} {
+      min-height: calc(var(--tbs-desktop-height) * .88);
+      padding-top: calc(var(--tbs-padding-top) * .8);
+      padding-bottom: calc(var(--tbs-padding-bottom) * .8);
+    }
+
+    #TurcyBrandStory-{{ section.id }} .turcy-brand-story__inner {
+      min-height: calc(
+        var(--tbs-desktop-height) * .88 -
+        var(--tbs-padding-top) * .8 -
+        var(--tbs-padding-bottom) * .8
+      );
+    }
+
+    #TurcyBrandStory-{{ section.id }} .turcy-brand-story__content {
+      width: min(100%, 700px);
+    }
+
+    #TurcyBrandStory-{{ section.id }} .turcy-brand-story__product {
+      max-width: 34vw;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    #TurcyBrandStory-{{ section.id }} {
+      min-height: var(--tbs-mobile-height);
+      padding-top: calc(var(--tbs-padding-top) * .58);
+      padding-bottom: calc(var(--tbs-padding-bottom) * .58);
+    }
+
+    #TurcyBrandStory-{{ section.id }} .turcy-brand-story__inner {
+      width: min(calc(100% - 28px), var(--tbs-max-width));
+      min-height: calc(
+        var(--tbs-mobile-height) -
+        var(--tbs-padding-top) * .58 -
+        var(--tbs-padding-bottom) * .58
+      );
+    }
+
+    #TurcyBrandStory-{{ section.id }} .turcy-brand-story__eyebrow {
+      margin-bottom: 14px;
+      font-size: 10px;
+      letter-spacing: .12em;
+    }
+
+    #TurcyBrandStory-{{ section.id }} .turcy-brand-story__heading {
+      font-size: clamp(34px, 10vw, 48px);
+      line-height: 1.08;
+    }
+
+    #TurcyBrandStory-{{ section.id }} .turcy-brand-story__description {
+      margin-top: 18px;
+      font-size: max(14px, calc(var(--tbs-body-size) - 1px));
+      line-height: 1.65;
+    }
+
+    #TurcyBrandStory-{{ section.id }} .turcy-brand-story__button {
+      min-height: 44px;
+      margin-top: 20px;
+      padding: 0 19px;
+      font-size: 12px;
+    }
+
+    #TurcyBrandStory-{{ section.id }} .turcy-brand-story__product {
+      left: var(--tbs-mobile-x);
+      top: var(--tbs-mobile-y);
+      width: var(--tbs-mobile-width);
+      max-width: 46vw;
+    }
+
+    #TurcyBrandStory-{{ section.id }} .turcy-brand-story__watermark {
+      bottom: -.11em;
+      font-size: clamp(78px, 28vw, 180px);
+    }
+
+    #TurcyBrandStory-{{ section.id }} .turcy-brand-story__shape {
+      left: -12%;
+      bottom: 0;
+      width: 155px;
+    }
+
+    #TurcyBrandStory-{{ section.id }} .turcy-brand-story__caption {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #TurcyBrandStory-{{ section.id }} .turcy-brand-story__product.is-floating {
+      animation: none;
+    }
+
+    #TurcyBrandStory-{{ section.id }} .turcy-brand-story__product,
+    #TurcyBrandStory-{{ section.id }} .turcy-brand-story__button,
+    #TurcyBrandStory-{{ section.id }} .turcy-brand-story__button span {
+      transition: none;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Turcy floating story",
+  "tag": "section",
+  "class": "section",
+  "max_blocks": 8,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Where science meets self-care"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading",
+      "default": "At Turcy, we believe good care should feel clear, thoughtful and made for real life."
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Too often, skincare feels complicated and one-size-fits-all. Turcy brings focused ingredients and practical routines together, helping you choose products with greater confidence.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "header",
+      "content": "Watermark"
+    },
+    {
+      "type": "text",
+      "id": "watermark_text",
+      "label": "Large watermark text",
+      "default": "turcy"
+    },
+    {
+      "type": "checkbox",
+      "id": "decorative_shape",
+      "label": "Show decorative shape",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "watermark_size",
+      "min": 180,
+      "max": 620,
+      "step": 10,
+      "unit": "px",
+      "label": "Watermark size",
+      "default": 420
+    },
+    {
+      "type": "range",
+      "id": "watermark_opacity",
+      "min": 2,
+      "max": 30,
+      "step": 1,
+      "unit": "%",
+      "label": "Watermark opacity",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "min": 1000,
+      "max": 1800,
+      "step": 20,
+      "unit": "px",
+      "label": "Maximum width",
+      "default": 1440
+    },
+    {
+      "type": "range",
+      "id": "desktop_height",
+      "min": 520,
+      "max": 1000,
+      "step": 20,
+      "unit": "px",
+      "label": "Desktop section height",
+      "default": 700
+    },
+    {
+      "type": "range",
+      "id": "mobile_height",
+      "min": 620,
+      "max": 1100,
+      "step": 20,
+      "unit": "px",
+      "label": "Mobile section height",
+      "default": 820
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 36,
+      "max": 86,
+      "step": 2,
+      "unit": "px",
+      "label": "Heading size",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "body_size",
+      "min": 13,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "label": "Description size",
+      "default": 17
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading",
+      "default": "#17211E"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Description",
+      "default": "#596762"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Eyebrow and button",
+      "default": "#173F35"
+    },
+    {
+      "type": "color",
+      "id": "watermark_color",
+      "label": "Watermark and shape",
+      "default": "#AEBDB7"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 20,
+      "max": 160,
+      "step": 5,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 55
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 20,
+      "max": 160,
+      "step": 5,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product_image",
+      "name": "Floating product image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Product image"
+        },
+        {
+          "type": "text",
+          "id": "alt_text",
+          "label": "Alternative text",
+          "default": "Turcy product"
+        },
+        {
+          "type": "text",
+          "id": "caption",
+          "label": "Optional caption"
+        },
+        {
+          "type": "header",
+          "content": "Desktop position"
+        },
+        {
+          "type": "range",
+          "id": "desktop_x",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Horizontal position",
+          "default": 50
+        },
+        {
+          "type": "range",
+          "id": "desktop_y",
+          "min": 20,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Vertical position",
+          "default": 70
+        },
+        {
+          "type": "range",
+          "id": "desktop_width",
+          "min": 80,
+          "max": 480,
+          "step": 10,
+          "unit": "px",
+          "label": "Desktop image width",
+          "default": 210
+        },
+        {
+          "type": "header",
+          "content": "Mobile position"
+        },
+        {
+          "type": "range",
+          "id": "mobile_x",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Horizontal position",
+          "default": 50
+        },
+        {
+          "type": "range",
+          "id": "mobile_y",
+          "min": 30,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Vertical position",
+          "default": 72
+        },
+        {
+          "type": "range",
+          "id": "mobile_width",
+          "min": 70,
+          "max": 280,
+          "step": 10,
+          "unit": "px",
+          "label": "Mobile image width",
+          "default": 150
+        },
+        {
+          "type": "header",
+          "content": "Image styling"
+        },
+        {
+          "type": "range",
+          "id": "rotation",
+          "min": -30,
+          "max": 30,
+          "step": 1,
+          "unit": "deg",
+          "label": "Rotation",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "shadow_opacity",
+          "min": 0,
+          "max": 40,
+          "step": 2,
+          "unit": "%",
+          "label": "Shadow strength",
+          "default": 18
+        },
+        {
+          "type": "range",
+          "id": "z_index",
+          "min": 1,
+          "max": 10,
+          "step": 1,
+          "label": "Layer position",
+          "default": 3
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_float",
+          "label": "Enable floating animation",
+          "default": true
+        },
+        {
+          "type": "range",
+          "id": "animation_delay",
+          "min": 0,
+          "max": 20,
+          "step": 1,
+          "label": "Animation delay",
+          "default": 0
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Turcy floating story",
+      "blocks": [
+        {
+          "type": "product_image",
+          "settings": {
+            "desktop_x": 16,
+            "desktop_y": 70,
+            "desktop_width": 170,
+            "mobile_x": 24,
+            "mobile_y": 70,
+            "mobile_width": 120,
+            "rotation": -8,
+            "z_index": 2,
+            "animation_delay": 0
+          }
+        },
+        {
+          "type": "product_image",
+          "settings": {
+            "desktop_x": 50,
+            "desktop_y": 76,
+            "desktop_width": 240,
+            "mobile_x": 50,
+            "mobile_y": 82,
+            "mobile_width": 170,
+            "rotation": 0,
+            "z_index": 4,
+            "animation_delay": 5
+          }
+        },
+        {
+          "type": "product_image",
+          "settings": {
+            "desktop_x": 84,
+            "desktop_y": 69,
+            "desktop_width": 170,
+            "mobile_x": 77,
+            "mobile_y": 68,
+            "mobile_width": 120,
+            "rotation": 10,
+            "z_index": 2,
+            "animation_delay": 10
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
