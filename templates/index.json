@@ -187,121 +187,124 @@
         "padding_bottom": 0
       }
     },
-    "bt_catogery_shop_nhMhN9": {
-      "type": "BT-catogery-shop",
+    "collection_inspiration_wVNhhj": {
+      "type": "collection-inspiration",
       "blocks": {
-        "category_DHekXm": {
-          "type": "category",
+        "style_card_pk6THe": {
+          "type": "style_card",
           "settings": {
-            "image": "shopify://shop_images/images.jpg",
-            "title": "Acne &Oil",
-            "link": "shopify://collections/texture",
-            "open_new_tab": true
-          }
-        },
-        "category_Hj8EEp": {
-          "type": "category",
-          "settings": {
-            "title": "Glow &Tone",
-            "link": "shopify://collections/face-care",
-            "open_new_tab": true
-          }
-        },
-        "category_W7QnUt": {
-          "type": "category",
-          "settings": {
-            "title": "Body Care",
-            "link": "shopify://collections/bodycare",
-            "open_new_tab": true
-          }
-        },
-        "category_UxCBLj": {
-          "type": "category",
-          "settings": {
-            "title": "Hydration &Soothing",
-            "link": "shopify://collections/sun-protection",
-            "open_new_tab": true
-          }
-        },
-        "category_axNDhB": {
-          "type": "category",
-          "settings": {
-            "title": "Daily SunCare",
-            "link": "shopify://collections/hair-care",
-            "open_new_tab": true
-          }
-        },
-        "category_N7b9CQ": {
-          "type": "category",
-          "settings": {
-            "title": "Scalp &Hair",
+            "collection": "glow-tone",
+            "image": "shopify://shop_images/beauty-smile-skincare-woman-face-wellness-healthy-with-happiness-against-beige-studio-background-happy-young-latino-model-with-glowing-soft-smooth-skin-advertise-cosmetic-product_5904.avif",
+            "badge": "",
             "link": "",
-            "open_new_tab": false
+            "accessibility_label": "Open style inspiration"
+          }
+        },
+        "style_card_WpTQzc": {
+          "type": "style_card",
+          "settings": {
+            "collection": "",
+            "image": "shopify://shop_images/Face_Oil_81655783ea.webp",
+            "badge": "Acne &Oil",
+            "link": "",
+            "accessibility_label": "Open style inspiration"
+          }
+        },
+        "style_card_9ppBGk": {
+          "type": "style_card",
+          "settings": {
+            "collection": "",
+            "image": "shopify://shop_images/images_840bcf0c-bd93-4f5b-9f33-2ce296fea32a.jpg",
+            "badge": "Hydration &Soothing",
+            "link": "",
+            "accessibility_label": "Open style inspiration"
+          }
+        },
+        "style_card_GY8nUW": {
+          "type": "style_card",
+          "settings": {
+            "collection": "",
+            "image": "shopify://shop_images/61IWmWRGlAL.jpg",
+            "badge": "Dress",
+            "link": "",
+            "accessibility_label": "Open style inspiration"
+          }
+        },
+        "style_card_jcCwqn": {
+          "type": "style_card",
+          "settings": {
+            "collection": "",
+            "image": "shopify://shop_images/shutterstock_1751352899.webp",
+            "badge": "Trendy",
+            "link": "",
+            "accessibility_label": "Open style inspiration"
           }
         }
       },
       "block_order": [
-        "category_DHekXm",
-        "category_Hj8EEp",
-        "category_W7QnUt",
-        "category_UxCBLj",
-        "category_axNDhB",
-        "category_N7b9CQ"
+        "style_card_pk6THe",
+        "style_card_WpTQzc",
+        "style_card_9ppBGk",
+        "style_card_GY8nUW",
+        "style_card_jcCwqn"
       ],
-      "name": "Shop Now Category Slider",
+      "name": "Style inspiration slider",
       "settings": {
+        "heading": "Start with what your routine needs.",
+        "body": "<p>Explore Turcy by your primary concern, then layer products gradually instead of changing everything at once.</p>",
         "full_width": false,
         "max_width": 1600,
-        "section_bg": "#ffffff",
-        "padding_top": 40,
-        "padding_bottom": 60,
-        "mobile_padding_top": 32,
-        "mobile_padding_bottom": 48,
-        "side_padding_desktop": 72,
-        "side_padding_mobile": 18,
-        "heading": "SHOP NOW",
-        "heading_color": "#000000",
-        "heading_bg": "#eaeaea",
-        "heading_font_desktop": 32,
-        "heading_font_mobile": 26,
-        "heading_weight": "700",
-        "heading_transform": "uppercase",
-        "heading_letter_spacing": 1,
-        "heading_radius": 28,
-        "heading_pad_x": 62,
-        "heading_pad_y": 12,
-        "mobile_heading_pad_x": 36,
-        "mobile_heading_pad_y": 10,
-        "card_bg": "#eaeaea",
-        "text_color": "#111111",
-        "item_width_desktop": 220,
-        "item_width_mobile": 118,
-        "gap_desktop": 20,
-        "gap_mobile": 14,
-        "card_height_desktop": 46,
-        "card_height_mobile": 40,
-        "card_font_desktop": 15,
-        "card_font_mobile": 12,
-        "card_font_weight": "600",
+        "header_max_width": 1300,
+        "heading_width": 2,
+        "body_width": 2,
+        "body_max_width": 700,
+        "header_bottom_space": 52,
+        "mobile_header_bottom_space": 32,
+        "heading_font": "serif",
+        "heading_italic": true,
+        "heading_size": 42,
+        "heading_mobile_size": 32,
+        "heading_line_height": 105,
+        "heading_weight": "400",
+        "body_size": 16,
+        "mobile_body_size": 15,
+        "body_weight": "700",
+        "card_aspect_ratio": "0.86 / 1",
+        "card_width": 290,
+        "card_width_tablet": 360,
+        "card_width_mobile": 280,
+        "card_gap": 16,
+        "mobile_card_gap": 14,
         "card_radius": 8,
-        "enable_hover": true,
-        "image_box_height_desktop": 130,
-        "image_box_height_mobile": 82,
-        "image_max_size_desktop": 130,
-        "image_max_size_mobile": 80,
-        "enable_image_shadow": true,
-        "image_shadow_opacity": 15,
-        "show_arrows": true,
-        "show_mobile_arrows": true,
-        "scroll_amount": 320,
-        "enable_autoplay": true,
-        "autoplay_speed": 3,
-        "arrow_bg": "#ffffff",
-        "arrow_color": "#111111",
-        "arrow_size": 42,
-        "arrow_font_size": 34,
-        "arrow_top": 58,
-        "arrow_side_offset": 16
+        "image_position": "center center",
+        "overlay_opacity": 35,
+        "show_card_arrow": true,
+        "badge_size": 11,
+        "badge_top": 36,
+        "badge_left": 18,
+        "card_arrow_size": 32,
+        "card_arrow_radius": 6,
+        "arrow_top": 34,
+        "arrow_right": 18,
+        "show_controls": true,
+        "controls_top_space": 28,
+        "mobile_controls_top_space": 24,
+        "progress_width": 780,
+        "progress_height": 3,
+        "nav_size": 38,
+        "nav_radius": 6,
+        "bg_color": "#FFFFFF",
+        "text_color": "#000000",
+        "body_color": "#000000",
+        "badge_text_color": "#ffffff",
+        "button_bg_color": "#ffffff",
+        "button_text_color": "#111111",
+        "progress_bg_color": "#777777",
+        "progress_fill_color": "#ffffff",
+        "padding_top": 84,
+        "padding_bottom": 56,
+        "mobile_padding_top": 32,
+        "mobile_padding_bottom": 40
       }
     },
     "sh_sub_collection_list_QB9yHY": {
@@ -1534,7 +1537,7 @@
   "order": [
     "sh_hero_slideshow_ppeQgX",
     "trust_highlights_WwUB9P",
-    "bt_catogery_shop_nhMhN9",
+    "collection_inspiration_wVNhhj",
     "sh_sub_collection_list_QB9yHY",
     "featured_collection_UkrKR7",
     "sh_image_with_text_3_z3LP76",
