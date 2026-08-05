@@ -1,0 +1,139 @@
+{{ 'turcy-home.css' | asset_url | stylesheet_tag }}
+
+<section class="turcy-section turcy-story" id="our-story">
+  <div class="turcy-shell turcy-story__grid">
+    <div class="turcy-story__collage">
+      {% if section.settings.story_image != blank %}
+        {{ section.settings.story_image | image_url: width: 1000 | image_tag: class: 'turcy-story__main', widths: '480, 720, 1000', loading: 'lazy' }}
+      {% else %}
+        <img class="turcy-story__main" src="{{ 'turcy-cleanser.jpg' | asset_url }}" alt="Daily cleansing routine" width="800" height="1000" loading="lazy">
+      {% endif %}
+      {% if section.settings.story_image_small != blank %}
+        {{ section.settings.story_image_small | image_url: width: 700 | image_tag: class: 'turcy-story__small', widths: '320, 480, 700', loading: 'lazy' }}
+      {% else %}
+        <img class="turcy-story__small" src="{{ 'turcy-aloe.jpg' | asset_url }}" alt="Aloe vera skincare" width="600" height="700" loading="lazy">
+      {% endif %}
+      <span class="turcy-story__stamp">{{ section.settings.story_stamp }}</span>
+    </div>
+    <div class="turcy-story__copy">
+      <p class="turcy-eyebrow">{{ section.settings.story_eyebrow }}</p>
+      <h2 class="turcy-display">{{ section.settings.story_heading }}</h2>
+      <div class="rte">{{ section.settings.story_text }}</div>
+      <div class="turcy-pillars">
+        {% for block in section.blocks %}{% if block.type == 'pillar' %}<div class="turcy-pillar" {{ block.shopify_attributes }}><strong>{{ block.settings.title }}</strong><span>{{ block.settings.text }}</span></div>{% endif %}{% endfor %}
+      </div>
+      {% if section.settings.story_button != blank %}<a class="turcy-button" href="{{ section.settings.story_link }}">{{ section.settings.story_button }} <span aria-hidden="true">→</span></a>{% endif %}
+    </div>
+  </div>
+</section>
+
+<section class="turcy-section turcy-ingredients" id="ingredients">
+  <div class="turcy-shell">
+    <div class="turcy-section-head"><div><p class="turcy-eyebrow">{{ section.settings.ingredients_eyebrow }}</p><h2 class="turcy-display">{{ section.settings.ingredients_heading }}</h2></div>{% if section.settings.ingredients_text != blank %}<p>{{ section.settings.ingredients_text }}</p>{% endif %}</div>
+    <div class="turcy-ingredient-grid">
+      {% for block in section.blocks %}{% if block.type == 'ingredient' %}<article class="turcy-ingredient" {{ block.shopify_attributes }}><span class="turcy-ingredient__symbol">{{ block.settings.symbol }}</span><h3>{{ block.settings.title }}</h3><p>{{ block.settings.text }}</p></article>{% endif %}{% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="turcy-section turcy-routine" id="routine">
+  <div class="turcy-shell turcy-routine__layout">
+    <div class="turcy-routine__intro"><p class="turcy-eyebrow">{{ section.settings.routine_eyebrow }}</p><h2 class="turcy-display">{{ section.settings.routine_heading }}</h2><div class="turcy-lead rte">{{ section.settings.routine_text }}</div></div>
+    <div class="turcy-routine__steps">
+      {% assign step_number = 0 %}
+      {% for block in section.blocks %}{% if block.type == 'step' %}{% assign step_number = step_number | plus: 1 %}<article class="turcy-routine__step" {{ block.shopify_attributes }}><span class="turcy-routine__number">{{ step_number }}</span><div><h3>{{ block.settings.title }}</h3><p>{{ block.settings.text }}</p></div><span class="turcy-routine__time">{{ block.settings.time }}</span></article>{% endif %}{% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="turcy-section turcy-bundle">
+  <div class="turcy-shell">
+    <div class="turcy-bundle__card">
+      <div class="turcy-bundle__images" aria-hidden="true"><img src="{{ 'turcy-cleanser.jpg' | asset_url }}" alt="" width="600" height="800" loading="lazy"><img src="{{ 'turcy-serum.jpg' | asset_url }}" alt="" width="600" height="800" loading="lazy"><img src="{{ 'turcy-aloe.jpg' | asset_url }}" alt="" width="600" height="800" loading="lazy"></div>
+      <div class="turcy-bundle__copy"><p class="turcy-eyebrow">{{ section.settings.bundle_eyebrow }}</p><h2 class="turcy-display">{{ section.settings.bundle_heading }}</h2><div class="rte">{{ section.settings.bundle_text }}</div>{% if section.settings.bundle_price != blank %}<p class="turcy-bundle__price"><strong>{{ section.settings.bundle_price }}</strong>{% if section.settings.bundle_compare_price != blank %} <s>{{ section.settings.bundle_compare_price }}</s>{% endif %}</p>{% endif %}<ul class="turcy-checks"><li>Foaming Face Wash Cleanser — 100 ml</li><li>10% Vitamin C + 5% Niacinamide Face Serum</li><li>Aloe Vera Gel — 30 ml</li></ul>{% if section.settings.bundle_button != blank %}<a class="turcy-button" href="{{ section.settings.bundle_link }}">{{ section.settings.bundle_button }} <span aria-hidden="true">→</span></a>{% endif %}</div>
+    </div>
+  </div>
+</section>
+
+<section class="turcy-section turcy-reviews">
+  <div class="turcy-shell">
+    <div class="turcy-section-head"><div><p class="turcy-eyebrow">{{ section.settings.reviews_eyebrow }}</p><h2 class="turcy-display">{{ section.settings.reviews_heading }}</h2></div></div>
+    <div class="turcy-review-grid">
+      {% for block in section.blocks %}{% if block.type == 'review' %}<article class="turcy-review" {{ block.shopify_attributes }}><span class="turcy-stars" aria-label="Five stars">★★★★★</span><blockquote>“{{ block.settings.quote }}”</blockquote><div class="turcy-review__person"><span class="turcy-review__initials">{{ block.settings.initials }}</span><div><strong>{{ block.settings.name }}</strong><span>{{ block.settings.detail }}</span></div></div></article>{% endif %}{% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="turcy-section turcy-faq" id="faq">
+  <div class="turcy-shell turcy-faq__layout">
+    <div><p class="turcy-eyebrow">{{ section.settings.faq_eyebrow }}</p><h2 class="turcy-display">{{ section.settings.faq_heading }}</h2>{% if section.settings.faq_text != blank %}<p class="turcy-lead">{{ section.settings.faq_text }}</p>{% endif %}</div>
+    <div class="turcy-faq__list">{% for block in section.blocks %}{% if block.type == 'faq' %}<details {{ block.shopify_attributes }}><summary>{{ block.settings.question }}</summary><div class="rte">{{ block.settings.answer }}</div></details>{% endif %}{% endfor %}</div>
+  </div>
+</section>
+
+<section class="turcy-section turcy-newsletter" style="background-image: linear-gradient(rgba(13,46,39,.82),rgba(13,46,39,.82)), url('{{ 'turcy-suncare.jpg' | asset_url }}');">
+  <h2 class="turcy-display">{{ section.settings.newsletter_heading }}</h2>
+  <div class="rte">{{ section.settings.newsletter_text }}</div>
+  {% form 'customer', class: 'turcy-newsletter__form' %}
+    <input type="hidden" name="contact[tags]" value="newsletter">
+    <label class="visually-hidden" for="TurcyNewsletter-{{ section.id }}">Email address</label>
+    <input id="TurcyNewsletter-{{ section.id }}" type="email" name="contact[email]" value="{{ form.email }}" placeholder="Email address" autocorrect="off" autocapitalize="off" autocomplete="email" required>
+    <button class="turcy-button" type="submit">{{ section.settings.newsletter_button }}</button>
+    {% if form.errors %}<small class="turcy-form-message">{{ form.errors.translated_fields.email | capitalize }} {{ form.errors.messages.email }}</small>{% endif %}
+    {% if form.posted_successfully? %}<small class="turcy-form-message">Thanks for subscribing.</small>{% endif %}
+  {% endform %}
+</section>
+
+{% schema %}
+{
+  "name": "Turcy editorial content",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "header", "content": "Brand story" },
+    { "type": "text", "id": "story_eyebrow", "label": "Eyebrow", "default": "Why Turcy" },
+    { "type": "text", "id": "story_heading", "label": "Heading", "default": "Better routines begin with clearer choices." },
+    { "type": "richtext", "id": "story_text", "label": "Text", "default": "<p>Turcy brings together recognizable skincare and haircare ingredients in focused formats. The goal is simple: make it easier to understand what belongs in your routine and why.</p><p>From a quick cleanse to daily hydration and targeted actives, each product is designed to earn a practical place on your shelf.</p>" },
+    { "type": "image_picker", "id": "story_image", "label": "Main image" },
+    { "type": "image_picker", "id": "story_image_small", "label": "Small image" },
+    { "type": "text", "id": "story_stamp", "label": "Stamp text", "default": "Clear care • Consistent routines" },
+    { "type": "text", "id": "story_button", "label": "Button", "default": "Explore the collection" },
+    { "type": "url", "id": "story_link", "label": "Button link" },
+    { "type": "header", "content": "Ingredients" },
+    { "type": "text", "id": "ingredients_eyebrow", "label": "Eyebrow", "default": "Ingredient guide" },
+    { "type": "text", "id": "ingredients_heading", "label": "Heading", "default": "Know what each hero ingredient is here to do." },
+    { "type": "textarea", "id": "ingredients_text", "label": "Supporting text", "default": "Product suitability varies by skin type. Introduce actives gradually, patch test where appropriate and follow the final packaging directions." },
+    { "type": "header", "content": "Routine" },
+    { "type": "text", "id": "routine_eyebrow", "label": "Eyebrow", "default": "How to layer" },
+    { "type": "text", "id": "routine_heading", "label": "Heading", "default": "A simple order that makes sense." },
+    { "type": "richtext", "id": "routine_text", "label": "Text", "default": "<p>Start with the basics, introduce targeted products gradually, and keep sun protection in the morning routine.</p>" },
+    { "type": "header", "content": "Routine bundle" },
+    { "type": "text", "id": "bundle_eyebrow", "label": "Eyebrow", "default": "Suggested starter routine" },
+    { "type": "text", "id": "bundle_heading", "label": "Heading", "default": "Cleanse. Treat. Hydrate." },
+    { "type": "richtext", "id": "bundle_text", "label": "Text", "default": "<p>Three straightforward steps for a balanced daily routine.</p>" },
+    { "type": "text", "id": "bundle_price", "label": "Bundle price", "default": "₹1,647" },
+    { "type": "text", "id": "bundle_compare_price", "label": "Compare-at price", "default": "₹2,448" },
+    { "type": "text", "id": "bundle_button", "label": "Button", "default": "Shop the routine" },
+    { "type": "url", "id": "bundle_link", "label": "Button link" },
+    { "type": "header", "content": "Reviews" },
+    { "type": "text", "id": "reviews_eyebrow", "label": "Eyebrow", "default": "Routine notes" },
+    { "type": "text", "id": "reviews_heading", "label": "Heading", "default": "Designed to feel clear, practical and easy to repeat." },
+    { "type": "header", "content": "FAQ" },
+    { "type": "text", "id": "faq_eyebrow", "label": "Eyebrow", "default": "Before you begin" },
+    { "type": "text", "id": "faq_heading", "label": "Heading", "default": "Good care starts with good information." },
+    { "type": "textarea", "id": "faq_text", "label": "Supporting text", "default": "Final directions, warnings and ingredient lists should match the approved product packaging." },
+    { "type": "header", "content": "Newsletter" },
+    { "type": "text", "id": "newsletter_heading", "label": "Heading", "default": "Build a routine you will actually follow." },
+    { "type": "richtext", "id": "newsletter_text", "label": "Text", "default": "<p>Join for product education, routine tips and thoughtful updates from Turcy.</p>" },
+    { "type": "text", "id": "newsletter_button", "label": "Button", "default": "Join Turcy" }
+  ],
+  "blocks": [
+    { "type": "pillar", "name": "Story pillar", "settings": [{ "type": "text", "id": "title", "label": "Title", "default": "Focused selection" }, { "type": "text", "id": "text", "label": "Text", "default": "A concise range built around real routine needs." }] },
+    { "type": "ingredient", "name": "Ingredient", "settings": [{ "type": "text", "id": "symbol", "label": "Symbol", "default": "C" }, { "type": "text", "id": "title", "label": "Title", "default": "Vitamin C" }, { "type": "textarea", "id": "text", "label": "Text", "default": "Used in brightening routines to support radiant-looking skin." }] },
+    { "type": "step", "name": "Routine step", "settings": [{ "type": "text", "id": "title", "label": "Title", "default": "Cleanse" }, { "type": "textarea", "id": "text", "label": "Text", "default": "Choose a cleanser that suits your primary concern." }, { "type": "text", "id": "time", "label": "Time", "default": "AM + PM" }] },
+    { "type": "review", "name": "Review", "settings": [{ "type": "textarea", "id": "quote", "label": "Quote", "default": "The routine feels simple enough to stay consistent with." }, { "type": "text", "id": "initials", "label": "Initials", "default": "AK" }, { "type": "text", "id": "name", "label": "Name", "default": "Aarushi K." }, { "type": "text", "id": "detail", "label": "Detail", "default": "Verified customer" }] },
+    { "type": "faq", "name": "FAQ", "settings": [{ "type": "text", "id": "question", "label": "Question", "default": "How should I introduce active ingredients?" }, { "type": "richtext", "id": "answer", "label": "Answer", "default": "<p>Introduce one active at a time, patch test first, and follow the directions on each product.</p>" }] }
+  ],
+  "presets": [{ "name": "Turcy editorial content" }]
+}
+{% endschema %}

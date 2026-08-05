@@ -1,0 +1,110 @@
+{{ 'turcy-home.css' | asset_url | stylesheet_tag }}
+
+<section class="turcy-section turcy-collections" id="shop-by-concern">
+  <div class="turcy-shell">
+    <div class="turcy-section-head">
+      <div>
+        {% if section.settings.eyebrow != blank %}<p class="turcy-eyebrow">{{ section.settings.eyebrow }}</p>{% endif %}
+        <h2 class="turcy-display">{{ section.settings.heading }}</h2>
+        {% if section.settings.text != blank %}<div class="turcy-lead rte">{{ section.settings.text }}</div>{% endif %}
+      </div>
+    </div>
+
+    <div class="turcy-collection-grid">
+      {% for block in section.blocks %}
+        {% liquid
+          assign collection = block.settings.collection
+          assign card_title = block.settings.title
+          if card_title == blank and collection != blank
+            assign card_title = collection.title
+          endif
+          assign card_url = block.settings.link
+          if card_url == blank and collection != blank
+            assign card_url = collection.url
+          endif
+          if card_url == blank
+            assign card_url = routes.all_products_collection_url
+          endif
+          case block.settings.fallback_image
+            when 'cleanser'
+              assign fallback_asset = 'turcy-cleanser.jpg'
+            when 'mist'
+              assign fallback_asset = 'turcy-mist.jpg'
+            when 'moisturizer'
+              assign fallback_asset = 'turcy-moisturizer.jpg'
+            when 'hair'
+              assign fallback_asset = 'turcy-hair.jpg'
+            when 'suncare'
+              assign fallback_asset = 'turcy-suncare.jpg'
+            when 'soap'
+              assign fallback_asset = 'turcy-soap.jpg'
+            when 'aloe'
+              assign fallback_asset = 'turcy-aloe.jpg'
+            else
+              assign fallback_asset = 'turcy-serum.jpg'
+          endcase
+        %}
+        <a class="turcy-collection-card" href="{{ card_url }}" {{ block.shopify_attributes }}>
+          <div class="turcy-collection-card__media">
+            {% if block.settings.image != blank %}
+              {{ block.settings.image | image_url: width: 700 | image_tag: widths: '240, 360, 540, 700', sizes: '(min-width: 1051px) 19vw, (min-width: 750px) 31vw, 48vw', loading: 'lazy' }}
+            {% else %}
+              <img src="{{ fallback_asset | asset_url }}" alt="{{ card_title | escape }}" width="700" height="850" loading="lazy">
+            {% endif %}
+          </div>
+          <div class="turcy-collection-card__body">
+            <span class="turcy-collection-card__number">{{ forloop.index | prepend: '0' }} / {{ block.settings.kicker }}</span>
+            <h3>{{ card_title }}</h3>
+            {% if block.settings.text != blank %}<p>{{ block.settings.text }}</p>{% endif %}
+            <span class="turcy-collection-card__arrow" aria-hidden="true">↗</span>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Turcy collection list",
+  "tag": "section",
+  "class": "section",
+  "max_blocks": 10,
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Shop by concern" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Start with what your routine needs." },
+    { "type": "richtext", "id": "text", "label": "Text" }
+  ],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "Collection",
+      "settings": [
+        { "type": "collection", "id": "collection", "label": "Collection" },
+        { "type": "image_picker", "id": "image", "label": "Custom image" },
+        {
+          "type": "select",
+          "id": "fallback_image",
+          "label": "Included fallback image",
+          "default": "serum",
+          "options": [
+            { "value": "serum", "label": "Serum" },
+            { "value": "cleanser", "label": "Cleanser" },
+            { "value": "mist", "label": "Face mist" },
+            { "value": "moisturizer", "label": "Moisturizer" },
+            { "value": "hair", "label": "Hair care" },
+            { "value": "suncare", "label": "Sun care" },
+            { "value": "soap", "label": "Soap" },
+            { "value": "aloe", "label": "Aloe vera" }
+          ]
+        },
+        { "type": "text", "id": "kicker", "label": "Kicker", "default": "BRIGHTEN" },
+        { "type": "text", "id": "title", "label": "Custom title" },
+        { "type": "textarea", "id": "text", "label": "Description", "default": "Focused essentials for a simple routine." },
+        { "type": "url", "id": "link", "label": "Custom link" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Turcy collection list", "blocks": [{ "type": "collection" }, { "type": "collection" }, { "type": "collection" }, { "type": "collection" }, { "type": "collection" }] }]
+}
+{% endschema %}
