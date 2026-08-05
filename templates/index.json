@@ -385,7 +385,8 @@
       ],
       "name": "SH: Image with text 3",
       "settings": {
-        "image_height": "adapt",
+        "image": "shopify://shop_images/pexels-photo-4857810.png",
+        "image_height": "small",
         "image_align": "right",
         "image_radius": 0,
         "text_align": "left",
