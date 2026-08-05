@@ -497,143 +497,11 @@
         "show_secondary_image": true,
         "show_vendor": false,
         "show_rating": false,
-        "quick_add": "none",
+        "quick_add": "standard",
         "columns_mobile": "2",
         "swipe_on_mobile": false,
         "padding_top": 36,
         "padding_bottom": 36
-      }
-    },
-    "available_on_fGVMhz": {
-      "type": "available-on",
-      "blocks": {
-        "logo_8iccDr": {
-          "type": "logo",
-          "settings": {
-            "logo_external_url": "",
-            "platform_name": "",
-            "logo_alt": "",
-            "platform_link": ""
-          }
-        },
-        "logo_Gk86B7": {
-          "type": "logo",
-          "settings": {
-            "logo_external_url": "",
-            "platform_name": "",
-            "logo_alt": "",
-            "platform_link": ""
-          }
-        },
-        "logo_YU8gbd": {
-          "type": "logo",
-          "settings": {
-            "logo_external_url": "https://suroskie.com/cdn/shop/files/pngwing.com_2.png?v=1758097663",
-            "platform_name": "Blinkit",
-            "logo_alt": "Blinkit logo",
-            "platform_link": ""
-          }
-        },
-        "logo_n4eL6V": {
-          "type": "logo",
-          "disabled": true,
-          "settings": {
-            "logo_external_url": "https://suroskie.com/cdn/shop/files/8c60911d-63aa-4e4c-953b-30d85c9a8c82.png?v=1758097759",
-            "platform_name": "Zepto",
-            "logo_alt": "Zepto logo",
-            "platform_link": ""
-          }
-        },
-        "logo_4944Bk": {
-          "type": "logo",
-          "settings": {
-            "logo_external_url": "https://suroskie.com/cdn/shop/files/instamart-logo-vector_logoshape.com.png?v=1767000384",
-            "platform_name": "Instamart",
-            "logo_alt": "Instamart logo",
-            "platform_link": ""
-          }
-        },
-        "logo_DpyH8q": {
-          "type": "logo",
-          "settings": {
-            "logo_external_url": "https://suroskie.com/cdn/shop/files/pngfind.com-flipkart-logo-png-3288902.png?v=1759829326",
-            "platform_name": "Flipkart",
-            "logo_alt": "Flipkart logo",
-            "platform_link": ""
-          }
-        },
-        "logo_dWxtzt": {
-          "type": "logo",
-          "settings": {
-            "logo_external_url": "",
-            "platform_name": "Amazon",
-            "logo_alt": "Platform logo",
-            "platform_link": ""
-          }
-        },
-        "logo_RMwgCt": {
-          "type": "logo",
-          "settings": {
-            "logo_external_url": "",
-            "platform_name": "Amazon",
-            "logo_alt": "Platform logo",
-            "platform_link": ""
-          }
-        },
-        "logo_r7DmGy": {
-          "type": "logo",
-          "settings": {
-            "logo_external_url": "",
-            "platform_name": "Amazon",
-            "logo_alt": "Platform logo",
-            "platform_link": ""
-          }
-        }
-      },
-      "block_order": [
-        "logo_8iccDr",
-        "logo_Gk86B7",
-        "logo_YU8gbd",
-        "logo_n4eL6V",
-        "logo_4944Bk",
-        "logo_DpyH8q",
-        "logo_dWxtzt",
-        "logo_RMwgCt",
-        "logo_r7DmGy"
-      ],
-      "name": "Simple Available On",
-      "settings": {
-        "heading": "We are Available on",
-        "layout_type": "slider",
-        "show_arrows": true,
-        "enable_autoplay": true,
-        "slider_speed": 3,
-        "desktop_slider_items": 6,
-        "mobile_slider_items": 2,
-        "section_bg": "#ffffff",
-        "heading_color": "#111111",
-        "card_bg": "#ffffff",
-        "card_border": "#ffffff",
-        "card_hover_border": "#bdbdbd",
-        "text_logo_color": "#111111",
-        "container_width": 1400,
-        "desktop_columns": 6,
-        "heading_size": 30,
-        "mobile_heading_size": 24,
-        "card_height": 76,
-        "mobile_card_height": 64,
-        "card_radius": 14,
-        "mobile_card_radius": 12,
-        "logo_max_width": 180,
-        "logo_max_height": 42,
-        "mobile_logo_max_width": 110,
-        "mobile_logo_max_height": 34,
-        "logo_gap": 16,
-        "mobile_logo_gap": 12,
-        "padding_top": 48,
-        "padding_bottom": 20,
-        "mobile_padding_top": 32,
-        "mobile_padding_bottom": 32
       }
     },
     "new_apart_XPcT3d": {
@@ -1081,7 +949,6 @@
     "sh_image_with_text_3_z3LP76",
     "sh_featured_banner_image_Rn79ib",
     "featured_collection_CXxJxB",
-    "available_on_fGVMhz",
     "new_apart_XPcT3d",
     "sh_image_with_text_ARHLDD",
     "17797033528d6814a0",
