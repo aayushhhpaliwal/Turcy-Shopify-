@@ -243,6 +243,97 @@
         "mobile_padding_bottom": 40
       }
     },
+    "turcy_floating_brand_story_pP4wy4": {
+      "type": "turcy-floating-brand-story",
+      "blocks": {
+        "product_image_rncGc7": {
+          "type": "product_image",
+          "settings": {
+            "image": "shopify://shop_images/pexels-photo-7814990_a53c063c-da16-4ae6-885f-6e0f662eabca.jpg",
+            "alt_text": "Turcy product",
+            "caption": "",
+            "desktop_x": 16,
+            "desktop_y": 70,
+            "desktop_width": 170,
+            "mobile_x": 24,
+            "mobile_y": 70,
+            "mobile_width": 120,
+            "rotation": -8,
+            "shadow_opacity": 18,
+            "z_index": 2,
+            "enable_float": true,
+            "animation_delay": 0
+          }
+        },
+        "product_image_GWyLFR": {
+          "type": "product_image",
+          "settings": {
+            "image": "shopify://shop_images/pexels-photo-4857810.jpg",
+            "alt_text": "Turcy product",
+            "caption": "",
+            "desktop_x": 50,
+            "desktop_y": 76,
+            "desktop_width": 240,
+            "mobile_x": 50,
+            "mobile_y": 82,
+            "mobile_width": 170,
+            "rotation": 0,
+            "shadow_opacity": 18,
+            "z_index": 4,
+            "enable_float": true,
+            "animation_delay": 5
+          }
+        },
+        "product_image_TyBh7q": {
+          "type": "product_image",
+          "settings": {
+            "image": "shopify://shop_images/pexels-photo-6847860.jpg",
+            "alt_text": "Turcy product",
+            "caption": "",
+            "desktop_x": 84,
+            "desktop_y": 69,
+            "desktop_width": 170,
+            "mobile_x": 77,
+            "mobile_y": 68,
+            "mobile_width": 120,
+            "rotation": 10,
+            "shadow_opacity": 18,
+            "z_index": 2,
+            "enable_float": true,
+            "animation_delay": 10
+          }
+        }
+      },
+      "block_order": [
+        "product_image_rncGc7",
+        "product_image_GWyLFR",
+        "product_image_TyBh7q"
+      ],
+      "name": "Turcy floating story",
+      "settings": {
+        "eyebrow": "Where science meets self-care",
+        "heading": "At Turcy, we believe good care should feel clear, thoughtful and made for real life.",
+        "description": "",
+        "button_label": "",
+        "button_link": "",
+        "watermark_text": "turcy",
+        "decorative_shape": true,
+        "watermark_size": 420,
+        "watermark_opacity": 8,
+        "max_width": 1440,
+        "desktop_height": 700,
+        "mobile_height": 820,
+        "heading_size": 56,
+        "body_size": 17,
+        "background_color": "#FFFFFF",
+        "heading_color": "#17211E",
+        "text_color": "#596762",
+        "accent_color": "#173F35",
+        "watermark_color": "#AEBDB7",
+        "padding_top": 55,
+        "padding_bottom": 90
+      }
+    },
     "sh_sub_collection_list_QB9yHY": {
       "type": "sh-sub-collection-list",
       "blocks": {
@@ -401,10 +492,10 @@
         "title_font_size": 28,
         "content_font_size": 16,
         "text_font_size": 20,
-        "bg_color": "#FFFFFF",
+        "bg_color": "#ffffff",
         "title_color": "#121212",
         "content_color": "#121212",
-        "content_bg_color": "#F7F4EF",
+        "content_bg_color": "#f7f4ef",
         "text_color": "#ffffff",
         "text_bg_color": "#121212",
         "btn_bg_color": "#121212",
@@ -595,14 +686,14 @@
         "body_size": 13,
         "symbol_size": 26,
         "icon_size": 64,
-        "background_color": "#FFFFFF",
-        "heading_color": "#17211E",
-        "text_color": "#66716D",
-        "accent_color": "#173F35",
-        "card_background": "#FCFAF6",
-        "card_border_color": "#E0E2DE",
-        "icon_background": "#DDEAE2",
-        "icon_color": "#173F35",
+        "background_color": "#ffffff",
+        "heading_color": "#17211e",
+        "text_color": "#66716d",
+        "accent_color": "#173f35",
+        "card_background": "#fcfaf6",
+        "card_border_color": "#e0e2de",
+        "icon_background": "#ddeae2",
+        "icon_color": "#173f35",
         "padding_top": 90,
         "padding_bottom": 25
       }
@@ -824,7 +915,7 @@
         "autoplay": false,
         "autoplay_interval": 4500,
         "bg": "#ffffff",
-        "card": "#F7F4EF",
+        "card": "#f7f4ef",
         "text": "#111111",
         "muted": "#000000",
         "section_padding": 42
@@ -897,11 +988,11 @@
         "heading_size": 70,
         "question_size": 16,
         "answer_size": 15,
-        "background_color": "#F7F4EF",
-        "heading_color": "#17211E",
-        "text_color": "#67736E",
-        "accent_color": "#173F35",
-        "line_color": "#D8DEDA",
+        "background_color": "#f7f4ef",
+        "heading_color": "#17211e",
+        "text_color": "#67736e",
+        "accent_color": "#173f35",
+        "line_color": "#d8deda",
         "padding_top": 90,
         "padding_bottom": 90
       }
@@ -1048,6 +1139,7 @@
     "sh_hero_slideshow_ppeQgX",
     "trust_highlights_WwUB9P",
     "collection_inspiration_wVNhhj",
+    "turcy_floating_brand_story_pP4wy4",
     "sh_sub_collection_list_QB9yHY",
     "featured_collection_UkrKR7",
     "sh_image_with_text_3_z3LP76",
