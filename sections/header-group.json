@@ -101,7 +101,7 @@
         ".list-menu__item {font-size: 14px;}"
       ],
       "settings": {
-        "logo_position": "middle-center",
+        "logo_position": "top-center",
         "mobile_logo_position": "center",
         "menu": "main-menu",
         "menu_type_desktop": "dropdown",
