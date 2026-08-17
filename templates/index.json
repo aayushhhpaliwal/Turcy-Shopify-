@@ -647,6 +647,104 @@
         "padding_bottom": 36
       }
     },
+    "bt_shop_by_skin_type_ApACtq": {
+      "type": "BT-shop-by-skin-type",
+      "blocks": {
+        "skin_type_XxN4pi": {
+          "type": "skin_type",
+          "settings": {
+            "image": "shopify://shop_images/1_6df3ff35-b637-4b6e-82ff-38522b3509bf.png",
+            "title": "Normal",
+            "collection": "",
+            "link": "",
+            "open_new_tab": false
+          }
+        },
+        "skin_type_9Ktnaa": {
+          "type": "skin_type",
+          "settings": {
+            "image": "shopify://shop_images/2_b880df5e-0ee8-44ca-bc25-f0caeb6428e3.png",
+            "title": "Oily",
+            "collection": "",
+            "link": "",
+            "open_new_tab": false
+          }
+        },
+        "skin_type_xnUwjW": {
+          "type": "skin_type",
+          "settings": {
+            "image": "shopify://shop_images/3_0d16835c-1215-4bce-8b75-3173653cff1f.png",
+            "title": "Dry",
+            "collection": "",
+            "link": "",
+            "open_new_tab": false
+          }
+        },
+        "skin_type_Y7VMLM": {
+          "type": "skin_type",
+          "settings": {
+            "image": "shopify://shop_images/5_66b7b97b-09e8-4031-a797-2ca889493c66.png",
+            "title": "Sensitive",
+            "collection": "",
+            "link": "",
+            "open_new_tab": false
+          }
+        },
+        "skin_type_W4fxEq": {
+          "type": "skin_type",
+          "settings": {
+            "image": "shopify://shop_images/4_98805591-1304-4e97-91fd-d17764388f37.png",
+            "title": "Combination",
+            "collection": "",
+            "link": "",
+            "open_new_tab": false
+          }
+        }
+      },
+      "block_order": [
+        "skin_type_XxN4pi",
+        "skin_type_9Ktnaa",
+        "skin_type_xnUwjW",
+        "skin_type_Y7VMLM",
+        "skin_type_W4fxEq"
+      ],
+      "name": "Shop by skin type",
+      "settings": {
+        "heading": "Shop By Skin Type",
+        "heading_background": "#F1F1F1",
+        "heading_color": "#000000",
+        "heading_bar_height": 60,
+        "heading_size": 32,
+        "heading_weight": "600",
+        "mobile_heading_bar_height": 54,
+        "mobile_heading_size": 26,
+        "section_background": "#ffffff",
+        "max_width": 1260,
+        "desktop_columns": 5,
+        "tablet_columns": 3,
+        "card_ratio": "1 / 1",
+        "image_fit": "cover",
+        "desktop_gap": 10,
+        "card_radius": 0,
+        "overlay_opacity": 40,
+        "hover_zoom": 4,
+        "label_color": "#ffffff",
+        "label_size": 23,
+        "label_weight": "700",
+        "label_horizontal_padding": 16,
+        "label_bottom_spacing": 18,
+        "mobile_label_size": 18,
+        "mobile_label_horizontal_padding": 12,
+        "mobile_label_bottom_spacing": 12,
+        "mobile_card_width": 68,
+        "mobile_gap": 10,
+        "mobile_scroll_bottom_padding": 2,
+        "padding_top": 24,
+        "padding_bottom": 12,
+        "mobile_padding_top": 16,
+        "mobile_padding_bottom": 16
+      }
+    },
     "turcy_ingredients_HceJQz": {
       "type": "turcy-ingredients",
       "blocks": {
@@ -1185,6 +1283,79 @@
         "mobile_padding_top": 32,
         "mobile_padding_bottom": 32
       }
+    },
+    "for_every_you_carousel_3aiGQ7": {
+      "type": "for-every-you-carousel",
+      "blocks": {
+        "slide_wNFVFD": {
+          "type": "slide",
+          "settings": {
+            "title": "OFFICE WEAR",
+            "link": ""
+          }
+        },
+        "slide_qkCKPJ": {
+          "type": "slide",
+          "settings": {
+            "title": "DAILY WEAR",
+            "link": ""
+          }
+        },
+        "slide_Yf9M6d": {
+          "type": "slide",
+          "settings": {
+            "title": "PARTY WEAR",
+            "link": ""
+          }
+        },
+        "slide_F3ttGk": {
+          "type": "slide",
+          "settings": {
+            "title": "DAY OUT",
+            "link": ""
+          }
+        },
+        "slide_fWJ4C8": {
+          "type": "slide",
+          "settings": {
+            "title": "WEDDING WEAR",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "slide_wNFVFD",
+        "slide_qkCKPJ",
+        "slide_Yf9M6d",
+        "slide_F3ttGk",
+        "slide_fWJ4C8"
+      ],
+      "name": "For Every You Palmonas",
+      "settings": {
+        "full_width": true,
+        "label_text": "FOR EVERY YOU",
+        "label_size": 12,
+        "label_size_mobile": 11,
+        "caption_size": 22,
+        "caption_size_mobile": 16,
+        "desktop_height": 640,
+        "mobile_height": 420,
+        "overlay_opacity": 10,
+        "arrow_offset": 16,
+        "start_from": 1,
+        "autoplay": false,
+        "autoplay_speed": 4,
+        "section_bg": "#f3f3f3",
+        "label_bg": "#2f62ff",
+        "label_color": "#ffffff",
+        "caption_color": "#ffffff",
+        "arrow_bg": "#ffffff",
+        "arrow_color": "#222222",
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "padding_top_mobile": 28,
+        "padding_bottom_mobile": 28
+      }
     }
   },
   "order": [
@@ -1198,12 +1369,14 @@
     "sh_featured_banner_image_Rn79ib",
     "turcy_featured_collection_ccNh6G",
     "featured_collection_CXxJxB",
+    "bt_shop_by_skin_type_ApACtq",
     "turcy_ingredients_HceJQz",
     "new_apart_XPcT3d",
     "sh_image_with_text_ARHLDD",
     "17797033528d6814a0",
     "bt_testimonial_VH3yTt",
     "turcy_premium_faq_PnG7q6",
-    "available_on_P7xQCx"
+    "available_on_P7xQCx",
+    "for_every_you_carousel_3aiGQ7"
   ]
 }
