@@ -424,7 +424,7 @@
       ],
       "name": "t:sections.featured-collection.presets.name",
       "settings": {
-        "collection": "glow-tone",
+        "collection": "hydration",
         "products_to_show": 4,
         "title": "<strong>ACNE & BLEMISH CARE</strong>",
         "heading_size": "h1",
