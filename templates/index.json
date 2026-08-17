@@ -562,9 +562,10 @@
     },
     "turcy_featured_collection_ccNh6G": {
       "type": "turcy-featured-collection",
+      "disabled": true,
       "name": "Turcy featured collection",
       "settings": {
-        "collection": "glow-tone",
+        "collection": "hydration",
         "products_to_show": 4,
         "eyebrow": "",
         "heading": "Skin Essentials Products",
@@ -612,7 +613,6 @@
     },
     "featured_collection_CXxJxB": {
       "type": "featured-collection",
-      "disabled": true,
       "custom_css": [
         "@media screen and (min-width: 990px) {.page-width-desktop {max-width: var(--page-width); padding: 0 1rem; }}",
         "h2.title.inline-richtext.h1 {font-size: 32px;}",
