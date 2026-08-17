@@ -1223,37 +1223,40 @@
         "logo_fPp6GD": {
           "type": "logo",
           "settings": {
+            "logo_image": "shopify://shop_images/jiomart-logo.png",
             "logo_external_url": "",
             "platform_name": "",
             "logo_alt": "",
-            "platform_link": "https://www.hindustantimes.com/brand-stories/kiteskraft-productions-llp-presents-the-league-of-extraordinary-achievers-2026-101772438131920.html"
+            "platform_link": ""
           }
         },
         "logo_w6KzTk": {
           "type": "logo",
           "settings": {
+            "logo_image": "shopify://shop_images/b4a0607481.png",
             "logo_external_url": "",
             "platform_name": "",
             "logo_alt": "",
-            "platform_link": "https://womensinsider.com/beauty/the-future-of-skincare-how-bio-mystery-is-redefining-beauty-with-science-and-integrity/"
+            "platform_link": ""
           }
         },
         "logo_jEdbFJ": {
           "type": "logo",
           "settings": {
-            "logo_external_url": "https://suroskie.com/cdn/shop/files/pngwing.com_2.png?v=1758097663",
-            "platform_name": "Blinkit",
-            "logo_alt": "Blinkit logo",
-            "platform_link": "https://usanews.com/newsroom/the-science-first-skincare-brand-changing-the-rules"
+            "logo_image": "shopify://shop_images/flipkart-logo-hd-transparent-background-701751694706841of8tlyo4n0.png",
+            "logo_external_url": "",
+            "platform_name": "",
+            "logo_alt": "",
+            "platform_link": ""
           }
         },
         "logo_gh7hc7": {
           "type": "logo",
-          "disabled": true,
           "settings": {
-            "logo_external_url": "https://suroskie.com/cdn/shop/files/8c60911d-63aa-4e4c-953b-30d85c9a8c82.png?v=1758097759",
-            "platform_name": "Zepto",
-            "logo_alt": "Zepto logo",
+            "logo_image": "shopify://shop_images/1748510129625.SwiggyInstamart-2025-12-5b4164ff67379191acc47995deb08be3.png",
+            "logo_external_url": "",
+            "platform_name": "",
+            "logo_alt": "",
             "platform_link": ""
           }
         },
