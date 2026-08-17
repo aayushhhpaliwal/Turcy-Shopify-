@@ -849,6 +849,75 @@
         "padding_bottom": 25
       }
     },
+    "for_every_you_carousel_3aiGQ7": {
+      "type": "for-every-you-carousel",
+      "blocks": {
+        "slide_qkCKPJ": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/imgi_72_1_962735ad-b0a9-42cc-b507-5a3e3c3af6c5.jpg",
+            "title": "Dark Spots & Pigmentation",
+            "link": ""
+          }
+        },
+        "slide_Yf9M6d": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/imgi_74_3_f489974e-f68a-422b-889d-2c2fe2e2c7e9.jpg",
+            "title": "Dry & Dull Skin Solutions",
+            "link": ""
+          }
+        },
+        "slide_F3ttGk": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/imgi_73_4_5ad38dd9-c5ff-4a81-92d2-f8de07abe806.jpg",
+            "title": "Fine Lines & Wrinkles",
+            "link": ""
+          }
+        },
+        "slide_ghmKtK": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/imgi_245_2_3329fc23-f7e1-47f6-b555-dd6dcc2ddaa8.jpg",
+            "title": "Redness Relief Cream & Serums",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "slide_qkCKPJ",
+        "slide_Yf9M6d",
+        "slide_F3ttGk",
+        "slide_ghmKtK"
+      ],
+      "name": "For Every You Palmonas",
+      "settings": {
+        "full_width": true,
+        "label_text": "FOR EVERY YOU",
+        "label_size": 12,
+        "label_size_mobile": 11,
+        "caption_size": 22,
+        "caption_size_mobile": 16,
+        "desktop_height": 640,
+        "mobile_height": 420,
+        "overlay_opacity": 10,
+        "arrow_offset": 16,
+        "start_from": 1,
+        "autoplay": false,
+        "autoplay_speed": 4,
+        "section_bg": "#f3f3f3",
+        "label_bg": "#F1F1F1",
+        "label_color": "#170808",
+        "caption_color": "#170808",
+        "arrow_bg": "#ffffff",
+        "arrow_color": "#222222",
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "padding_top_mobile": 28,
+        "padding_bottom_mobile": 28
+      }
+    },
     "new_apart_XPcT3d": {
       "type": "new-apart",
       "blocks": {
@@ -1283,79 +1352,6 @@
         "padding_bottom": 20,
         "mobile_padding_top": 32,
         "mobile_padding_bottom": 32
-      }
-    },
-    "for_every_you_carousel_3aiGQ7": {
-      "type": "for-every-you-carousel",
-      "blocks": {
-        "slide_wNFVFD": {
-          "type": "slide",
-          "settings": {
-            "title": "OFFICE WEAR",
-            "link": ""
-          }
-        },
-        "slide_qkCKPJ": {
-          "type": "slide",
-          "settings": {
-            "title": "DAILY WEAR",
-            "link": ""
-          }
-        },
-        "slide_Yf9M6d": {
-          "type": "slide",
-          "settings": {
-            "title": "PARTY WEAR",
-            "link": ""
-          }
-        },
-        "slide_F3ttGk": {
-          "type": "slide",
-          "settings": {
-            "title": "DAY OUT",
-            "link": ""
-          }
-        },
-        "slide_fWJ4C8": {
-          "type": "slide",
-          "settings": {
-            "title": "WEDDING WEAR",
-            "link": ""
-          }
-        }
-      },
-      "block_order": [
-        "slide_wNFVFD",
-        "slide_qkCKPJ",
-        "slide_Yf9M6d",
-        "slide_F3ttGk",
-        "slide_fWJ4C8"
-      ],
-      "name": "For Every You Palmonas",
-      "settings": {
-        "full_width": true,
-        "label_text": "FOR EVERY YOU",
-        "label_size": 12,
-        "label_size_mobile": 11,
-        "caption_size": 22,
-        "caption_size_mobile": 16,
-        "desktop_height": 640,
-        "mobile_height": 420,
-        "overlay_opacity": 10,
-        "arrow_offset": 16,
-        "start_from": 1,
-        "autoplay": false,
-        "autoplay_speed": 4,
-        "section_bg": "#f3f3f3",
-        "label_bg": "#2f62ff",
-        "label_color": "#ffffff",
-        "caption_color": "#ffffff",
-        "arrow_bg": "#ffffff",
-        "arrow_color": "#222222",
-        "padding_top": 40,
-        "padding_bottom": 40,
-        "padding_top_mobile": 28,
-        "padding_bottom_mobile": 28
       }
     }
   },
