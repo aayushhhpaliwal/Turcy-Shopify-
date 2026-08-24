@@ -562,6 +562,143 @@
         "section_max_width": "1500"
       }
     },
+    "bt_before_after_results_JjPdwJ": {
+      "type": "BT-before-after-results",
+      "blocks": {
+        "result_jiKDFr": {
+          "type": "result",
+          "settings": {
+            "category": "anti-aging",
+            "before_image": "shopify://shop_images/imgi_50_Before-3.jpg",
+            "before_alt": "Before using the product",
+            "after_image": "shopify://shop_images/imgi_49_After-3.jpg",
+            "after_alt": "After using the product",
+            "initial_slider_position": 50,
+            "customer_name": "Customer 1",
+            "skin_goal": "Smoother and firmer skin",
+            "duration": "2 Months",
+            "product": "moisturizer-cream",
+            "show_product_image": true,
+            "button_link": "",
+            "show_button": true,
+            "button_label": "Shop Now",
+            "open_in_new_tab": false
+          }
+        },
+        "result_wFT7XR": {
+          "type": "result",
+          "settings": {
+            "category": "acne",
+            "before_image": "shopify://shop_images/imgi_227_Before-4.jpg",
+            "before_alt": "Before using the product",
+            "after_image": "shopify://shop_images/imgi_52_After-4.jpg",
+            "after_alt": "After using the product",
+            "initial_slider_position": 50,
+            "customer_name": "Customer 2",
+            "skin_goal": "Fade acne marks",
+            "duration": "4 Months",
+            "product": "foaming-face-wash-cleanser",
+            "show_product_image": true,
+            "button_link": "",
+            "show_button": true,
+            "button_label": "Shop Now",
+            "open_in_new_tab": false
+          }
+        },
+        "result_7EKf6h": {
+          "type": "result",
+          "settings": {
+            "category": "pigmentation",
+            "before_image": "shopify://shop_images/Before-2.webp",
+            "before_alt": "Before using the product",
+            "after_image": "shopify://shop_images/After-2.webp",
+            "after_alt": "After using the product",
+            "initial_slider_position": 50,
+            "customer_name": "Customer 3",
+            "skin_goal": "Reduce pigmentation",
+            "duration": "6 Months",
+            "product": "10-vitamin-c-5-niacinamide-face-serum",
+            "show_product_image": true,
+            "button_link": "",
+            "show_button": true,
+            "button_label": "Shop Now",
+            "open_in_new_tab": false
+          }
+        },
+        "result_TEa4Yt": {
+          "type": "result",
+          "settings": {
+            "category": "acne",
+            "before_image": "shopify://shop_images/Before-4.webp",
+            "before_alt": "Before using the product",
+            "after_image": "shopify://shop_images/After-4.webp",
+            "after_alt": "After using the product",
+            "initial_slider_position": 50,
+            "customer_name": "Customer 4",
+            "skin_goal": "Improve skin texture",
+            "duration": "3 Months",
+            "product": "foaming-face-wash-cleanser",
+            "show_product_image": true,
+            "button_link": "",
+            "show_button": true,
+            "button_label": "Shop Now",
+            "open_in_new_tab": false
+          }
+        }
+      },
+      "block_order": [
+        "result_jiKDFr",
+        "result_wFT7XR",
+        "result_7EKf6h",
+        "result_TEa4Yt"
+      ],
+      "name": "Before & after results",
+      "settings": {
+        "heading": "Don't Take Our Word For It, Take Theirs!",
+        "subheading": "#Real People Real Results",
+        "show_filters": true,
+        "show_result_count": true,
+        "all_label": "All",
+        "anti_aging_label": "Anti-Aging",
+        "acne_label": "Acne",
+        "pigmentation_label": "Pigmentation",
+        "results_label": "Results",
+        "before_label": "Before",
+        "after_label": "After",
+        "journey_suffix": "'s Journey",
+        "skin_goal_label": "Skin Goal",
+        "duration_label": "Duration",
+        "max_width": 1400,
+        "desktop_columns": 4,
+        "tablet_cards_per_view": 2,
+        "slider_gap": 20,
+        "show_navigation": true,
+        "slider_aria_label": "Customer before and after results",
+        "previous_label": "Previous result",
+        "next_label": "Next result",
+        "image_ratio": "1 / 1",
+        "image_fit": "cover",
+        "mobile_card_width": 88,
+        "card_radius": 18,
+        "product_image_width": 110,
+        "mobile_product_image_width": 90,
+        "show_mobile_hint": true,
+        "mobile_hint": "Swipe to see more results",
+        "background_color": "#f7f4ef",
+        "card_background": "#ffffff",
+        "text_color": "#171717",
+        "muted_text_color": "#6b6b6b",
+        "accent_color": "#171717",
+        "accent_text_color": "#ffffff",
+        "border_color": "#dedbd6",
+        "card_shadow": "0 8px 26px rgba(0, 0, 0, 0.06)",
+        "card_hover_shadow": "0 14px 34px rgba(0, 0, 0, 0.10)",
+        "padding_top": 72,
+        "padding_bottom": 20,
+        "mobile_padding_top": 48,
+        "mobile_padding_bottom": 8
+      }
+    },
     "turcy_featured_collection_ccNh6G": {
       "type": "turcy-featured-collection",
       "disabled": true,
@@ -1356,143 +1493,6 @@
         "mobile_padding_top": 32,
         "mobile_padding_bottom": 32
       }
-    },
-    "bt_before_after_results_JjPdwJ": {
-      "type": "BT-before-after-results",
-      "blocks": {
-        "result_jiKDFr": {
-          "type": "result",
-          "settings": {
-            "category": "anti-aging",
-            "before_image": "shopify://shop_images/imgi_50_Before-3.jpg",
-            "before_alt": "Before using the product",
-            "after_image": "shopify://shop_images/imgi_49_After-3.jpg",
-            "after_alt": "After using the product",
-            "initial_slider_position": 50,
-            "customer_name": "Customer 1",
-            "skin_goal": "Smoother and firmer skin",
-            "duration": "2 Months",
-            "product": "moisturizer-cream",
-            "show_product_image": true,
-            "button_link": "",
-            "show_button": true,
-            "button_label": "Shop Now",
-            "open_in_new_tab": false
-          }
-        },
-        "result_wFT7XR": {
-          "type": "result",
-          "settings": {
-            "category": "acne",
-            "before_image": "shopify://shop_images/imgi_227_Before-4.jpg",
-            "before_alt": "Before using the product",
-            "after_image": "shopify://shop_images/imgi_52_After-4.jpg",
-            "after_alt": "After using the product",
-            "initial_slider_position": 50,
-            "customer_name": "Customer 2",
-            "skin_goal": "Fade acne marks",
-            "duration": "4 Months",
-            "product": "foaming-face-wash-cleanser",
-            "show_product_image": true,
-            "button_link": "",
-            "show_button": true,
-            "button_label": "Shop Now",
-            "open_in_new_tab": false
-          }
-        },
-        "result_7EKf6h": {
-          "type": "result",
-          "settings": {
-            "category": "pigmentation",
-            "before_image": "shopify://shop_images/Before-2.webp",
-            "before_alt": "Before using the product",
-            "after_image": "shopify://shop_images/After-2.webp",
-            "after_alt": "After using the product",
-            "initial_slider_position": 50,
-            "customer_name": "Customer 3",
-            "skin_goal": "Reduce pigmentation",
-            "duration": "6 Months",
-            "product": "10-vitamin-c-5-niacinamide-face-serum",
-            "show_product_image": true,
-            "button_link": "",
-            "show_button": true,
-            "button_label": "Shop Now",
-            "open_in_new_tab": false
-          }
-        },
-        "result_TEa4Yt": {
-          "type": "result",
-          "settings": {
-            "category": "acne",
-            "before_image": "shopify://shop_images/Before-4.webp",
-            "before_alt": "Before using the product",
-            "after_image": "shopify://shop_images/After-4.webp",
-            "after_alt": "After using the product",
-            "initial_slider_position": 50,
-            "customer_name": "Customer 4",
-            "skin_goal": "Improve skin texture",
-            "duration": "3 Months",
-            "product": "foaming-face-wash-cleanser",
-            "show_product_image": true,
-            "button_link": "",
-            "show_button": true,
-            "button_label": "Shop Now",
-            "open_in_new_tab": false
-          }
-        }
-      },
-      "block_order": [
-        "result_jiKDFr",
-        "result_wFT7XR",
-        "result_7EKf6h",
-        "result_TEa4Yt"
-      ],
-      "name": "Before & after results",
-      "settings": {
-        "heading": "Don't Take Our Word For It, Take Theirs!",
-        "subheading": "#Real People Real Results",
-        "show_filters": true,
-        "show_result_count": true,
-        "all_label": "All",
-        "anti_aging_label": "Anti-Aging",
-        "acne_label": "Acne",
-        "pigmentation_label": "Pigmentation",
-        "results_label": "Results",
-        "before_label": "Before",
-        "after_label": "After",
-        "journey_suffix": "'s Journey",
-        "skin_goal_label": "Skin Goal",
-        "duration_label": "Duration",
-        "max_width": 1400,
-        "desktop_columns": 4,
-        "tablet_cards_per_view": 2,
-        "slider_gap": 20,
-        "show_navigation": true,
-        "slider_aria_label": "Customer before and after results",
-        "previous_label": "Previous result",
-        "next_label": "Next result",
-        "image_ratio": "1 / 1",
-        "image_fit": "cover",
-        "mobile_card_width": 88,
-        "card_radius": 18,
-        "product_image_width": 110,
-        "mobile_product_image_width": 90,
-        "show_mobile_hint": true,
-        "mobile_hint": "Swipe to see more results",
-        "background_color": "#f7f4ef",
-        "card_background": "#ffffff",
-        "text_color": "#171717",
-        "muted_text_color": "#6b6b6b",
-        "accent_color": "#171717",
-        "accent_text_color": "#ffffff",
-        "border_color": "#dedbd6",
-        "card_shadow": "0 8px 26px rgba(0, 0, 0, 0.06)",
-        "card_hover_shadow": "0 14px 34px rgba(0, 0, 0, 0.10)",
-        "padding_top": 72,
-        "padding_bottom": 72,
-        "mobile_padding_top": 48,
-        "mobile_padding_bottom": 48
-      }
     }
   },
   "order": [
@@ -1504,6 +1504,7 @@
     "featured_collection_UkrKR7",
     "sh_image_with_text_3_z3LP76",
     "sh_featured_banner_image_Rn79ib",
+    "bt_before_after_results_JjPdwJ",
     "turcy_featured_collection_ccNh6G",
     "featured_collection_CXxJxB",
     "bt_shop_by_skin_type_ApACtq",
@@ -1514,7 +1515,6 @@
     "17797033528d6814a0",
     "bt_testimonial_VH3yTt",
     "turcy_premium_faq_PnG7q6",
-    "available_on_P7xQCx",
-    "bt_before_after_results_JjPdwJ"
+    "available_on_P7xQCx"
   ]
 }
