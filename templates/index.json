@@ -450,6 +450,104 @@
         "padding_bottom": 36
       }
     },
+    "bt_shop_by_skin_type_ApACtq": {
+      "type": "BT-shop-by-skin-type",
+      "blocks": {
+        "skin_type_XxN4pi": {
+          "type": "skin_type",
+          "settings": {
+            "image": "shopify://shop_images/1_6df3ff35-b637-4b6e-82ff-38522b3509bf.png",
+            "title": "Normal",
+            "collection": "",
+            "link": "",
+            "open_new_tab": false
+          }
+        },
+        "skin_type_9Ktnaa": {
+          "type": "skin_type",
+          "settings": {
+            "image": "shopify://shop_images/2_b880df5e-0ee8-44ca-bc25-f0caeb6428e3.png",
+            "title": "Oily",
+            "collection": "",
+            "link": "",
+            "open_new_tab": false
+          }
+        },
+        "skin_type_xnUwjW": {
+          "type": "skin_type",
+          "settings": {
+            "image": "shopify://shop_images/3_0d16835c-1215-4bce-8b75-3173653cff1f.png",
+            "title": "Dry",
+            "collection": "",
+            "link": "",
+            "open_new_tab": false
+          }
+        },
+        "skin_type_Y7VMLM": {
+          "type": "skin_type",
+          "settings": {
+            "image": "shopify://shop_images/5_66b7b97b-09e8-4031-a797-2ca889493c66.png",
+            "title": "Sensitive",
+            "collection": "",
+            "link": "",
+            "open_new_tab": false
+          }
+        },
+        "skin_type_W4fxEq": {
+          "type": "skin_type",
+          "settings": {
+            "image": "shopify://shop_images/4_98805591-1304-4e97-91fd-d17764388f37.png",
+            "title": "Combination",
+            "collection": "",
+            "link": "",
+            "open_new_tab": false
+          }
+        }
+      },
+      "block_order": [
+        "skin_type_XxN4pi",
+        "skin_type_9Ktnaa",
+        "skin_type_xnUwjW",
+        "skin_type_Y7VMLM",
+        "skin_type_W4fxEq"
+      ],
+      "name": "Shop by skin type",
+      "settings": {
+        "heading": "Shop By Skin Type",
+        "heading_background": "#f1f1f1",
+        "heading_color": "#000000",
+        "heading_bar_height": 60,
+        "heading_size": 32,
+        "heading_weight": "600",
+        "mobile_heading_bar_height": 54,
+        "mobile_heading_size": 26,
+        "section_background": "#ffffff",
+        "max_width": 1260,
+        "desktop_columns": 5,
+        "tablet_columns": 3,
+        "card_ratio": "1 / 1",
+        "image_fit": "cover",
+        "desktop_gap": 10,
+        "card_radius": 0,
+        "overlay_opacity": 40,
+        "hover_zoom": 4,
+        "label_color": "#ffffff",
+        "label_size": 23,
+        "label_weight": "700",
+        "label_horizontal_padding": 16,
+        "label_bottom_spacing": 18,
+        "mobile_label_size": 18,
+        "mobile_label_horizontal_padding": 12,
+        "mobile_label_bottom_spacing": 12,
+        "mobile_card_width": 68,
+        "mobile_gap": 10,
+        "mobile_scroll_bottom_padding": 2,
+        "padding_top": 24,
+        "padding_bottom": 12,
+        "mobile_padding_top": 16,
+        "mobile_padding_bottom": 16
+      }
+    },
     "sh_image_with_text_3_z3LP76": {
       "type": "sh-image-with-text-3",
       "blocks": {
@@ -783,104 +881,6 @@
         "swipe_on_mobile": false,
         "padding_top": 36,
         "padding_bottom": 36
-      }
-    },
-    "bt_shop_by_skin_type_ApACtq": {
-      "type": "BT-shop-by-skin-type",
-      "blocks": {
-        "skin_type_XxN4pi": {
-          "type": "skin_type",
-          "settings": {
-            "image": "shopify://shop_images/1_6df3ff35-b637-4b6e-82ff-38522b3509bf.png",
-            "title": "Normal",
-            "collection": "",
-            "link": "",
-            "open_new_tab": false
-          }
-        },
-        "skin_type_9Ktnaa": {
-          "type": "skin_type",
-          "settings": {
-            "image": "shopify://shop_images/2_b880df5e-0ee8-44ca-bc25-f0caeb6428e3.png",
-            "title": "Oily",
-            "collection": "",
-            "link": "",
-            "open_new_tab": false
-          }
-        },
-        "skin_type_xnUwjW": {
-          "type": "skin_type",
-          "settings": {
-            "image": "shopify://shop_images/3_0d16835c-1215-4bce-8b75-3173653cff1f.png",
-            "title": "Dry",
-            "collection": "",
-            "link": "",
-            "open_new_tab": false
-          }
-        },
-        "skin_type_Y7VMLM": {
-          "type": "skin_type",
-          "settings": {
-            "image": "shopify://shop_images/5_66b7b97b-09e8-4031-a797-2ca889493c66.png",
-            "title": "Sensitive",
-            "collection": "",
-            "link": "",
-            "open_new_tab": false
-          }
-        },
-        "skin_type_W4fxEq": {
-          "type": "skin_type",
-          "settings": {
-            "image": "shopify://shop_images/4_98805591-1304-4e97-91fd-d17764388f37.png",
-            "title": "Combination",
-            "collection": "",
-            "link": "",
-            "open_new_tab": false
-          }
-        }
-      },
-      "block_order": [
-        "skin_type_XxN4pi",
-        "skin_type_9Ktnaa",
-        "skin_type_xnUwjW",
-        "skin_type_Y7VMLM",
-        "skin_type_W4fxEq"
-      ],
-      "name": "Shop by skin type",
-      "settings": {
-        "heading": "Shop By Skin Type",
-        "heading_background": "#f1f1f1",
-        "heading_color": "#000000",
-        "heading_bar_height": 60,
-        "heading_size": 32,
-        "heading_weight": "600",
-        "mobile_heading_bar_height": 54,
-        "mobile_heading_size": 26,
-        "section_background": "#ffffff",
-        "max_width": 1260,
-        "desktop_columns": 5,
-        "tablet_columns": 3,
-        "card_ratio": "1 / 1",
-        "image_fit": "cover",
-        "desktop_gap": 10,
-        "card_radius": 0,
-        "overlay_opacity": 40,
-        "hover_zoom": 4,
-        "label_color": "#ffffff",
-        "label_size": 23,
-        "label_weight": "700",
-        "label_horizontal_padding": 16,
-        "label_bottom_spacing": 18,
-        "mobile_label_size": 18,
-        "mobile_label_horizontal_padding": 12,
-        "mobile_label_bottom_spacing": 12,
-        "mobile_card_width": 68,
-        "mobile_gap": 10,
-        "mobile_scroll_bottom_padding": 2,
-        "padding_top": 24,
-        "padding_bottom": 12,
-        "mobile_padding_top": 16,
-        "mobile_padding_bottom": 16
       }
     },
     "turcy_ingredients_HceJQz": {
@@ -1502,12 +1502,12 @@
     "turcy_floating_brand_story_pP4wy4",
     "sh_sub_collection_list_QB9yHY",
     "featured_collection_UkrKR7",
+    "bt_shop_by_skin_type_ApACtq",
     "sh_image_with_text_3_z3LP76",
     "sh_featured_banner_image_Rn79ib",
     "bt_before_after_results_JjPdwJ",
     "turcy_featured_collection_ccNh6G",
     "featured_collection_CXxJxB",
-    "bt_shop_by_skin_type_ApACtq",
     "turcy_ingredients_HceJQz",
     "for_every_you_carousel_3aiGQ7",
     "new_apart_XPcT3d",
