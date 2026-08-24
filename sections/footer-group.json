@@ -33,7 +33,7 @@
           "type": "link_list",
           "settings": {
             "heading": "POLICY",
-            "menu": ""
+            "menu": "footer"
           }
         },
         "link_list_HdATWb": {
