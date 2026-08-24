@@ -1464,7 +1464,7 @@
         "skin_goal_label": "Skin Goal",
         "duration_label": "Duration",
         "max_width": 1320,
-        "desktop_columns": 3,
+        "desktop_columns": 4,
         "tablet_cards_per_view": 2,
         "slider_gap": 20,
         "show_navigation": true,
