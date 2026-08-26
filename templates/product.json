@@ -66,6 +66,12 @@
             "show_gift_card_recipient": true
           }
         },
+        "xb_trust_badges_trust_badge_block_LPHgw9": {
+          "type": "shopify://apps/xb-trust-badges/blocks/trust-badge-block/019b20f1-9b53-7417-8d4c-d3a6013ec580",
+          "settings": {
+            "offerId": "2eb00a5349b84aa5a072639c3eab8b29"
+          }
+        },
         "custom_liquid_Kg437N": {
           "type": "custom_liquid",
           "settings": {
@@ -117,6 +123,7 @@
         "variant_picker",
         "quantity_selector",
         "buy_buttons",
+        "xb_trust_badges_trust_badge_block_LPHgw9",
         "custom_liquid_Kg437N",
         "custom_liquid_mqqMQr",
         "collapsible_tab_GR983k",
