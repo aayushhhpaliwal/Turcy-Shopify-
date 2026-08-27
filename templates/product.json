@@ -117,6 +117,26 @@
           "disabled": true,
           "settings": {}
         },
+        "shipping_information_f7z4AD": {
+          "type": "shipping_information",
+          "settings": {
+            "estimate_delivery": "Receive your order :",
+            "delivery_day_min": 0,
+            "delivery_day_max": 7,
+            "order_text": "Ordered",
+            "order_icon": "shopify://shop_images/5220625_1.png",
+            "prepare_text": "Shipped",
+            "prepare_time": 1,
+            "delivery_icon": "shopify://shop_images/truck-delivered-icon_1.png",
+            "deliveried_text": "Delivered",
+            "delivery_day": 7,
+            "deliveried_icon": "shopify://shop_images/1610961_1.png",
+            "background_color": "#ffffff",
+            "text_color": "#000000",
+            "line_color": "#000000",
+            "border_color": "#000000"
+          }
+        },
         "share": {
           "type": "share",
           "settings": {
@@ -140,6 +160,7 @@
         "collapsible_tab_YrPPxF",
         "gropulse_wishlist_gropulse_upsell_offer_LTPcii",
         "description",
+        "shipping_information_f7z4AD",
         "share"
       ],
       "custom_css": [
