@@ -109,6 +109,10 @@
             "page": ""
           }
         },
+        "gropulse_wishlist_gropulse_upsell_offer_LTPcii": {
+          "type": "shopify://apps/gropulse-wishlist/blocks/gropulse-upsell-offer/d606b448-832c-4b0a-adbb-21c7fa132df1",
+          "settings": {}
+        },
         "description": {
           "type": "description",
           "disabled": true,
@@ -135,6 +139,7 @@
         "custom_liquid_mqqMQr",
         "collapsible_tab_GR983k",
         "collapsible_tab_YrPPxF",
+        "gropulse_wishlist_gropulse_upsell_offer_LTPcii",
         "description",
         "share"
       ],
@@ -187,7 +192,7 @@
           "settings": {
             "air_blockreviews_summaryHeading": "Reviews",
             "air_blockreviews_layout": "grid",
-            "air_blockreviews_singleStarColor": "#16A086",
+            "air_blockreviews_singleStarColor": "#16a086",
             "air_blockreviews_primaryColor": "#121212"
           }
         }
