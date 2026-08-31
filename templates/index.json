@@ -1278,6 +1278,35 @@
         "section_padding": 42
       }
     },
+    "1788168617f13462e1": {
+      "type": "apps",
+      "blocks": {
+        "instafeed_app_block_D6YG43": {
+          "type": "shopify://apps/instafeed/blocks/app-block/c447db20-095d-4a10-9725-b5977662c9d5",
+          "settings": {
+            "title": "Instagram Highlights",
+            "title_color": "",
+            "title_size_v2": 0,
+            "alignment": "center",
+            "instafeed_margin_top": 19,
+            "instafeed_margin_bottom": 32,
+            "instafeed_margin_sides": 0,
+            "show_instagram_link": false,
+            "link_alignment": "center",
+            "link_color": "#000000",
+            "background_color": "",
+            "feed_id": "",
+            "html_area": ""
+          }
+        }
+      },
+      "block_order": [
+        "instafeed_app_block_D6YG43"
+      ],
+      "settings": {
+        "include_margins": true
+      }
+    },
     "turcy_premium_faq_PnG7q6": {
       "type": "turcy-premium-faq",
       "blocks": {
@@ -1493,35 +1522,6 @@
         "mobile_padding_top": 32,
         "mobile_padding_bottom": 32
       }
-    },
-    "1788168617f13462e1": {
-      "type": "apps",
-      "blocks": {
-        "instafeed_app_block_D6YG43": {
-          "type": "shopify://apps/instafeed/blocks/app-block/c447db20-095d-4a10-9725-b5977662c9d5",
-          "settings": {
-            "title": "Instagram Highlights",
-            "title_color": "",
-            "title_size_v2": 0,
-            "alignment": "center",
-            "instafeed_margin_top": 19,
-            "instafeed_margin_bottom": 32,
-            "instafeed_margin_sides": 0,
-            "show_instagram_link": false,
-            "link_alignment": "center",
-            "link_color": "#000000",
-            "background_color": "",
-            "feed_id": "",
-            "html_area": ""
-          }
-        }
-      },
-      "block_order": [
-        "instafeed_app_block_D6YG43"
-      ],
-      "settings": {
-        "include_margins": true
-      }
     }
   },
   "order": [
@@ -1543,8 +1543,8 @@
     "sh_image_with_text_ARHLDD",
     "17797033528d6814a0",
     "bt_testimonial_VH3yTt",
+    "1788168617f13462e1",
     "turcy_premium_faq_PnG7q6",
-    "available_on_P7xQCx",
-    "1788168617f13462e1"
+    "available_on_P7xQCx"
   ]
 }
