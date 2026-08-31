@@ -19,6 +19,7 @@
     },
     "sh_featured_banner_image_FcXTD9": {
       "type": "sh-featured-banner-image",
+      "disabled": true,
       "name": "SH: Featured banner image",
       "settings": {
         "image_height": "small",
@@ -94,6 +95,7 @@
         "step_8VDycc",
         "step_YXbWTq"
       ],
+      "disabled": true,
       "name": "BT Earn Work",
       "settings": {
         "heading": "How Does It Work?",
@@ -142,11 +144,130 @@
         "mobile_padding_top": 28,
         "mobile_padding_bottom": 28
       }
+    },
+    "turcy_brand_story_kT3nHx": {
+      "type": "turcy-brand-story",
+      "blocks": {
+        "story_text_iTGhFD": {
+          "type": "story_text",
+          "settings": {
+            "kicker": "Our Story",
+            "heading": "Skincare That Begins With Understanding",
+            "text": "<p>The skincare world is full of choices. New trends, new ingredients and new promises appear constantly. But one question often gets overlooked: <strong>what does your skin actually need?</strong></p><p>Turcy was born from the desire to create a brand that could become a catalyst in someone's skincare journey.</p>",
+            "image": "shopify://shop_images/02.png",
+            "layout": "image_right"
+          }
+        },
+        "highlight_ywPx9K": {
+          "type": "highlight",
+          "settings": {
+            "heading": "Why Sea Buckthorn?",
+            "text": "<p>Sea Buckthorn grows in challenging Himalayan environments, yet continues to thrive. For Turcy, that resilience represents transformation, adaptation and the decision to take a different Turn.</p>"
+          }
+        },
+        "story_text_zzYrHV": {
+          "type": "story_text",
+          "settings": {
+            "kicker": "Nature Meets Modern Understanding",
+            "heading": "Botanical Inspiration, Thoughtful Formulation",
+            "text": "<p>At Turcy, we respect what nature offers. But we also believe modern skincare requires more than simply calling something natural. It requires understanding, quality and responsible communication.</p>",
+            "image": "shopify://shop_images/06.png",
+            "layout": "image_left"
+          }
+        },
+        "mission_list_DqrqrK": {
+          "type": "mission_list",
+          "settings": {
+            "kicker": "Our Mission",
+            "heading": "To Become a Catalyst in Every Skincare Journey",
+            "item_1": "Bring the potential of Sea Buckthorn into thoughtfully developed products.",
+            "item_2": "Encourage people to understand their skin rather than simply follow trends.",
+            "item_3": "Combine botanical ingredients with modern formulation understanding.",
+            "item_4": "Promote informed and consistent self-care.",
+            "item_5": "Build trust through quality, transparency and continuous learning.",
+            "item_6": "Become a meaningful Catalyst in every skincare journey we touch."
+          }
+        },
+        "values_grid_8ViU3c": {
+          "type": "values_grid",
+          "settings": {
+            "kicker": "Our Core Values",
+            "heading": "The Principles Behind Every Turcy Product",
+            "value_1_title": "Transformation",
+            "value_1_text": "Meaningful change begins with the willingness to take a Turn.",
+            "value_2_title": "Nature",
+            "value_2_text": "We respect the intelligence and potential found in nature.",
+            "value_3_title": "Purpose",
+            "value_3_text": "Every ingredient, formulation and product should have a reason to exist.",
+            "value_4_title": "Quality",
+            "value_4_text": "Trust is built through consistency, thoughtful processes and attention to detail.",
+            "value_5_title": "Learning",
+            "value_5_text": "Skincare is constantly evolving, so we keep learning and improving.",
+            "value_6_title": "Transparency",
+            "value_6_text": "Consumers deserve clear, responsible and meaningful product information."
+          }
+        },
+        "philosophy_QE3QkL": {
+          "type": "philosophy",
+          "settings": {
+            "heading": "The Turcy Philosophy",
+            "step_1": "Turn",
+            "step_2": "Catalyst",
+            "step_3": "Transformation",
+            "text": "<p>A Turn changes the direction. A Catalyst helps initiate the change. And consistent care can lead to Transformation.</p>"
+          }
+        },
+        "final_cta_NLj9p3": {
+          "type": "final_cta",
+          "settings": {
+            "heading": "Turn. Catalyst. Transformation.",
+            "text": "<p>A Turn Towards Better Skin.<br/>The Catalyst for Confident Beauty.</p>",
+            "button_label": "Shop Turcy",
+            "button_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "story_text_iTGhFD",
+        "highlight_ywPx9K",
+        "story_text_zzYrHV",
+        "mission_list_DqrqrK",
+        "values_grid_8ViU3c",
+        "philosophy_QE3QkL",
+        "final_cta_NLj9p3"
+      ],
+      "name": "Turcy Brand Story",
+      "settings": {
+        "show_hero": true,
+        "eyebrow": "Welcome to Turcy",
+        "heading": "A Turn Towards Better Skin",
+        "subheading": "<p>Every transformation begins with a decision. At Turcy, we call that decision a <strong>Turn</strong>. And every meaningful Turn needs a <strong>Catalyst</strong>.</p>",
+        "hero_image": "shopify://shop_images/07.png",
+        "button_label": "Explore Our Philosophy",
+        "button_link": "",
+        "show_meaning": true,
+        "tur_text": "A turning point towards better, more thoughtful skincare.",
+        "cy_text": "The force that helps begin meaningful transformation.",
+        "result_text": "Together, they create Turcy — a brand built around understanding, consistency and thoughtful care.",
+        "bg_color": "#FFF7EC",
+        "card_color": "#FFFFFF",
+        "primary_color": "#193D35",
+        "accent_color": "#E7813D",
+        "soft_color": "#DCE8D7",
+        "text_color": "#5D4A3D",
+        "muted_color": "#8A7E72",
+        "border_color": "#EADBC5",
+        "max_width": 1320,
+        "radius": 28,
+        "padding_top": 56,
+        "padding_bottom": 56
+      }
     }
   },
   "order": [
     "main",
     "sh_featured_banner_image_FcXTD9",
-    "bt_earn_Cfei9D"
+    "bt_earn_Cfei9D",
+    "turcy_brand_story_kT3nHx"
   ]
 }
