@@ -616,9 +616,9 @@
       "type": "sh-featured-banner-image",
       "name": "SH: Featured banner image",
       "settings": {
-        "image": "shopify://shop_images/imgi_42_ChatGPT_Image_Jul_16_2026_06_31_54_PM.jpg",
-        "mob_image": "shopify://shop_images/imgi_42_ChatGPT_Image_Jul_16_2026_06_31_54_PM_818fabce-dd73-4b3d-84fb-c34575de057b.jpg",
-        "image_height": "medium",
+        "image": "shopify://shop_images/Slides-image.png",
+        "mob_image": "shopify://shop_images/Turcy_2.png",
+        "image_height": "adapt",
         "heading": "",
         "text": "",
         "button_label_1": "",
