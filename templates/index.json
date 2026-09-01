@@ -15,11 +15,12 @@
         "image_slide_XmYrNd": {
           "type": "image_slide",
           "settings": {
-            "image": "shopify://shop_images/abb7daad-9808-4b0c-ad20-66c15446c53c.png",
+            "image": "shopify://shop_images/turcy.png",
+            "mob_image": "shopify://shop_images/turcy_mobile.png",
             "heading": "",
             "subheading": "",
             "button_label": "",
-            "button_link": "/",
+            "button_link": "shopify://collections",
             "btn_outline": false,
             "outline_btn_text_color": "#000000",
             "border_radius": 0,
