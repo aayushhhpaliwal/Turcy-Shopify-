@@ -9,6 +9,67 @@
  */
 {
   "sections": {
+    "sh_hero_slideshow_wQtydW": {
+      "type": "sh-hero-slideshow",
+      "blocks": {
+        "image_slide_UyNCYU": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/Untitled_design_1_.jpg_1.jpg",
+            "mob_image": "shopify://shop_images/Untitled_375_x_169_px__jpg.jpg",
+            "heading": "",
+            "subheading": "",
+            "button_label": "",
+            "button_link": "/",
+            "btn_outline": false,
+            "outline_btn_text_color": "#000000",
+            "border_radius": 0,
+            "desktop_content_position": "middle-center",
+            "desktop_content_alignment": "center",
+            "show_text_box": false,
+            "mobile_content_position": "middle",
+            "mobile_content_alignment": "center",
+            "heading_font_size": 36,
+            "content_font_size": 18,
+            "opacity": 0,
+            "overlay_color": "#000000",
+            "heading_color": "#000000",
+            "content_color": "#000000",
+            "btn_bg_color": "#000000",
+            "btn_text_color": "#ffffff",
+            "btn_border_color": "#000000",
+            "btn_hover_bg_color": "#ffffff",
+            "btn_hover_text_color": "#000000",
+            "btn_hover_border_color": "#000000",
+            "outline_btn_shadow_color": "#000000",
+            "box_bg_color": "#ffffff"
+          }
+        }
+      },
+      "block_order": [
+        "image_slide_UyNCYU"
+      ],
+      "name": "SH: Hero slideshow",
+      "settings": {
+        "slide_height": "adapt",
+        "auto_rotate": false,
+        "change_slides_speed": 5,
+        "show_arrows": false,
+        "show_pagination": false,
+        "pagination_type": "dots",
+        "show_text_below_mob": false,
+        "dots_color": "#000000",
+        "arrow_color": "#000000",
+        "arrow_bg_color": "#ffffff",
+        "arrow_border_color": "#000000",
+        "arrow_size": 16,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "mob_padding_top": 0,
+        "mob_padding_bottom": 0,
+        "section_max_width": "1140"
+      }
+    },
     "banner": {
       "type": "main-collection-banner",
       "settings": {
@@ -42,6 +103,7 @@
     }
   },
   "order": [
+    "sh_hero_slideshow_wQtydW",
     "banner",
     "product-grid"
   ]
