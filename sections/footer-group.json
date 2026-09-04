@@ -92,7 +92,7 @@
           "settings": {
             "label": "Home",
             "icon": "home",
-            "link": "https://www.biomystery.in/",
+            "link": "https://turcy.myshopify.com/",
             "highlight_child_paths": true
           }
         },
@@ -119,7 +119,7 @@
           "settings": {
             "label": "Profile",
             "icon": "account",
-            "link": "https://shopify.com/authentication/73416704139/login?client_id=19b8ba76-75e3-4436-b9c7-2be9330f4e98&locale=en-IN&redirect_uri=%2Fauthentication%2F73416704139%2Foauth%2Fauthorize%3Fbuyer_flags%3DeyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1YXhnY3YtYXMubXlzaG9waWZ5LmNvbSIsImZsYWdzIjpbXSwiZXhwIjoxNzc4MzE0MTg0LCJuYmYiOjE3Nzc3MDkzODR9.SwV192TyBkoPnEWr2PmTPyGDTXm650zDCXy1FflC3FQ%26client_id%3D19b8ba76-75e3-4436-b9c7-2be9330f4e98%26locale%3Den-IN%26nonce%3D705cfcbc-04b0-4004-94f1-095fb0029008%26redirect_uri%3Dhttps%253A%252F%252Fshopify.com%252F73416704139%252Faccount%252Fcallback%26region_country%3DIN%26response_type%3Dcode%26scope%3Dopenid%2Bemail%2Bcustomer-account-api%253Afull%26state%3DhWNBgsKNeBu5G7CvqIIwdzMI&region_country=IN",
+            "link": "https://shopify.com/authentication/60343189550/login",
             "highlight_child_paths": true
           }
         }
