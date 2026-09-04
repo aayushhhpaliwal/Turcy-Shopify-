@@ -110,7 +110,7 @@
           "settings": {
             "label": "Offers",
             "icon": "offers",
-            "link": "shopify://collections/minimal-edition",
+            "link": "shopify://collections",
             "highlight_child_paths": true
           }
         },
