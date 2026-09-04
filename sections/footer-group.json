@@ -130,7 +130,6 @@
         "nav_item_offers",
         "nav_item_profile"
       ],
-      "disabled": true,
       "settings": {
         "accessibility_label": "Mobile navigation",
         "show_separators": true,
