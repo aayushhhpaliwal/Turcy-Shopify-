@@ -184,6 +184,11 @@
         "type": "shopify://apps/instafeed/blocks/head-block/c447db20-095d-4a10-9725-b5977662c9d5",
         "disabled": false,
         "settings": {}
+      },
+      "3831548704281821991": {
+        "type": "shopify://apps/startstorez-ai-chatbot/blocks/chatbot_widget/019c0a92-6b53-7001-90ae-6b5d1df32480",
+        "disabled": false,
+        "settings": {}
       }
     },
     "color_schemes": {
