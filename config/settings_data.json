@@ -185,13 +185,13 @@
         "disabled": false,
         "settings": {}
       },
-      "3831548704281821991": {
-        "type": "shopify://apps/startstorez-ai-chatbot/blocks/chatbot_widget/019c0a92-6b53-7001-90ae-6b5d1df32480",
+      "8529531577560427644": {
+        "type": "shopify://apps/otp/blocks/otp-plus/47f9f75c-53b3-4e16-ba66-80a88d275a5b",
         "disabled": false,
         "settings": {}
       },
-      "8529531577560427644": {
-        "type": "shopify://apps/otp/blocks/otp-plus/47f9f75c-53b3-4e16-ba66-80a88d275a5b",
+      "8838267387977255474": {
+        "type": "shopify://apps/jotform-ai-chatbot/blocks/app-embed/8b752cf5-34d6-4e3e-96cf-8a6ef85fb35a",
         "disabled": false,
         "settings": {}
       }
