@@ -19,9 +19,9 @@
         "limit": 4,
         "title": "You might like...",
         "title_text_align": "left",
-        "list_style_cart_drawer": "stack",
+        "list_style_cart_drawer": "scroll",
         "list_style_cart_page": "scroll",
-        "btn_style": "button--secondary",
+        "btn_style": "",
         "show_empty_cart": true
       }
     },
