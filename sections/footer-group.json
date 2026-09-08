@@ -11,6 +11,20 @@
   "name": "t:sections.footer.name",
   "type": "footer",
   "sections": {
+    "cart_upsell_h79mDj": {
+      "type": "cart-upsell",
+      "name": "Ap - Cart Drawer Upsell",
+      "settings": {
+        "collection": "glow-tone",
+        "limit": 4,
+        "title": "You might like...",
+        "title_text_align": "left",
+        "list_style_cart_drawer": "stack",
+        "list_style_cart_page": "scroll",
+        "btn_style": "button--secondary",
+        "show_empty_cart": true
+      }
+    },
     "footer": {
       "type": "footer",
       "blocks": {
@@ -145,6 +159,7 @@
     }
   },
   "order": [
+    "cart_upsell_h79mDj",
     "footer",
     "mobile_sticky_navigation"
   ]
