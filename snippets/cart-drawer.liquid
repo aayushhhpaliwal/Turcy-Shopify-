@@ -5,48 +5,6 @@
   {% render 'cart-drawer' %}
 {% endcomment %}
 
-        {%- liquid
-  assign bt_subtotal = cart.items_subtotal_price
-
-  comment
-    Backend discount tiers ke same amount yaha set karo:
-    ₹200 = 20000
-    ₹500 = 50000
-    ₹1000 = 100000
-  endcomment
-
-  assign bt_goal_1 = 20000
-  assign bt_goal_2 = 50000
-  assign bt_goal_3 = 100000
-
-  assign bt_discount_1 = 5
-  assign bt_discount_2 = 10
-  assign bt_discount_3 = 15
-
-  assign bt_progress = bt_subtotal | times: 100 | divided_by: bt_goal_3
-  if bt_progress > 100
-    assign bt_progress = 100
-  endif
-
-  assign bt_unlocked = 0
-  assign bt_next_discount = bt_discount_1
-  assign bt_more = bt_goal_1 | minus: bt_subtotal
-
-  if bt_subtotal >= bt_goal_3
-    assign bt_unlocked = bt_discount_3
-    assign bt_next_discount = bt_discount_3
-    assign bt_more = 0
-  elsif bt_subtotal >= bt_goal_2
-    assign bt_unlocked = bt_discount_2
-    assign bt_next_discount = bt_discount_3
-    assign bt_more = bt_goal_3 | minus: bt_subtotal
-  elsif bt_subtotal >= bt_goal_1
-    assign bt_unlocked = bt_discount_1
-    assign bt_next_discount = bt_discount_2
-    assign bt_more = bt_goal_2 | minus: bt_subtotal
-  endif
--%}
-
 {{ 'quantity-popover.css' | asset_url | stylesheet_tag }}
 {{ 'component-card.css' | asset_url | stylesheet_tag }}
 
@@ -57,334 +15,9 @@
   .drawer {
     visibility: hidden;
   }
-
-  .bt-cart-drawer-style .drawer__inner {
-  width: 39rem;
-  max-width: calc(100vw - 2rem);
-  background: #ffffff;
-}
-
-.bt-cart-drawer-style .drawer__header {
-  padding: 18px 18px 10px;
-  border-bottom: 1px solid #eeeeee;
-}
-
-.bt-cart-drawer-style .drawer__heading {
-  font-size: 18px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-
-.bt-cart-drawer-style .drawer__cart-items-wrapper {
-  padding: 0 10px;
-}
-
-.bt-cart-drawer-style .cart-items thead {
-  display: none;
-}
-
-.bt-cart-drawer-style .cart-item {
-  display: grid;
-  grid-template-columns: 120px 1fr;
-  gap: 14px;
-  padding: 18px 0;
-  border-bottom: 1px solid #eeeeee;
-}
-
-.bt-cart-drawer-style .cart-item__media,
-.bt-cart-drawer-style .cart-item__details,
-.bt-cart-drawer-style .cart-item__quantity {
-  display: block;
-  padding: 0 !important;
-  width: auto !important;
-}
-
-.bt-cart-drawer-style .cart-item__media {
-  grid-row: span 3;
-}
-
-.bt-cart-drawer-style .cart-item__image {
-  width: 120px;
-  height: 120px;
-  object-fit: cover;
-  border-radius: 10px;
-}
-
-.bt-cart-drawer-style .cart-item__name {
-  font-size: 13px;
-  line-height: 1.35;
-  font-weight: 500;
-  text-transform: uppercase;
-  text-decoration: none;
-  margin-bottom: 6px;
-}
-
-.bt-cart-drawer-style .cart-item__details > .product-option {
-  display: block !important;
-  margin-top: 8px !important;
-  margin-bottom: 12px !important;
-  font-size: 13px !important;
-  font-weight: 700 !important;
-  color: #111111 !important;
-}
-
-.bt-cart-drawer-style .cart-item__details dl .product-option {
-  margin-top: 4px !important;
-  margin-bottom: 0 !important;
-  font-size: 12px !important;
-  font-weight: 400 !important;
-  color: #777777 !important;
-}
-
-.bt-cart-drawer-style .cart-item__price-wrapper {
-  display: none !important;
-}
-
-.bt-cart-drawer-style .product-option {
-  font-size: 12px;
-  color: #777777;
-  margin: 0;
-}
-
-.bt-cart-drawer-style .cart-item__price-wrapper {
-  margin-top: 8px;
-}
-
-.bt-cart-drawer-style .price {
-  font-size: 15px;
-  font-weight: 700;
-  color: #111111;
-}
-
-.bt-cart-drawer-style .cart-item__quantity-wrapper {
-  margin-top: 12px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.bt-cart-drawer-style .cart-quantity {
-  min-height: 42px;
-  width: 135px;
-  border: 1px solid #dddddd;
-  border-radius: 999px;
-}
-
-.bt-cart-drawer-style .cart-quantity .quantity__button {
-  width: 40px;
-}
-
-.bt-cart-drawer-style .cart-quantity .quantity__input {
-  font-size: 14px;
-  font-weight: 600;
-}
-
-.bt-cart-drawer-style .cart-remove-button {
-  min-width: auto;
-  min-height: auto;
-  padding: 0;
-  background: transparent;
-  border: 0;
-  color: #555555;
-  text-decoration: underline;
-  text-transform: uppercase;
-  font-size: 12px;
-}
-
-.bt-cart-drawer-style .cart-remove-button .svg-wrapper {
-  display: none;
-}
-
-.bt-cart-drawer-style .cart-remove-button::after {
-  content: "Remove";
-}
-
-.bt-cart-reward {
-  margin: 12px 0 18px;
-  padding: 16px 14px;
-  border: 1px solid #eeeeee;
-  border-radius: 16px;
-  background: #ffffff;
-  box-shadow: 0 4px 18px rgba(0,0,0,0.06);
-}
-
-.bt-cart-reward__text {
-  margin: 0 0 16px;
-  text-align: center;
-  font-size: 12px;
-  line-height: 1.5;
-  color: #111111;
-}
-
-.bt-cart-reward__text strong {
-  color: #00b894;
-  font-weight: 800;
-}
-
-.bt-cart-reward__badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 5px;
-  padding: 3px 7px;
-  border-radius: 999px;
-  background: #dff8ef;
-  color: #009e75;
-  font-size: 10px;
-  font-weight: 800;
-}
-
-.bt-cart-reward__bar {
-  position: relative;
-  height: 12px;
-  margin: 28px 4px 22px;
-  background: #c8f4ec;
-  border-radius: 999px;
-}
-
-.bt-cart-reward__fill {
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 12px;
-  background: #00bfa5;
-  border-radius: 999px;
-}
-
-.bt-cart-reward__step {
-  position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  border: 2px solid #00bfa5;
-  background: #ffffff;
-  color: #00a98f;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 9px;
-  font-weight: 800;
-  z-index: 2;
-}
-
-.bt-cart-reward__step.is-active {
-  background: #00bfa5;
-  color: #ffffff;
-}
-
-.bt-cart-reward__labels {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  text-align: center;
-  font-size: 10px;
-  color: #777777;
-}
-
-.bt-cart-reward__labels strong {
-  display: block;
-  color: #111111;
-  font-size: 11px;
-  margin-bottom: 2px;
-}
-
-.bt-cart-summary {
-  padding: 0;
-}
-
-.bt-cart-summary__row,
-.bt-cart-summary__discount {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 12px;
-  font-size: 13px;
-  letter-spacing: 0.04em;
-}
-
-.bt-cart-summary__row span,
-.bt-cart-summary__discount span:first-child {
-  font-weight: 700;
-  text-transform: uppercase;
-}
-
-.bt-cart-summary__row strong {
-  font-size: 14px;
-  font-weight: 700;
-}
-
-.bt-cart-summary__discount {
-  background: #f5f5f5;
-  padding: 8px 10px;
-  border-radius: 8px;
-  color: #555555;
-}
-
-.bt-cart-summary__row--total {
-  margin-top: 10px;
-  padding-top: 4px;
-}
-
-.bt-cart-summary__row--total strong {
-  font-size: 16px;
-}
-
-.bt-cart-drawer-style .tax-note {
-  display: block;
-  text-align: center;
-  margin: 18px 0;
-  font-size: 10px;
-  color: #777777;
-}
-
-.bt-cart-drawer-style .cart__checkout-button {
-  width: 100%;
-  min-height: 48px;
-  background: #222222;
-  color: #ffffff;
-  border: 0;
-  border-radius: 2px;
-  font-size: 13px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.bt-cart-continue {
-  display: block;
-  margin-top: 18px;
-  text-align: center;
-  font-size: 13px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #333333;
-  text-decoration: underline;
-  text-underline-offset: 4px;
-}
-
-@media screen and (max-width: 480px) {
-  .bt-cart-drawer-style .drawer__inner {
-    width: 100%;
-    max-width: 100%;
-  }
-
-  .bt-cart-drawer-style .cart-item {
-    grid-template-columns: 115px 1fr;
-  }
-
-  .bt-cart-drawer-style .cart-item__image {
-    width: 115px;
-    height: 115px;
-  }
-}
-
-
-
 </style>
 
-<cart-drawer class="drawer bt-cart-drawer-style{% if cart == empty %} is-empty{% endif %}">
+<cart-drawer class="drawer{% if cart == empty %} is-empty{% endif %}">
   <div id="CartDrawer" class="cart-drawer">
     <div id="CartDrawer-Overlay" class="cart-drawer__overlay"></div>
     <div
@@ -446,6 +79,7 @@
           class=" is-empty"
         {% endif %}
       >
+        {% render 'ap-cart-goal' %} 
         <form
           action="{{ routes.cart_url }}"
           id="CartDrawer-Form"
@@ -865,7 +499,7 @@
         <!-- Start blocks -->
         <!-- Subtotals -->
 
-        {% comment %} <div class="cart-drawer__footer" {{ block.shopify_attributes }}>
+        <div class="cart-drawer__footer" {{ block.shopify_attributes }}>
           <div>
             {%- if cart.cart_level_discount_applications.size > 0 -%}
               <ul class="discounts list-unstyled" role="list" aria-label="{{ 'customer.order.discount' | t }}">
@@ -924,94 +558,12 @@
               {%- endif -%}
             {%- endif -%}
           </small>
-        </div> {% endcomment %}
+        </div>
 
-        {%- liquid
-  assign bt_cart_saving = cart.items_subtotal_price | minus: cart.total_price
--%}
+         <a href="{{ routes.cart_url }}" class="cart-drawer__view-all">
+  View cart
+</a>
 
-<div class="cart-drawer__footer bt-cart-summary">
-  <div class="bt-cart-summary__row">
-    <span>Subtotal</span>
-    <strong>{{ cart.items_subtotal_price | money }}</strong>
-  </div>
-
-  {%- if bt_cart_saving > 0 -%}
-    <div class="bt-cart-summary__discount">
-      <span>
-        {%- if cart.cart_level_discount_applications.size > 0 -%}
-          {%- for discount in cart.cart_level_discount_applications -%}
-            {{ discount.title | escape }}{% unless forloop.last %}, {% endunless %}
-          {%- endfor -%}
-        {%- else -%}
-          Discount
-        {%- endif -%}
-      </span>
-      <span>-{{ bt_cart_saving | money }}</span>
-    </div>
-  {%- endif -%}
-
-  <div class="bt-cart-summary__row bt-cart-summary__row--total">
-    <span>Total</span>
-    <strong>{{ cart.total_price | money }}</strong>
-  </div>
-
-  <small class="tax-note caption-large rte">
-    Tax included and shipping calculated at checkout
-  </small>
-</div>
-
-
-
-
-{% comment %} Cart Reword {% endcomment %}
-
-{% comment %} <div class="bt-cart-reward">
-  <p class="bt-cart-reward__text">
-    {%- if bt_more > 0 -%}
-      {%- if bt_unlocked > 0 -%}
-        You unlocked <strong>{{ bt_unlocked }}% OFF</strong>
-        <span class="bt-cart-reward__badge">SAVE{{ bt_unlocked }}</span>
-      {%- endif -%}
-
-      Add <strong>{{ bt_more | money }}</strong> more for <strong>{{ bt_next_discount }}% OFF</strong>
-    {%- else -%}
-      You unlocked <strong>{{ bt_discount_3 }}% OFF</strong>
-      <span class="bt-cart-reward__badge">BEST DEAL</span>
-    {%- endif -%}
-  </p>
-
-  <div class="bt-cart-reward__bar">
-    <div class="bt-cart-reward__fill" style="width: {{ bt_progress }}%;"></div>
-
-    <span class="bt-cart-reward__step {% if bt_subtotal >= bt_goal_1 %}is-active{% endif %}" style="left: 20%;">
-      {{ bt_discount_1 }}%
-    </span>
-
-    <span class="bt-cart-reward__step {% if bt_subtotal >= bt_goal_2 %}is-active{% endif %}" style="left: 50%;">
-      {{ bt_discount_2 }}%
-    </span>
-
-    <span class="bt-cart-reward__step {% if bt_subtotal >= bt_goal_3 %}is-active{% endif %}" style="left: 100%;">
-      {{ bt_discount_3 }}%
-    </span>
-  </div>
-
-  <div class="bt-cart-reward__labels">
-    <div>
-      <strong>{{ bt_goal_1 | money_without_trailing_zeros }}</strong>
-      <span>{{ bt_discount_1 }}% OFF</span>
-    </div>
-    <div>
-      <strong>{{ bt_goal_2 | money_without_trailing_zeros }}</strong>
-      <span>{{ bt_discount_2 }}% OFF</span>
-    </div>
-    <div>
-      <strong>{{ bt_goal_3 | money_without_trailing_zeros }}</strong>
-      <span>{{ bt_discount_3 }}% OFF</span>
-    </div>
-  </div>
-</div> {% endcomment %}
 
         <!-- CTAs -->
 
@@ -1033,3 +585,29 @@
     </div>
   </div>
 </cart-drawer>
+
+
+<style>
+  .cart-drawer__view-all {
+    display: block;
+      text-align: center;
+        padding: 12px 20px;
+          margin: 10px 0;
+            background-color: #8F2130;
+              color: #fff;
+                border-radius: 30px;
+                  font-size: 13px;
+                    font-weight: 500;
+                      text-transform: uppercase;
+                        transition: background 0.2s ease;
+                          text-decoration: none;
+                            border: 1px solid black;
+                            }
+                            
+                            .cart-drawer__view-all:hover {
+                              background-color: #000;
+                                color: #fff;
+                                  {% comment %} border: 1px solid white; {% endcomment %}
+                                  }
+                                  </style>
+                                  
