@@ -69,7 +69,7 @@
         "announcement-bar-0": {
           "type": "announcement",
           "settings": {
-            "text": "Get Flat 15% Off on First Order",
+            "text": "Get Flat 10% Off on First Order",
             "link": "shopify://collections/best-sellers"
           }
         },
