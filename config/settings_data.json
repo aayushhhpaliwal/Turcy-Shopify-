@@ -129,6 +129,7 @@
     "show_cart_note": false,
     "cart_drawer_collection": "",
     "cart_color_scheme": "scheme-1",
+    "ks_cart_goal_goal_one_value": "INR:",
     "sections": {
       "main-password-header": {
         "type": "main-password-header",
@@ -204,7 +205,7 @@
           "text": "#000000",
           "button": "#121212",
           "button_label": "#ffffff",
-          "secondary_button_label": "#F1F1F1",
+          "secondary_button_label": "#f1f1f1",
           "shadow": "#121212"
         }
       },
