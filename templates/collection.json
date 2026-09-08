@@ -15,8 +15,8 @@
         "image_slide_UyNCYU": {
           "type": "image_slide",
           "settings": {
-            "image": "shopify://shop_images/Untitled_design_1_.jpg_1.jpg",
-            "mob_image": "shopify://shop_images/Untitled_375_x_169_px__jpg.jpg",
+            "image": "shopify://shop_images/Untitled_design_1.svg",
+            "mob_image": "shopify://shop_images/Untitled_375_x_169_px.svg",
             "heading": "",
             "subheading": "",
             "button_label": "",
