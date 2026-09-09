@@ -214,7 +214,7 @@
           "background": "#f7f4ef",
           "background_gradient": "",
           "text": "#000000",
-          "button": "#108B50",
+          "button": "#108b50",
           "button_label": "#ffffff",
           "secondary_button_label": "#f1f1f1",
           "shadow": "#121212"
@@ -255,12 +255,12 @@
       },
       "scheme-5": {
         "settings": {
-          "background": "#ebd0ba",
+          "background": "#F1F1F1",
           "background_gradient": "",
           "text": "#000000",
           "button": "#ffffff",
           "button_label": "#334fb4",
-          "secondary_button_label": "#ffffff",
+          "secondary_button_label": "#111111",
           "shadow": "#121212"
         }
       }
