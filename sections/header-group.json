@@ -66,8 +66,16 @@
     "announcement-bar": {
       "type": "announcement-bar",
       "blocks": {
+        "announcement_Vq4HL7": {
+          "type": "announcement",
+          "settings": {
+            "text": "free shipping",
+            "link": ""
+          }
+        },
         "announcement-bar-0": {
           "type": "announcement",
+          "disabled": true,
           "settings": {
             "text": "Get Flat 10% Off on First Order",
             "link": "shopify://collections/best-sellers"
@@ -82,6 +90,7 @@
         }
       },
       "block_order": [
+        "announcement_Vq4HL7",
         "announcement-bar-0",
         "announcement_anPyHa"
       ],
