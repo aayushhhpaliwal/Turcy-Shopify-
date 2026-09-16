@@ -12,6 +12,38 @@
     "sh_hero_slideshow_ppeQgX": {
       "type": "sh-hero-slideshow",
       "blocks": {
+        "image_slide_nq8krm": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/Slides-image.png",
+            "heading": "",
+            "subheading": "",
+            "button_label": "",
+            "button_link": "shopify://products/10-vitamin-c-5-niacinamide-face-serum",
+            "btn_outline": false,
+            "outline_btn_text_color": "#000000",
+            "border_radius": 0,
+            "desktop_content_position": "middle-center",
+            "desktop_content_alignment": "center",
+            "show_text_box": false,
+            "mobile_content_position": "middle",
+            "mobile_content_alignment": "center",
+            "heading_font_size": 36,
+            "content_font_size": 18,
+            "opacity": 0,
+            "overlay_color": "#000000",
+            "heading_color": "#000000",
+            "content_color": "#000000",
+            "btn_bg_color": "#000000",
+            "btn_text_color": "#ffffff",
+            "btn_border_color": "#000000",
+            "btn_hover_bg_color": "#ffffff",
+            "btn_hover_text_color": "#000000",
+            "btn_hover_border_color": "#000000",
+            "outline_btn_shadow_color": "#000000",
+            "box_bg_color": "#ffffff"
+          }
+        },
         "image_slide_XmYrNd": {
           "type": "image_slide",
           "settings": {
@@ -47,6 +79,7 @@
         }
       },
       "block_order": [
+        "image_slide_nq8krm",
         "image_slide_XmYrNd"
       ],
       "name": "SH: Hero slideshow",
