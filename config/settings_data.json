@@ -202,7 +202,7 @@
       },
       "8838267387977255474": {
         "type": "shopify://apps/jotform-ai-chatbot/blocks/app-embed/8b752cf5-34d6-4e3e-96cf-8a6ef85fb35a",
-        "disabled": false,
+        "disabled": true,
         "settings": {}
       }
     },
@@ -253,7 +253,7 @@
       },
       "scheme-5": {
         "settings": {
-          "background": "#F1F1F1",
+          "background": "#f1f1f1",
           "background_gradient": "",
           "text": "#000000",
           "button": "#ffffff",
