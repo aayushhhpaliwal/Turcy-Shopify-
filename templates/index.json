@@ -1214,10 +1214,10 @@
           "settings": {
             "tag": "Skin Brightening",
             "rating": 5,
-            "product_review_image": "shopify://shop_images/turcy_mobile.png",
+            "product_review_image": "shopify://shop_images/09.png",
             "title": "Visible glow in a few weeks",
             "text": "<p>I started using this soap daily and my skin feels cleaner, smoother, and more even. It helped reduce dullness and made my face look fresher.</p>",
-            "customer_image": "shopify://shop_images/WhatsApp_Image_2026-09-07_at_12.32.29_PM.jpg",
+            "customer_image": "shopify://shop_images/61IWmWRGlAL.jpg",
             "name": "Priya S.",
             "location": "Ahmedabad, IN",
             "verified": true
@@ -1228,8 +1228,10 @@
           "settings": {
             "tag": "Night Care",
             "rating": 5,
+            "product_review_image": "shopify://shop_images/07.png",
             "title": "Skin feels smoother by morning",
             "text": "<p>I started using this cream at night and my skin feels soft, hydrated, and smoother when I wake up. It fits perfectly into my skincare routine.<br/><br/></p>",
+            "customer_image": "shopify://shop_images/Face_Oil_81655783ea.webp",
             "name": "Neha R.,",
             "location": "Pune, IN",
             "verified": true
@@ -1240,8 +1242,10 @@
           "settings": {
             "tag": "Day & Night Care",
             "rating": 5,
+            "product_review_image": "shopify://shop_images/06.png",
             "title": "Skin feels soft and hydrated",
             "text": "<p><br/>I use this cream in my morning and night routine. It feels lightweight, absorbs quickly, and keeps my skin soft without feeling oily.<br/><br/>.</p>",
+            "customer_image": "shopify://shop_images/images_840bcf0c-bd93-4f5b-9f33-2ce296fea32a.jpg",
             "name": "Aditi M.,",
             "location": "Jaipur, IN",
             "verified": true
@@ -1252,22 +1256,12 @@
           "settings": {
             "tag": "Hair Growth Support",
             "rating": 5,
+            "product_review_image": "shopify://shop_images/02.png",
             "title": "Baby hairs are visible",
             "text": "<p><br/>After consistent use, I noticed small baby hairs near my hairline. It takes patience, but the routine feels worth it.<br/><br/></p>",
+            "customer_image": "shopify://shop_images/beauty-smile-skincare-woman-face-wellness-healthy-with-happiness-against-beige-studio-background-happy-young-latino-model-with-glowing-soft-smooth-skin-advertise-cosmetic-product_5904.avif",
             "name": "Aditi M.,",
             "location": "Jaipur, IN",
-            "verified": true
-          }
-        },
-        "review_Vz46DK": {
-          "type": "review",
-          "settings": {
-            "tag": "Brightening",
-            "rating": 5,
-            "title": "More even-looking skin",
-            "text": "<p><br/>This cream helped my skin look brighter and more even. It feels gentle and comfortable for daily use.<br/><br/></p>",
-            "name": "Anjali T.",
-            "location": "Delhi, IN",
             "verified": true
           }
         }
@@ -1276,8 +1270,7 @@
         "review_YngAzj",
         "review_P9YNdd",
         "review_8fRDxX",
-        "review_4EL8aP",
-        "review_Vz46DK"
+        "review_4EL8aP"
       ],
       "name": "BT Testimonials",
       "settings": {
