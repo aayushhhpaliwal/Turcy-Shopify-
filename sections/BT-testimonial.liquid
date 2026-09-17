@@ -45,6 +45,20 @@
                   {% endif %}
                 </div>
 
+                {% if block.settings.product_review_image != blank %}
+                  <div class="enica-testi__review-image">
+                    {{
+                      block.settings.product_review_image
+                      | image_url: width: 720
+                      | image_tag:
+                        class: 'enica-testi__review-image-element',
+                        widths: '240, 360, 540, 720',
+                        sizes: '(max-width: 749px) 71vw, (max-width: 989px) 45vw, 25vw',
+                        loading: 'lazy'
+                    }}
+                  </div>
+                {% endif %}
+
                 {% if block.settings.title != blank %}
                   <h3 class="enica-testi__cardTitle">{{ block.settings.title }}</h3>
                 {% endif %}
@@ -288,6 +302,22 @@
     border-radius: 999px;
     white-space: nowrap;
     flex-shrink: 0;
+  }
+
+  #enica-testi-{{ section.id }} .enica-testi__review-image{
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    margin-bottom: 14px;
+    border-radius: 14px;
+    overflow: hidden;
+    background: rgba(62,31,63,.06);
+  }
+
+  #enica-testi-{{ section.id }} .enica-testi__review-image-element{
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
   }
 
   #enica-testi-{{ section.id }} .enica-testi__cardTitle{
@@ -813,6 +843,11 @@
           "max": 5,
           "step": 1,
           "default": 5
+        },
+        {
+          "type": "image_picker",
+          "id": "product_review_image",
+          "label": "Product review image"
         },
         {
           "type": "text",
