@@ -188,14 +188,6 @@
                 <div class="bar-card__divider" aria-hidden="true"></div>
               {% endif %}
 
-              {% if block.settings.duration != blank %}
-                <div class="bar-card__meta">
-                  <span>{{ section.settings.duration_label }}</span>
-                  <strong>{{ block.settings.duration }}</strong>
-                </div>
-                <div class="bar-card__divider" aria-hidden="true"></div>
-              {% endif %}
-
               {% if selected_product != blank and block.settings.show_product_image %}
                 <div class="bar-card__product">
                   <a
