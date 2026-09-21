@@ -200,11 +200,6 @@
         "disabled": false,
         "settings": {}
       },
-      "8838267387977255474": {
-        "type": "shopify://apps/jotform-ai-chatbot/blocks/app-embed/8b752cf5-34d6-4e3e-96cf-8a6ef85fb35a",
-        "disabled": true,
-        "settings": {}
-      },
       "599976418744975545": {
         "type": "shopify://apps/flyweight-ai-chatbot/blocks/chat-button/acee03b0-ec73-4598-adb4-eab25db2b54c",
         "disabled": false,
@@ -218,7 +213,7 @@
           "background_gradient": "",
           "text": "#000000",
           "button": "#108b50",
-          "button_label": "#ffffff",
+          "button_label": "#000000",
           "secondary_button_label": "#f1f1f1",
           "shadow": "#121212"
         }
