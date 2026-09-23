@@ -204,6 +204,11 @@
         "type": "shopify://apps/flyweight-ai-chatbot/blocks/chat-button/acee03b0-ec73-4598-adb4-eab25db2b54c",
         "disabled": false,
         "settings": {}
+      },
+      "8023178096671368477": {
+        "type": "shopify://apps/smart-discounts/blocks/embed/019d1c1c-2c4b-704e-be88-ea7fd20c9afb",
+        "disabled": false,
+        "settings": {}
       }
     },
     "color_schemes": {
