@@ -27,12 +27,6 @@
     "main": {
       "type": "main-product",
       "blocks": {
-        "hoppy_bundles_bulk_discount_block_BN7AKx": {
-          "type": "shopify://apps/hoppy-bundles/blocks/bulk_discount_block/39b0734f-c894-4234-906e-b511bfd44522",
-          "settings": {
-            "bundle-id": "be29f6e9-de07-4ee9-9c45-a4588ef01033"
-          }
-        },
         "vendor": {
           "type": "text",
           "settings": {
@@ -96,6 +90,12 @@
             "custom_liquid": "{% render 'BT-pincode-checker' %}"
           }
         },
+        "hoppy_bundles_bulk_discount_block_BN7AKx": {
+          "type": "shopify://apps/hoppy-bundles/blocks/bulk_discount_block/39b0734f-c894-4234-906e-b511bfd44522",
+          "settings": {
+            "bundle-id": "be29f6e9-de07-4ee9-9c45-a4588ef01033"
+          }
+        },
         "collapsible_tab_GR983k": {
           "type": "collapsible_tab",
           "settings": {
@@ -151,7 +151,6 @@
         }
       },
       "block_order": [
-        "hoppy_bundles_bulk_discount_block_BN7AKx",
         "vendor",
         "title",
         "custom_liquid_tUpwqd",
@@ -163,6 +162,7 @@
         "buy_buttons",
         "xb_trust_badges_trust_badge_block_LPHgw9",
         "custom_liquid_Kg437N",
+        "hoppy_bundles_bulk_discount_block_BN7AKx",
         "collapsible_tab_GR983k",
         "collapsible_tab_YrPPxF",
         "gropulse_wishlist_gropulse_upsell_offer_LTPcii",
