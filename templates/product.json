@@ -84,6 +84,12 @@
             "offerId": "2eb00a5349b84aa5a072639c3eab8b29"
           }
         },
+        "gsc_countdown_timer_countdown_mhceeL": {
+          "type": "shopify://apps/gsc-countdown-timer/blocks/countdown/58dc5b1b-43d2-4209-b1f3-52aff31643ed",
+          "settings": {
+            "widget_id": "GSC-SMALL-gifiCXmhPOnf"
+          }
+        },
         "custom_liquid_Kg437N": {
           "type": "custom_liquid",
           "settings": {
@@ -155,6 +161,7 @@
         "quantity_selector",
         "buy_buttons",
         "xb_trust_badges_trust_badge_block_LPHgw9",
+        "gsc_countdown_timer_countdown_mhceeL",
         "custom_liquid_Kg437N",
         "collapsible_tab_GR983k",
         "collapsible_tab_YrPPxF",
